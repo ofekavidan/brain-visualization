@@ -1,14 +1,18 @@
 import Image from "next/image";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "C:/Users/DELL/projects/brain-visualization/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-} from "C:/Users/DELL/projects/brain-visualization/components/ui/card";
+// import {
+//   Tabs,
+//   TabsContent,
+//   TabsList,
+//   TabsTrigger,
+// } from "C:/Users/DELL/projects/brain-visualization/components/ui/tabs";
+// import {
+//   Card,
+//   CardContent,
+// } from "C:/Users/DELL/projects/brain-visualization/components/ui/card";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+
 
 export default function Home() {
   return (
