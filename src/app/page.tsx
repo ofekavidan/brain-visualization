@@ -1,6 +1,4 @@
 import Image from "next/image";
-
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -25,7 +23,7 @@ export default function Home() {
       </p>
 
       <Tabs defaultValue="fig1" className="w-full max-w-5xl">
-        <TabsList className="grid grid-cols-4 mb-4">
+        <TabsList className="grid grid-cols-5 mb-4">
           <TabsTrigger
             value="fig1"
             className="data-[state=active]:bg-black data-[state=active]:text-white"
@@ -33,16 +31,15 @@ export default function Home() {
             Figure 1
           </TabsTrigger>
           <TabsTrigger
-            value="fig3"
+            value="fig2"
             className="data-[state=active]:bg-black data-[state=active]:text-white"
           >
             Figure 2
           </TabsTrigger>
           <TabsTrigger
-            value="fig2"
+            value="fig3"
             className="data-[state=active]:bg-black data-[state=active]:text-white"
           >
-
             Figure 3
           </TabsTrigger>
           <TabsTrigger
@@ -85,8 +82,8 @@ export default function Home() {
               />
             </CardContent>
           </Card>
-                  </TabsContent>
-          
+        </TabsContent>
+
         <TabsContent value="fig3">
           <Card>
             <CardContent className="p-4">
