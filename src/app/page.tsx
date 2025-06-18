@@ -36,6 +36,13 @@ export default function Home() {
             value="fig3"
             className="data-[state=active]:bg-black data-[state=active]:text-white"
           >
+            Figure 2
+          </TabsTrigger>
+          <TabsTrigger
+            value="fig2"
+            className="data-[state=active]:bg-black data-[state=active]:text-white"
+          >
+
             Figure 3
           </TabsTrigger>
           <TabsTrigger
@@ -66,6 +73,20 @@ export default function Home() {
           </Card>
         </TabsContent>
 
+        <TabsContent value="fig2">
+          <Card>
+            <CardContent className="p-4">
+              <Image
+                src="/fig2.webp"
+                alt="Figure 2"
+                width={1200}
+                height={800}
+                className="mx-auto"
+              />
+            </CardContent>
+          </Card>
+                  </TabsContent>
+          
         <TabsContent value="fig3">
           <Card>
             <CardContent className="p-4">
