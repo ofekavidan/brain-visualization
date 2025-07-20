@@ -1,0 +1,7 @@
+Test group,Reference group,Stat,Pvalue,Padj
+Neurons (NEUN),Microglia (IBA1),221.0,0.7807751404726111,1.0
+Neurons (NEUN),Astrocytes (GFAP),213.0,0.32675712323788175,1.0
+Neurons (NEUN),Oligodendrocytes (OLIG2),115.0,0.8517818481399239,1.0
+Microglia (IBA1),Astrocytes (GFAP),209.0,0.5629614564913861,1.0
+Microglia (IBA1),Oligodendrocytes (OLIG2),116.0,1.0,1.0
+Astrocytes (GFAP),Oligodendrocytes (OLIG2),81.0,0.41459968617380627,1.0
