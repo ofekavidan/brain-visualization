@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 import mirListRaw from "@/data/mir_list.json";
 import Image from "next/image";
@@ -11,13 +11,17 @@ const mirList = mirListRaw.map((mir) => ({
   label: mir.label,
 }));
 
-export default function BoxPlot() {
-  const [mirna, setMirna] = useState("hsa-miR-500a-3p");
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export default function BoxPlot({ value, onChange }: Props) {
   const [search, setSearch] = useState("");
   const [tableData, setTableData] = useState<string[][]>([]);
 
   useEffect(() => {
-    const filePath = `/plots/stat_tables/stats_${mirna}.csv`;
+    const filePath = `/plots/stat_tables/stats_${value}.csv`;
     fetch(filePath)
       .then((response) => {
         if (!response.ok) throw new Error("CSV not found");
@@ -31,7 +35,7 @@ export default function BoxPlot() {
         console.error("Failed to load stats table:", error);
         setTableData([]);
       });
-  }, [mirna]);
+  }, [value]);
 
   const filteredItems = mirList.filter((item) =>
     item.label.toLowerCase().includes(search.toLowerCase())
@@ -52,13 +56,13 @@ export default function BoxPlot() {
             variant="bordered"
             className="w-full text-xl"
             classNames={{
-              trigger: "bg-white py-2 text-xl pr-12",      // ריווח מהחץ
-              selectorIcon: "right-2 top-1/2 -translate-y-1/2 absolute", // חץ בימין
+              trigger: "bg-white py-2 text-xl pr-12",
+              selectorIcon: "right-2 top-1/2 -translate-y-1/2 absolute",
               popoverContent: "bg-white",
             }}
             disallowEmptySelection
-            selectedKeys={[mirna]}
-            onChange={(e) => setMirna(e.target.value)}
+            selectedKeys={[value]}
+            onChange={(e) => onChange(e.target.value)}
             aria-label="miRNA Selector"
             items={filteredItems}
             listboxProps={{
@@ -72,8 +76,8 @@ export default function BoxPlot() {
 
       <div className="flex justify-center">
         <Image
-          src={`/plots/interactive_boxplot/Boxplot_${mirna}.png`}
-          alt={`Boxplot for ${mirna}`}
+          src={`/plots/interactive_boxplot/Boxplot_${value}.png`}
+          alt={`Boxplot for ${value}`}
           width={800}
           height={600}
           className="mx-auto"
@@ -122,7 +126,7 @@ export default function BoxPlot() {
           </div>
         ) : (
           <p className="mt-4 text-gray-500 text-lg">
-            No statistics available for {mirna}.
+            No statistics available for {value}.
           </p>
         )}
       </div>

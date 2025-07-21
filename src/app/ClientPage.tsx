@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import {
   Tabs,
   TabsContent,
@@ -16,6 +17,8 @@ const BoxPlot = dynamic(() => import("@/components/BoxPlot"), {
 });
 
 export default function ClientPage() {
+  const [selectedMirna, setSelectedMirna] = useState("hsa-miR-500a-3p");
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-4">
       <h1 className="text-4xl font-bold mb-4">
@@ -42,10 +45,10 @@ export default function ClientPage() {
         </TabsList>
 
         <TabsContent value="umap">
-          <UmapPlot />
+          <UmapPlot value={selectedMirna} onChange={setSelectedMirna} />
         </TabsContent>
         <TabsContent value="boxplot">
-          <BoxPlot />
+          <BoxPlot value={selectedMirna} onChange={setSelectedMirna} />
         </TabsContent>
       </Tabs>
     </main>

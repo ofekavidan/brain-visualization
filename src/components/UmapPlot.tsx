@@ -10,8 +10,12 @@ const mirList = mirListRaw.map((mir) => ({
   label: mir.label,
 }));
 
-export default function UmapPlot() {
-  const [mirna, setMirna] = useState("hsa-miR-500a-3p");
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+export default function UmapPlot({ value, onChange }: Props) {
   const [search, setSearch] = useState("");
 
   const filteredItems = mirList.filter((item) =>
@@ -33,13 +37,13 @@ export default function UmapPlot() {
             variant="bordered"
             className="w-full text-xl"
             classNames={{
-              trigger: "bg-white py-2 text-xl pr-12", // מרווח מהחץ
-              selectorIcon: "right-2",                // מיקום החץ
+              trigger: "bg-white py-2 text-xl pr-12",
+              selectorIcon: "right-2",
               popoverContent: "bg-white",
             }}
             disallowEmptySelection
-            selectedKeys={[mirna]}
-            onChange={(e) => setMirna(e.target.value)}
+            selectedKeys={[value]}
+            onChange={(e) => onChange(e.target.value)}
             aria-label="miRNA Selector"
             items={filteredItems}
             listboxProps={{
@@ -53,8 +57,8 @@ export default function UmapPlot() {
 
       <div className="flex justify-center">
         <Image
-          src={`/plots/interactive_umap/UMAP_${mirna}.png`}
-          alt={`UMAP Plot for ${mirna}`}
+          src={`/plots/interactive_umap/UMAP_${value}.png`}
+          alt={`UMAP Plot for ${value}`}
           width={1024}
           height={768}
           className="mx-auto"
