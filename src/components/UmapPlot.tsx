@@ -2,8 +2,13 @@
 
 import { useState } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
-import mirList from "@/data/mir_list.json";
+import mirListRaw from "@/data/mir_list.json";
 import Image from "next/image";
+
+const mirList = mirListRaw.map((mir) => ({
+  key: mir.key,
+  label: mir.label,
+}));
 
 export default function UmapPlot() {
   const [mirna, setMirna] = useState("hsa-miR-500a-3p");
@@ -20,21 +25,22 @@ export default function UmapPlot() {
           <input
             type="text"
             placeholder="Search a miRNA"
+            className="w-full p-3 text-xl mb-2 border rounded"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-3 text-xl mb-2 border rounded focus:outline-none"
           />
           <Select
-            aria-label="miRNA Selector"
-            placeholder="Choose a miRNA"
-            className="w-full bg-white text-xl"
+            variant="bordered"
+            className="w-full text-xl"
             classNames={{
-              trigger: "bg-white py-2 text-xl",
+              trigger: "bg-white py-2 text-xl pr-12", // מרווח מהחץ
+              selectorIcon: "right-2",                // מיקום החץ
               popoverContent: "bg-white",
             }}
             disallowEmptySelection
             selectedKeys={[mirna]}
             onChange={(e) => setMirna(e.target.value)}
+            aria-label="miRNA Selector"
             items={filteredItems}
             listboxProps={{
               emptyContent: "No options found",

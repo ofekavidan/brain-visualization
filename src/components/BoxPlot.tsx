@@ -50,9 +50,10 @@ export default function BoxPlot() {
           />
           <Select
             variant="bordered"
-            className="w-full bg-white text-xl"
+            className="w-full text-xl"
             classNames={{
-              trigger: "bg-white py-2 text-xl",
+              trigger: "bg-white py-2 text-xl pr-12",      // ריווח מהחץ
+              selectorIcon: "right-2 top-1/2 -translate-y-1/2 absolute", // חץ בימין
               popoverContent: "bg-white",
             }}
             disallowEmptySelection
