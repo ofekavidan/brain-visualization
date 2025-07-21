@@ -6,10 +6,10 @@ import mirListRaw from "@/data/mir_list.json";
 import Image from "next/image";
 import Papa from "papaparse";
 
-const mirList = mirListRaw.map((mir) => ({
-  key: mir.key,
-  label: mir.label,
-}));
+// מיון אלפביתי עם תמיכה במספרים (natural sort)
+const mirList = mirListRaw
+  .map((mir) => ({ key: mir.key, label: mir.label }))
+  .sort((a, b) => a.label.localeCompare(b.label, undefined, { numeric: true }));
 
 type Props = {
   value: string;
