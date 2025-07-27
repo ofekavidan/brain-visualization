@@ -108,6 +108,9 @@ export default function BoxPlot({ value, onChange }: Props) {
                       const isPadj =
                         tableData[0][colIdx].toLowerCase().includes("padj");
                       const highlight = isPadj && value < 0.05;
+                      const isNumeric = !isNaN(value);
+                      const display = isNumeric ? value.toFixed(3) : cell;
+
                       return (
                         <td
                           key={colIdx}
@@ -115,9 +118,10 @@ export default function BoxPlot({ value, onChange }: Props) {
                             highlight ? "bg-yellow-100 font-semibold" : ""
                           }`}
                         >
-                          {cell}
+                          {display}
                         </td>
                       );
+
                     })}
                   </tr>
                 ))}
