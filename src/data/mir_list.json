@@ -1,303 +1,375 @@
 [
   {
-    "key": "hsa-miR-500a-3p",
-    "label": "hsa-miR-500a-3p"
+    "key": "hsa-let-7a-3p",
+    "label": "hsa-let-7a-3p"
   },
   {
-    "key": "hsa-miR-34b-5p",
-    "label": "hsa-miR-34b-5p"
+    "key": "hsa-let-7a-5p",
+    "label": "hsa-let-7a-5p"
   },
   {
-    "key": "hsa-miR-744-3p",
-    "label": "hsa-miR-744-3p"
+    "key": "hsa-let-7b-3p",
+    "label": "hsa-let-7b-3p"
   },
   {
-    "key": "hsa-miR-4521",
-    "label": "hsa-miR-4521"
+    "key": "hsa-let-7b-5p",
+    "label": "hsa-let-7b-5p"
   },
   {
-    "key": "hsa-miR-374a-3p",
-    "label": "hsa-miR-374a-3p"
+    "key": "hsa-let-7c-5p",
+    "label": "hsa-let-7c-5p"
   },
   {
-    "key": "hsa-miR-874-5p",
-    "label": "hsa-miR-874-5p"
+    "key": "hsa-let-7d-3p",
+    "label": "hsa-let-7d-3p"
   },
   {
-    "key": "hsa-miR-511-3p",
-    "label": "hsa-miR-511-3p"
+    "key": "hsa-let-7d-5p",
+    "label": "hsa-let-7d-5p"
   },
   {
-    "key": "hsa-miR-7-2-3p",
-    "label": "hsa-miR-7-2-3p"
+    "key": "hsa-let-7e-5p",
+    "label": "hsa-let-7e-5p"
   },
   {
-    "key": "hsa-miR-1277-5p",
-    "label": "hsa-miR-1277-5p"
+    "key": "hsa-let-7f-5p",
+    "label": "hsa-let-7f-5p"
   },
   {
-    "key": "hsa-miR-766-3p",
-    "label": "hsa-miR-766-3p"
-  },
-  {
-    "key": "hsa-miR-377-5p",
-    "label": "hsa-miR-377-5p"
-  },
-  {
-    "key": "hsa-miR-376b-5p",
-    "label": "hsa-miR-376b-5p"
-  },
-  {
-    "key": "hsa-miR-1-3p",
-    "label": "hsa-miR-1-3p"
-  },
-  {
-    "key": "hsa-miR-548h-3p",
-    "label": "hsa-miR-548h-3p"
-  },
-  {
-    "key": "hsa-miR-345-5p",
-    "label": "hsa-miR-345-5p"
-  },
-  {
-    "key": "hsa-miR-376c-5p",
-    "label": "hsa-miR-376c-5p"
-  },
-  {
-    "key": "hsa-miR-548z",
-    "label": "hsa-miR-548z"
-  },
-  {
-    "key": "hsa-miR-505-5p",
-    "label": "hsa-miR-505-5p"
-  },
-  {
-    "key": "hsa-miR-663b",
-    "label": "hsa-miR-663b"
-  },
-  {
-    "key": "hsa-miR-1248",
-    "label": "hsa-miR-1248"
-  },
-  {
-    "key": "hsa-miR-326",
-    "label": "hsa-miR-326"
-  },
-  {
-    "key": "hsa-miR-193b-3p",
-    "label": "hsa-miR-193b-3p"
-  },
-  {
-    "key": "hsa-miR-4484",
-    "label": "hsa-miR-4484"
-  },
-  {
-    "key": "hsa-miR-106a-5p",
-    "label": "hsa-miR-106a-5p"
-  },
-  {
-    "key": "hsa-miR-409-5p",
-    "label": "hsa-miR-409-5p"
-  },
-  {
-    "key": "hsa-miR-425-3p",
-    "label": "hsa-miR-425-3p"
-  },
-  {
-    "key": "hsa-miR-1307-5p",
-    "label": "hsa-miR-1307-5p"
-  },
-  {
-    "key": "hsa-miR-1268b",
-    "label": "hsa-miR-1268b"
-  },
-  {
-    "key": "hsa-miR-129-5p",
-    "label": "hsa-miR-129-5p"
-  },
-  {
-    "key": "hsa-miR-505-3p",
-    "label": "hsa-miR-505-3p"
-  },
-  {
-    "key": "hsa-miR-489-3p",
-    "label": "hsa-miR-489-3p"
-  },
-  {
-    "key": "hsa-miR-323b-3p",
-    "label": "hsa-miR-323b-3p"
-  },
-  {
-    "key": "hsa-miR-346",
-    "label": "hsa-miR-346"
-  },
-  {
-    "key": "hsa-miR-33a-3p",
-    "label": "hsa-miR-33a-3p"
-  },
-  {
-    "key": "hsa-miR-450a-5p",
-    "label": "hsa-miR-450a-5p"
-  },
-  {
-    "key": "hsa-miR-3651",
-    "label": "hsa-miR-3651"
-  },
-  {
-    "key": "hsa-miR-590-3p",
-    "label": "hsa-miR-590-3p"
-  },
-  {
-    "key": "hsa-miR-103a-2-5p",
-    "label": "hsa-miR-103a-2-5p"
-  },
-  {
-    "key": "hsa-miR-153-5p",
-    "label": "hsa-miR-153-5p"
-  },
-  {
-    "key": "hsa-miR-487a-3p",
-    "label": "hsa-miR-487a-3p"
-  },
-  {
-    "key": "hsa-miR-411-3p",
-    "label": "hsa-miR-411-3p"
-  },
-  {
-    "key": "hsa-miR-876-3p",
-    "label": "hsa-miR-876-3p"
-  },
-  {
-    "key": "hsa-miR-34a-3p",
-    "label": "hsa-miR-34a-3p"
+    "key": "hsa-let-7g-5p",
+    "label": "hsa-let-7g-5p"
   },
   {
     "key": "hsa-let-7i-3p",
     "label": "hsa-let-7i-3p"
   },
   {
-    "key": "hsa-miR-1277-3p",
-    "label": "hsa-miR-1277-3p"
+    "key": "hsa-let-7i-5p",
+    "label": "hsa-let-7i-5p"
   },
   {
-    "key": "hsa-miR-6724-5p",
-    "label": "hsa-miR-6724-5p"
+    "key": "hsa-miR-100-5p",
+    "label": "hsa-miR-100-5p"
   },
   {
-    "key": "hsa-miR-1268a",
-    "label": "hsa-miR-1268a"
-  },
-  {
-    "key": "hsa-miR-887-3p",
-    "label": "hsa-miR-887-3p"
-  },
-  {
-    "key": "hsa-miR-1255b-5p",
-    "label": "hsa-miR-1255b-5p"
-  },
-  {
-    "key": "hsa-miR-301b-3p",
-    "label": "hsa-miR-301b-3p"
-  },
-  {
-    "key": "hsa-miR-532-3p",
-    "label": "hsa-miR-532-3p"
-  },
-  {
-    "key": "hsa-miR-192-5p",
-    "label": "hsa-miR-192-5p"
-  },
-  {
-    "key": "hsa-miR-424-3p",
-    "label": "hsa-miR-424-3p"
-  },
-  {
-    "key": "hsa-miR-4485-5p",
-    "label": "hsa-miR-4485-5p"
-  },
-  {
-    "key": "hsa-miR-582-5p",
-    "label": "hsa-miR-582-5p"
-  },
-  {
-    "key": "hsa-miR-656-3p",
-    "label": "hsa-miR-656-3p"
-  },
-  {
-    "key": "hsa-miR-339-3p",
-    "label": "hsa-miR-339-3p"
-  },
-  {
-    "key": "hsa-miR-31-3p",
-    "label": "hsa-miR-31-3p"
-  },
-  {
-    "key": "hsa-miR-873-5p",
-    "label": "hsa-miR-873-5p"
-  },
-  {
-    "key": "hsa-miR-181a-3p",
-    "label": "hsa-miR-181a-3p"
-  },
-  {
-    "key": "hsa-miR-1307-3p",
-    "label": "hsa-miR-1307-3p"
+    "key": "hsa-miR-101-3p",
+    "label": "hsa-miR-101-3p"
   },
   {
     "key": "hsa-miR-101-5p",
     "label": "hsa-miR-101-5p"
   },
   {
-    "key": "hsa-miR-433-3p",
-    "label": "hsa-miR-433-3p"
+    "key": "hsa-miR-10395-3p",
+    "label": "hsa-miR-10395-3p"
   },
   {
-    "key": "hsa-miR-29a-5p",
-    "label": "hsa-miR-29a-5p"
+    "key": "hsa-miR-10396a-3p",
+    "label": "hsa-miR-10396a-3p"
   },
   {
-    "key": "hsa-miR-154-3p",
-    "label": "hsa-miR-154-3p"
+    "key": "hsa-miR-10396b-3p",
+    "label": "hsa-miR-10396b-3p"
   },
   {
-    "key": "hsa-miR-625-5p",
-    "label": "hsa-miR-625-5p"
+    "key": "hsa-miR-103a-2-5p",
+    "label": "hsa-miR-103a-2-5p"
   },
   {
-    "key": "hsa-miR-340-3p",
-    "label": "hsa-miR-340-3p"
+    "key": "hsa-miR-103a-3p",
+    "label": "hsa-miR-103a-3p"
   },
   {
-    "key": "hsa-miR-625-3p",
-    "label": "hsa-miR-625-3p"
+    "key": "hsa-miR-10401-3p",
+    "label": "hsa-miR-10401-3p"
   },
   {
-    "key": "hsa-miR-410-3p",
-    "label": "hsa-miR-410-3p"
+    "key": "hsa-miR-10401-5p",
+    "label": "hsa-miR-10401-5p"
   },
   {
-    "key": "hsa-miR-193b-5p",
-    "label": "hsa-miR-193b-5p"
+    "key": "hsa-miR-106a-5p",
+    "label": "hsa-miR-106a-5p"
   },
   {
-    "key": "hsa-miR-539-3p",
-    "label": "hsa-miR-539-3p"
+    "key": "hsa-miR-106b-5p",
+    "label": "hsa-miR-106b-5p"
+  },
+  {
+    "key": "hsa-miR-107",
+    "label": "hsa-miR-107"
+  },
+  {
+    "key": "hsa-miR-1185-5p",
+    "label": "hsa-miR-1185-5p"
+  },
+  {
+    "key": "hsa-miR-12136",
+    "label": "hsa-miR-12136"
+  },
+  {
+    "key": "hsa-miR-124-3p",
+    "label": "hsa-miR-124-3p"
+  },
+  {
+    "key": "hsa-miR-124-5p",
+    "label": "hsa-miR-124-5p"
+  },
+  {
+    "key": "hsa-miR-1246",
+    "label": "hsa-miR-1246"
+  },
+  {
+    "key": "hsa-miR-1248",
+    "label": "hsa-miR-1248"
+  },
+  {
+    "key": "hsa-miR-1249-3p",
+    "label": "hsa-miR-1249-3p"
+  },
+  {
+    "key": "hsa-miR-1255a",
+    "label": "hsa-miR-1255a"
+  },
+  {
+    "key": "hsa-miR-1255b-5p",
+    "label": "hsa-miR-1255b-5p"
+  },
+  {
+    "key": "hsa-miR-125a-5p",
+    "label": "hsa-miR-125a-5p"
+  },
+  {
+    "key": "hsa-miR-125b-2-3p",
+    "label": "hsa-miR-125b-2-3p"
+  },
+  {
+    "key": "hsa-miR-125b-5p",
+    "label": "hsa-miR-125b-5p"
+  },
+  {
+    "key": "hsa-miR-126-3p",
+    "label": "hsa-miR-126-3p"
+  },
+  {
+    "key": "hsa-miR-126-5p",
+    "label": "hsa-miR-126-5p"
+  },
+  {
+    "key": "hsa-miR-1260b",
+    "label": "hsa-miR-1260b"
+  },
+  {
+    "key": "hsa-miR-1268a",
+    "label": "hsa-miR-1268a"
+  },
+  {
+    "key": "hsa-miR-1268b",
+    "label": "hsa-miR-1268b"
+  },
+  {
+    "key": "hsa-miR-127-3p",
+    "label": "hsa-miR-127-3p"
   },
   {
     "key": "hsa-miR-127-5p",
     "label": "hsa-miR-127-5p"
   },
   {
-    "key": "hsa-miR-194-5p",
-    "label": "hsa-miR-194-5p"
+    "key": "hsa-miR-1273h-5p",
+    "label": "hsa-miR-1273h-5p"
   },
   {
-    "key": "hsa-miR-877-5p",
-    "label": "hsa-miR-877-5p"
+    "key": "hsa-miR-1275",
+    "label": "hsa-miR-1275"
   },
   {
-    "key": "hsa-miR-769-3p",
-    "label": "hsa-miR-769-3p"
+    "key": "hsa-miR-1277-3p",
+    "label": "hsa-miR-1277-3p"
+  },
+  {
+    "key": "hsa-miR-1277-5p",
+    "label": "hsa-miR-1277-5p"
+  },
+  {
+    "key": "hsa-miR-128-3p",
+    "label": "hsa-miR-128-3p"
+  },
+  {
+    "key": "hsa-miR-1285-3p",
+    "label": "hsa-miR-1285-3p"
+  },
+  {
+    "key": "hsa-miR-1285-5p",
+    "label": "hsa-miR-1285-5p"
+  },
+  {
+    "key": "hsa-miR-129-2-3p",
+    "label": "hsa-miR-129-2-3p"
+  },
+  {
+    "key": "hsa-miR-1296-5p",
+    "label": "hsa-miR-1296-5p"
+  },
+  {
+    "key": "hsa-miR-1303",
+    "label": "hsa-miR-1303"
+  },
+  {
+    "key": "hsa-miR-1307-3p",
+    "label": "hsa-miR-1307-3p"
+  },
+  {
+    "key": "hsa-miR-1307-5p",
+    "label": "hsa-miR-1307-5p"
+  },
+  {
+    "key": "hsa-miR-130a-3p",
+    "label": "hsa-miR-130a-3p"
+  },
+  {
+    "key": "hsa-miR-130b-3p",
+    "label": "hsa-miR-130b-3p"
+  },
+  {
+    "key": "hsa-miR-132-3p",
+    "label": "hsa-miR-132-3p"
+  },
+  {
+    "key": "hsa-miR-135a-5p",
+    "label": "hsa-miR-135a-5p"
+  },
+  {
+    "key": "hsa-miR-136-3p",
+    "label": "hsa-miR-136-3p"
+  },
+  {
+    "key": "hsa-miR-136-5p",
+    "label": "hsa-miR-136-5p"
+  },
+  {
+    "key": "hsa-miR-137-3p",
+    "label": "hsa-miR-137-3p"
+  },
+  {
+    "key": "hsa-miR-138-5p",
+    "label": "hsa-miR-138-5p"
+  },
+  {
+    "key": "hsa-miR-139-3p",
+    "label": "hsa-miR-139-3p"
+  },
+  {
+    "key": "hsa-miR-139-5p",
+    "label": "hsa-miR-139-5p"
+  },
+  {
+    "key": "hsa-miR-140-3p",
+    "label": "hsa-miR-140-3p"
+  },
+  {
+    "key": "hsa-miR-140-5p",
+    "label": "hsa-miR-140-5p"
+  },
+  {
+    "key": "hsa-miR-142-3p",
+    "label": "hsa-miR-142-3p"
+  },
+  {
+    "key": "hsa-miR-142-5p",
+    "label": "hsa-miR-142-5p"
+  },
+  {
+    "key": "hsa-miR-143-3p",
+    "label": "hsa-miR-143-3p"
+  },
+  {
+    "key": "hsa-miR-145-5p",
+    "label": "hsa-miR-145-5p"
+  },
+  {
+    "key": "hsa-miR-146a-5p",
+    "label": "hsa-miR-146a-5p"
+  },
+  {
+    "key": "hsa-miR-146b-5p",
+    "label": "hsa-miR-146b-5p"
+  },
+  {
+    "key": "hsa-miR-148a-3p",
+    "label": "hsa-miR-148a-3p"
+  },
+  {
+    "key": "hsa-miR-148b-3p",
+    "label": "hsa-miR-148b-3p"
+  },
+  {
+    "key": "hsa-miR-149-5p",
+    "label": "hsa-miR-149-5p"
+  },
+  {
+    "key": "hsa-miR-150-5p",
+    "label": "hsa-miR-150-5p"
+  },
+  {
+    "key": "hsa-miR-151a-3p",
+    "label": "hsa-miR-151a-3p"
+  },
+  {
+    "key": "hsa-miR-151a-5p",
+    "label": "hsa-miR-151a-5p"
+  },
+  {
+    "key": "hsa-miR-151b",
+    "label": "hsa-miR-151b"
+  },
+  {
+    "key": "hsa-miR-153-3p",
+    "label": "hsa-miR-153-3p"
+  },
+  {
+    "key": "hsa-miR-15a-5p",
+    "label": "hsa-miR-15a-5p"
+  },
+  {
+    "key": "hsa-miR-15b-5p",
+    "label": "hsa-miR-15b-5p"
+  },
+  {
+    "key": "hsa-miR-16-5p",
+    "label": "hsa-miR-16-5p"
+  },
+  {
+    "key": "hsa-miR-17-5p",
+    "label": "hsa-miR-17-5p"
+  },
+  {
+    "key": "hsa-miR-181a-3p",
+    "label": "hsa-miR-181a-3p"
+  },
+  {
+    "key": "hsa-miR-181a-5p",
+    "label": "hsa-miR-181a-5p"
+  },
+  {
+    "key": "hsa-miR-181b-5p",
+    "label": "hsa-miR-181b-5p"
+  },
+  {
+    "key": "hsa-miR-181c-5p",
+    "label": "hsa-miR-181c-5p"
+  },
+  {
+    "key": "hsa-miR-181d-5p",
+    "label": "hsa-miR-181d-5p"
+  },
+  {
+    "key": "hsa-miR-185-5p",
+    "label": "hsa-miR-185-5p"
+  },
+  {
+    "key": "hsa-miR-186-5p",
+    "label": "hsa-miR-186-5p"
   },
   {
     "key": "hsa-miR-18a-5p",
@@ -308,328 +380,348 @@
     "label": "hsa-miR-18b-5p"
   },
   {
-    "key": "hsa-miR-655-3p",
-    "label": "hsa-miR-655-3p"
-  },
-  {
-    "key": "hsa-miR-361-3p",
-    "label": "hsa-miR-361-3p"
-  },
-  {
-    "key": "hsa-miR-369-5p",
-    "label": "hsa-miR-369-5p"
-  },
-  {
-    "key": "hsa-miR-1303",
-    "label": "hsa-miR-1303"
-  },
-  {
-    "key": "hsa-miR-532-5p",
-    "label": "hsa-miR-532-5p"
-  },
-  {
-    "key": "hsa-miR-628-5p",
-    "label": "hsa-miR-628-5p"
-  },
-  {
-    "key": "hsa-let-7a-3p",
-    "label": "hsa-let-7a-3p"
-  },
-  {
-    "key": "hsa-miR-539-5p",
-    "label": "hsa-miR-539-5p"
-  },
-  {
-    "key": "hsa-miR-432-5p",
-    "label": "hsa-miR-432-5p"
-  },
-  {
-    "key": "hsa-miR-543",
-    "label": "hsa-miR-543"
-  },
-  {
-    "key": "hsa-miR-487a-5p",
-    "label": "hsa-miR-487a-5p"
-  },
-  {
-    "key": "hsa-miR-154-5p",
-    "label": "hsa-miR-154-5p"
-  },
-  {
-    "key": "hsa-miR-378a-3p",
-    "label": "hsa-miR-378a-3p"
-  },
-  {
-    "key": "hsa-miR-369-3p",
-    "label": "hsa-miR-369-3p"
-  },
-  {
-    "key": "hsa-miR-30a-5p",
-    "label": "hsa-miR-30a-5p"
-  },
-  {
-    "key": "hsa-miR-362-3p",
-    "label": "hsa-miR-362-3p"
-  },
-  {
-    "key": "hsa-miR-124-5p",
-    "label": "hsa-miR-124-5p"
-  },
-  {
-    "key": "hsa-miR-4485-3p",
-    "label": "hsa-miR-4485-3p"
-  },
-  {
-    "key": "hsa-miR-1249-3p",
-    "label": "hsa-miR-1249-3p"
-  },
-  {
-    "key": "hsa-miR-30a-3p",
-    "label": "hsa-miR-30a-3p"
-  },
-  {
-    "key": "hsa-let-7b-3p",
-    "label": "hsa-let-7b-3p"
-  },
-  {
-    "key": "hsa-miR-99a-3p",
-    "label": "hsa-miR-99a-3p"
-  },
-  {
-    "key": "hsa-miR-411-5p",
-    "label": "hsa-miR-411-5p"
-  },
-  {
-    "key": "hsa-miR-210-3p",
-    "label": "hsa-miR-210-3p"
-  },
-  {
-    "key": "hsa-miR-132-5p",
-    "label": "hsa-miR-132-5p"
-  },
-  {
     "key": "hsa-miR-190a-3p",
     "label": "hsa-miR-190a-3p"
   },
   {
-    "key": "hsa-miR-421",
-    "label": "hsa-miR-421"
+    "key": "hsa-miR-190a-5p",
+    "label": "hsa-miR-190a-5p"
   },
   {
-    "key": "hsa-miR-5100",
-    "label": "hsa-miR-5100"
+    "key": "hsa-miR-191-5p",
+    "label": "hsa-miR-191-5p"
   },
   {
-    "key": "hsa-miR-577",
-    "label": "hsa-miR-577"
-  },
-  {
-    "key": "hsa-miR-660-5p",
-    "label": "hsa-miR-660-5p"
-  },
-  {
-    "key": "hsa-miR-494-3p",
-    "label": "hsa-miR-494-3p"
-  },
-  {
-    "key": "hsa-miR-488-3p",
-    "label": "hsa-miR-488-3p"
-  },
-  {
-    "key": "hsa-miR-5684",
-    "label": "hsa-miR-5684"
-  },
-  {
-    "key": "hsa-miR-5701",
-    "label": "hsa-miR-5701"
-  },
-  {
-    "key": "hsa-miR-4449",
-    "label": "hsa-miR-4449"
-  },
-  {
-    "key": "hsa-miR-574-5p",
-    "label": "hsa-miR-574-5p"
-  },
-  {
-    "key": "hsa-miR-1285-3p",
-    "label": "hsa-miR-1285-3p"
-  },
-  {
-    "key": "hsa-miR-145-5p",
-    "label": "hsa-miR-145-5p"
-  },
-  {
-    "key": "hsa-miR-130b-3p",
-    "label": "hsa-miR-130b-3p"
-  },
-  {
-    "key": "hsa-miR-663a",
-    "label": "hsa-miR-663a"
-  },
-  {
-    "key": "hsa-miR-129-1-3p",
-    "label": "hsa-miR-129-1-3p"
-  },
-  {
-    "key": "hsa-miR-139-3p",
-    "label": "hsa-miR-139-3p"
-  },
-  {
-    "key": "hsa-miR-1185-5p",
-    "label": "hsa-miR-1185-5p"
-  },
-  {
-    "key": "hsa-miR-203a-3p",
-    "label": "hsa-miR-203a-3p"
+    "key": "hsa-miR-192-5p",
+    "label": "hsa-miR-192-5p"
   },
   {
     "key": "hsa-miR-193a-5p",
     "label": "hsa-miR-193a-5p"
   },
   {
-    "key": "hsa-miR-22-5p",
-    "label": "hsa-miR-22-5p"
+    "key": "hsa-miR-193b-3p",
+    "label": "hsa-miR-193b-3p"
   },
   {
-    "key": "hsa-miR-383-5p",
-    "label": "hsa-miR-383-5p"
+    "key": "hsa-miR-193b-5p",
+    "label": "hsa-miR-193b-5p"
   },
   {
-    "key": "hsa-miR-31-5p",
-    "label": "hsa-miR-31-5p"
+    "key": "hsa-miR-194-5p",
+    "label": "hsa-miR-194-5p"
   },
   {
-    "key": "hsa-miR-485-3p",
-    "label": "hsa-miR-485-3p"
-  },
-  {
-    "key": "hsa-miR-590-5p",
-    "label": "hsa-miR-590-5p"
-  },
-  {
-    "key": "hsa-miR-30d-5p",
-    "label": "hsa-miR-30d-5p"
-  },
-  {
-    "key": "hsa-miR-455-3p",
-    "label": "hsa-miR-455-3p"
-  },
-  {
-    "key": "hsa-miR-204-5p",
-    "label": "hsa-miR-204-5p"
-  },
-  {
-    "key": "hsa-miR-376a-5p",
-    "label": "hsa-miR-376a-5p"
-  },
-  {
-    "key": "hsa-miR-342-5p",
-    "label": "hsa-miR-342-5p"
-  },
-  {
-    "key": "hsa-miR-6516-3p",
-    "label": "hsa-miR-6516-3p"
-  },
-  {
-    "key": "hsa-miR-548t-3p",
-    "label": "hsa-miR-548t-3p"
-  },
-  {
-    "key": "hsa-miR-485-5p",
-    "label": "hsa-miR-485-5p"
-  },
-  {
-    "key": "hsa-miR-3200-3p",
-    "label": "hsa-miR-3200-3p"
-  },
-  {
-    "key": "hsa-miR-106b-5p",
-    "label": "hsa-miR-106b-5p"
-  },
-  {
-    "key": "hsa-miR-548aa",
-    "label": "hsa-miR-548aa"
-  },
-  {
-    "key": "hsa-miR-409-3p",
-    "label": "hsa-miR-409-3p"
-  },
-  {
-    "key": "hsa-miR-143-3p",
-    "label": "hsa-miR-143-3p"
-  },
-  {
-    "key": "hsa-miR-29b-2-5p",
-    "label": "hsa-miR-29b-2-5p"
-  },
-  {
-    "key": "hsa-miR-379-5p",
-    "label": "hsa-miR-379-5p"
-  },
-  {
-    "key": "hsa-miR-423-3p",
-    "label": "hsa-miR-423-3p"
-  },
-  {
-    "key": "hsa-miR-12136",
-    "label": "hsa-miR-12136"
-  },
-  {
-    "key": "hsa-miR-181d-5p",
-    "label": "hsa-miR-181d-5p"
-  },
-  {
-    "key": "hsa-miR-95-3p",
-    "label": "hsa-miR-95-3p"
-  },
-  {
-    "key": "hsa-miR-338-5p",
-    "label": "hsa-miR-338-5p"
-  },
-  {
-    "key": "hsa-miR-504-5p",
-    "label": "hsa-miR-504-5p"
-  },
-  {
-    "key": "hsa-miR-1285-5p",
-    "label": "hsa-miR-1285-5p"
-  },
-  {
-    "key": "hsa-miR-876-5p",
-    "label": "hsa-miR-876-5p"
-  },
-  {
-    "key": "hsa-miR-454-3p",
-    "label": "hsa-miR-454-3p"
-  },
-  {
-    "key": "hsa-miR-148b-3p",
-    "label": "hsa-miR-148b-3p"
-  },
-  {
-    "key": "hsa-miR-15a-5p",
-    "label": "hsa-miR-15a-5p"
-  },
-  {
-    "key": "hsa-miR-218-5p",
-    "label": "hsa-miR-218-5p"
-  },
-  {
-    "key": "hsa-miR-7704",
-    "label": "hsa-miR-7704"
+    "key": "hsa-miR-195-5p",
+    "label": "hsa-miR-195-5p"
   },
   {
     "key": "hsa-miR-197-3p",
     "label": "hsa-miR-197-3p"
   },
   {
-    "key": "hsa-miR-136-5p",
-    "label": "hsa-miR-136-5p"
+    "key": "hsa-miR-1972",
+    "label": "hsa-miR-1972"
+  },
+  {
+    "key": "hsa-miR-19a-3p",
+    "label": "hsa-miR-19a-3p"
+  },
+  {
+    "key": "hsa-miR-19b-3p",
+    "label": "hsa-miR-19b-3p"
+  },
+  {
+    "key": "hsa-miR-203a-3p",
+    "label": "hsa-miR-203a-3p"
+  },
+  {
+    "key": "hsa-miR-204-5p",
+    "label": "hsa-miR-204-5p"
+  },
+  {
+    "key": "hsa-miR-20a-5p",
+    "label": "hsa-miR-20a-5p"
+  },
+  {
+    "key": "hsa-miR-21-5p",
+    "label": "hsa-miR-21-5p"
+  },
+  {
+    "key": "hsa-miR-210-3p",
+    "label": "hsa-miR-210-3p"
+  },
+  {
+    "key": "hsa-miR-218-5p",
+    "label": "hsa-miR-218-5p"
+  },
+  {
+    "key": "hsa-miR-219a-2-3p",
+    "label": "hsa-miR-219a-2-3p"
+  },
+  {
+    "key": "hsa-miR-219a-5p",
+    "label": "hsa-miR-219a-5p"
+  },
+  {
+    "key": "hsa-miR-22-3p",
+    "label": "hsa-miR-22-3p"
+  },
+  {
+    "key": "hsa-miR-22-5p",
+    "label": "hsa-miR-22-5p"
+  },
+  {
+    "key": "hsa-miR-221-3p",
+    "label": "hsa-miR-221-3p"
+  },
+  {
+    "key": "hsa-miR-222-3p",
+    "label": "hsa-miR-222-3p"
+  },
+  {
+    "key": "hsa-miR-223-3p",
+    "label": "hsa-miR-223-3p"
+  },
+  {
+    "key": "hsa-miR-23a-3p",
+    "label": "hsa-miR-23a-3p"
+  },
+  {
+    "key": "hsa-miR-23b-3p",
+    "label": "hsa-miR-23b-3p"
+  },
+  {
+    "key": "hsa-miR-24-3p",
+    "label": "hsa-miR-24-3p"
+  },
+  {
+    "key": "hsa-miR-25-3p",
+    "label": "hsa-miR-25-3p"
+  },
+  {
+    "key": "hsa-miR-26a-5p",
+    "label": "hsa-miR-26a-5p"
+  },
+  {
+    "key": "hsa-miR-26b-5p",
+    "label": "hsa-miR-26b-5p"
+  },
+  {
+    "key": "hsa-miR-27a-3p",
+    "label": "hsa-miR-27a-3p"
+  },
+  {
+    "key": "hsa-miR-27b-3p",
+    "label": "hsa-miR-27b-3p"
   },
   {
     "key": "hsa-miR-28-3p",
     "label": "hsa-miR-28-3p"
+  },
+  {
+    "key": "hsa-miR-28-5p",
+    "label": "hsa-miR-28-5p"
+  },
+  {
+    "key": "hsa-miR-299-5p",
+    "label": "hsa-miR-299-5p"
+  },
+  {
+    "key": "hsa-miR-29a-3p",
+    "label": "hsa-miR-29a-3p"
+  },
+  {
+    "key": "hsa-miR-29a-5p",
+    "label": "hsa-miR-29a-5p"
+  },
+  {
+    "key": "hsa-miR-29b-2-5p",
+    "label": "hsa-miR-29b-2-5p"
+  },
+  {
+    "key": "hsa-miR-29b-3p",
+    "label": "hsa-miR-29b-3p"
+  },
+  {
+    "key": "hsa-miR-29c-3p",
+    "label": "hsa-miR-29c-3p"
+  },
+  {
+    "key": "hsa-miR-29c-5p",
+    "label": "hsa-miR-29c-5p"
+  },
+  {
+    "key": "hsa-miR-301a-3p",
+    "label": "hsa-miR-301a-3p"
+  },
+  {
+    "key": "hsa-miR-301b-3p",
+    "label": "hsa-miR-301b-3p"
+  },
+  {
+    "key": "hsa-miR-30a-3p",
+    "label": "hsa-miR-30a-3p"
+  },
+  {
+    "key": "hsa-miR-30a-5p",
+    "label": "hsa-miR-30a-5p"
+  },
+  {
+    "key": "hsa-miR-30b-5p",
+    "label": "hsa-miR-30b-5p"
+  },
+  {
+    "key": "hsa-miR-30c-5p",
+    "label": "hsa-miR-30c-5p"
+  },
+  {
+    "key": "hsa-miR-30d-5p",
+    "label": "hsa-miR-30d-5p"
+  },
+  {
+    "key": "hsa-miR-30e-3p",
+    "label": "hsa-miR-30e-3p"
+  },
+  {
+    "key": "hsa-miR-30e-5p",
+    "label": "hsa-miR-30e-5p"
+  },
+  {
+    "key": "hsa-miR-31-3p",
+    "label": "hsa-miR-31-3p"
+  },
+  {
+    "key": "hsa-miR-31-5p",
+    "label": "hsa-miR-31-5p"
+  },
+  {
+    "key": "hsa-miR-3135b",
+    "label": "hsa-miR-3135b"
+  },
+  {
+    "key": "hsa-miR-32-5p",
+    "label": "hsa-miR-32-5p"
+  },
+  {
+    "key": "hsa-miR-3200-3p",
+    "label": "hsa-miR-3200-3p"
+  },
+  {
+    "key": "hsa-miR-320a-3p",
+    "label": "hsa-miR-320a-3p"
+  },
+  {
+    "key": "hsa-miR-320b",
+    "label": "hsa-miR-320b"
+  },
+  {
+    "key": "hsa-miR-323a-3p",
+    "label": "hsa-miR-323a-3p"
+  },
+  {
+    "key": "hsa-miR-324-5p",
+    "label": "hsa-miR-324-5p"
+  },
+  {
+    "key": "hsa-miR-326",
+    "label": "hsa-miR-326"
+  },
+  {
+    "key": "hsa-miR-328-3p",
+    "label": "hsa-miR-328-3p"
+  },
+  {
+    "key": "hsa-miR-329-3p",
+    "label": "hsa-miR-329-3p"
+  },
+  {
+    "key": "hsa-miR-330-3p",
+    "label": "hsa-miR-330-3p"
+  },
+  {
+    "key": "hsa-miR-331-3p",
+    "label": "hsa-miR-331-3p"
+  },
+  {
+    "key": "hsa-miR-335-5p",
+    "label": "hsa-miR-335-5p"
+  },
+  {
+    "key": "hsa-miR-338-3p",
+    "label": "hsa-miR-338-3p"
+  },
+  {
+    "key": "hsa-miR-338-5p",
+    "label": "hsa-miR-338-5p"
+  },
+  {
+    "key": "hsa-miR-339-3p",
+    "label": "hsa-miR-339-3p"
+  },
+  {
+    "key": "hsa-miR-33a-3p",
+    "label": "hsa-miR-33a-3p"
+  },
+  {
+    "key": "hsa-miR-33a-5p",
+    "label": "hsa-miR-33a-5p"
+  },
+  {
+    "key": "hsa-miR-33b-5p",
+    "label": "hsa-miR-33b-5p"
+  },
+  {
+    "key": "hsa-miR-340-3p",
+    "label": "hsa-miR-340-3p"
+  },
+  {
+    "key": "hsa-miR-340-5p",
+    "label": "hsa-miR-340-5p"
+  },
+  {
+    "key": "hsa-miR-342-3p",
+    "label": "hsa-miR-342-3p"
+  },
+  {
+    "key": "hsa-miR-342-5p",
+    "label": "hsa-miR-342-5p"
+  },
+  {
+    "key": "hsa-miR-346",
+    "label": "hsa-miR-346"
+  },
+  {
+    "key": "hsa-miR-34a-3p",
+    "label": "hsa-miR-34a-3p"
+  },
+  {
+    "key": "hsa-miR-34a-5p",
+    "label": "hsa-miR-34a-5p"
+  },
+  {
+    "key": "hsa-miR-361-3p",
+    "label": "hsa-miR-361-3p"
+  },
+  {
+    "key": "hsa-miR-361-5p",
+    "label": "hsa-miR-361-5p"
+  },
+  {
+    "key": "hsa-miR-3613-5p",
+    "label": "hsa-miR-3613-5p"
+  },
+  {
+    "key": "hsa-miR-362-3p",
+    "label": "hsa-miR-362-3p"
+  },
+  {
+    "key": "hsa-miR-3648",
+    "label": "hsa-miR-3648"
+  },
+  {
+    "key": "hsa-miR-3651",
+    "label": "hsa-miR-3651"
   },
   {
     "key": "hsa-miR-365a-3p",
@@ -640,583 +732,411 @@
     "label": "hsa-miR-365b-3p"
   },
   {
-    "key": "hsa-miR-15b-5p",
-    "label": "hsa-miR-15b-5p"
+    "key": "hsa-miR-369-3p",
+    "label": "hsa-miR-369-3p"
   },
   {
-    "key": "hsa-miR-598-3p",
-    "label": "hsa-miR-598-3p"
-  },
-  {
-    "key": "hsa-miR-299-5p",
-    "label": "hsa-miR-299-5p"
-  },
-  {
-    "key": "hsa-miR-320b",
-    "label": "hsa-miR-320b"
-  },
-  {
-    "key": "hsa-miR-135a-5p",
-    "label": "hsa-miR-135a-5p"
-  },
-  {
-    "key": "hsa-miR-30e-3p",
-    "label": "hsa-miR-30e-3p"
-  },
-  {
-    "key": "hsa-miR-329-3p",
-    "label": "hsa-miR-329-3p"
-  },
-  {
-    "key": "hsa-miR-136-3p",
-    "label": "hsa-miR-136-3p"
-  },
-  {
-    "key": "hsa-miR-885-5p",
-    "label": "hsa-miR-885-5p"
-  },
-  {
-    "key": "hsa-miR-127-3p",
-    "label": "hsa-miR-127-3p"
-  },
-  {
-    "key": "hsa-miR-33b-5p",
-    "label": "hsa-miR-33b-5p"
-  },
-  {
-    "key": "hsa-miR-491-5p",
-    "label": "hsa-miR-491-5p"
-  },
-  {
-    "key": "hsa-miR-4284",
-    "label": "hsa-miR-4284"
-  },
-  {
-    "key": "hsa-miR-20a-5p",
-    "label": "hsa-miR-20a-5p"
-  },
-  {
-    "key": "hsa-miR-1296-5p",
-    "label": "hsa-miR-1296-5p"
-  },
-  {
-    "key": "hsa-miR-382-5p",
-    "label": "hsa-miR-382-5p"
-  },
-  {
-    "key": "hsa-miR-32-5p",
-    "label": "hsa-miR-32-5p"
-  },
-  {
-    "key": "hsa-miR-195-5p",
-    "label": "hsa-miR-195-5p"
-  },
-  {
-    "key": "hsa-let-7d-3p",
-    "label": "hsa-let-7d-3p"
-  },
-  {
-    "key": "hsa-miR-4800-5p",
-    "label": "hsa-miR-4800-5p"
-  },
-  {
-    "key": "hsa-miR-769-5p",
-    "label": "hsa-miR-769-5p"
-  },
-  {
-    "key": "hsa-miR-1260b",
-    "label": "hsa-miR-1260b"
-  },
-  {
-    "key": "hsa-miR-497-5p",
-    "label": "hsa-miR-497-5p"
-  },
-  {
-    "key": "hsa-miR-186-5p",
-    "label": "hsa-miR-186-5p"
-  },
-  {
-    "key": "hsa-miR-376c-3p",
-    "label": "hsa-miR-376c-3p"
-  },
-  {
-    "key": "hsa-miR-151a-3p",
-    "label": "hsa-miR-151a-3p"
-  },
-  {
-    "key": "hsa-miR-150-5p",
-    "label": "hsa-miR-150-5p"
-  },
-  {
-    "key": "hsa-miR-484",
-    "label": "hsa-miR-484"
-  },
-  {
-    "key": "hsa-miR-29c-5p",
-    "label": "hsa-miR-29c-5p"
-  },
-  {
-    "key": "hsa-miR-27a-3p",
-    "label": "hsa-miR-27a-3p"
-  },
-  {
-    "key": "hsa-miR-26b-5p",
-    "label": "hsa-miR-26b-5p"
-  },
-  {
-    "key": "hsa-miR-361-5p",
-    "label": "hsa-miR-361-5p"
-  },
-  {
-    "key": "hsa-miR-30e-5p",
-    "label": "hsa-miR-30e-5p"
-  },
-  {
-    "key": "hsa-miR-7-1-3p",
-    "label": "hsa-miR-7-1-3p"
-  },
-  {
-    "key": "hsa-miR-495-3p",
-    "label": "hsa-miR-495-3p"
-  },
-  {
-    "key": "hsa-miR-27b-3p",
-    "label": "hsa-miR-27b-3p"
-  },
-  {
-    "key": "hsa-miR-425-5p",
-    "label": "hsa-miR-425-5p"
-  },
-  {
-    "key": "hsa-miR-149-5p",
-    "label": "hsa-miR-149-5p"
-  },
-  {
-    "key": "hsa-miR-30b-5p",
-    "label": "hsa-miR-30b-5p"
-  },
-  {
-    "key": "hsa-miR-151b",
-    "label": "hsa-miR-151b"
-  },
-  {
-    "key": "hsa-miR-377-3p",
-    "label": "hsa-miR-377-3p"
-  },
-  {
-    "key": "hsa-miR-340-5p",
-    "label": "hsa-miR-340-5p"
-  },
-  {
-    "key": "hsa-miR-10395-3p",
-    "label": "hsa-miR-10395-3p"
-  },
-  {
-    "key": "hsa-miR-146a-5p",
-    "label": "hsa-miR-146a-5p"
-  },
-  {
-    "key": "hsa-miR-5585-3p",
-    "label": "hsa-miR-5585-3p"
-  },
-  {
-    "key": "hsa-miR-874-3p",
-    "label": "hsa-miR-874-3p"
-  },
-  {
-    "key": "hsa-miR-708-5p",
-    "label": "hsa-miR-708-5p"
-  },
-  {
-    "key": "hsa-miR-487b-3p",
-    "label": "hsa-miR-487b-3p"
-  },
-  {
-    "key": "hsa-miR-320a-3p",
-    "label": "hsa-miR-320a-3p"
-  },
-  {
-    "key": "hsa-miR-126-5p",
-    "label": "hsa-miR-126-5p"
-  },
-  {
-    "key": "hsa-miR-153-3p",
-    "label": "hsa-miR-153-3p"
-  },
-  {
-    "key": "hsa-miR-324-5p",
-    "label": "hsa-miR-324-5p"
-  },
-  {
-    "key": "hsa-miR-146b-5p",
-    "label": "hsa-miR-146b-5p"
-  },
-  {
-    "key": "hsa-miR-126-3p",
-    "label": "hsa-miR-126-3p"
-  },
-  {
-    "key": "hsa-miR-1273h-5p",
-    "label": "hsa-miR-1273h-5p"
-  },
-  {
-    "key": "hsa-miR-935",
-    "label": "hsa-miR-935"
-  },
-  {
-    "key": "hsa-miR-93-5p",
-    "label": "hsa-miR-93-5p"
-  },
-  {
-    "key": "hsa-miR-323a-3p",
-    "label": "hsa-miR-323a-3p"
-  },
-  {
-    "key": "hsa-miR-664a-3p",
-    "label": "hsa-miR-664a-3p"
-  },
-  {
-    "key": "hsa-miR-140-5p",
-    "label": "hsa-miR-140-5p"
-  },
-  {
-    "key": "hsa-miR-100-5p",
-    "label": "hsa-miR-100-5p"
-  },
-  {
-    "key": "hsa-miR-92b-3p",
-    "label": "hsa-miR-92b-3p"
-  },
-  {
-    "key": "hsa-miR-30c-5p",
-    "label": "hsa-miR-30c-5p"
-  },
-  {
-    "key": "hsa-miR-17-5p",
-    "label": "hsa-miR-17-5p"
-  },
-  {
-    "key": "hsa-miR-664b-3p",
-    "label": "hsa-miR-664b-3p"
-  },
-  {
-    "key": "hsa-miR-1275",
-    "label": "hsa-miR-1275"
-  },
-  {
-    "key": "hsa-miR-33a-5p",
-    "label": "hsa-miR-33a-5p"
-  },
-  {
-    "key": "hsa-miR-26a-5p",
-    "label": "hsa-miR-26a-5p"
+    "key": "hsa-miR-369-5p",
+    "label": "hsa-miR-369-5p"
   },
   {
     "key": "hsa-miR-374a-5p",
     "label": "hsa-miR-374a-5p"
   },
   {
-    "key": "hsa-miR-744-5p",
-    "label": "hsa-miR-744-5p"
+    "key": "hsa-miR-374b-5p",
+    "label": "hsa-miR-374b-5p"
   },
   {
-    "key": "hsa-miR-129-2-3p",
-    "label": "hsa-miR-129-2-3p"
+    "key": "hsa-miR-376a-5p",
+    "label": "hsa-miR-376a-5p"
   },
   {
-    "key": "hsa-miR-132-3p",
-    "label": "hsa-miR-132-3p"
+    "key": "hsa-miR-376c-3p",
+    "label": "hsa-miR-376c-3p"
   },
   {
-    "key": "hsa-miR-28-5p",
-    "label": "hsa-miR-28-5p"
+    "key": "hsa-miR-377-3p",
+    "label": "hsa-miR-377-3p"
   },
   {
-    "key": "hsa-miR-4286",
-    "label": "hsa-miR-4286"
+    "key": "hsa-miR-378a-3p",
+    "label": "hsa-miR-378a-3p"
   },
   {
-    "key": "hsa-miR-219a-2-3p",
-    "label": "hsa-miR-219a-2-3p"
+    "key": "hsa-miR-379-5p",
+    "label": "hsa-miR-379-5p"
   },
   {
-    "key": "hsa-miR-190a-5p",
-    "label": "hsa-miR-190a-5p"
+    "key": "hsa-miR-382-5p",
+    "label": "hsa-miR-382-5p"
   },
   {
-    "key": "hsa-miR-130a-3p",
-    "label": "hsa-miR-130a-3p"
+    "key": "hsa-miR-383-5p",
+    "label": "hsa-miR-383-5p"
   },
   {
-    "key": "hsa-miR-140-3p",
-    "label": "hsa-miR-140-3p"
+    "key": "hsa-miR-409-3p",
+    "label": "hsa-miR-409-3p"
   },
   {
-    "key": "hsa-miR-92a-3p",
-    "label": "hsa-miR-92a-3p"
+    "key": "hsa-miR-421",
+    "label": "hsa-miR-421"
   },
   {
-    "key": "hsa-miR-139-5p",
-    "label": "hsa-miR-139-5p"
-  },
-  {
-    "key": "hsa-miR-328-3p",
-    "label": "hsa-miR-328-3p"
-  },
-  {
-    "key": "hsa-miR-25-3p",
-    "label": "hsa-miR-25-3p"
-  },
-  {
-    "key": "hsa-miR-107",
-    "label": "hsa-miR-107"
-  },
-  {
-    "key": "hsa-miR-451a",
-    "label": "hsa-miR-451a"
-  },
-  {
-    "key": "hsa-miR-185-5p",
-    "label": "hsa-miR-185-5p"
-  },
-  {
-    "key": "hsa-miR-1246",
-    "label": "hsa-miR-1246"
-  },
-  {
-    "key": "hsa-miR-1972",
-    "label": "hsa-miR-1972"
-  },
-  {
-    "key": "hsa-miR-181c-5p",
-    "label": "hsa-miR-181c-5p"
-  },
-  {
-    "key": "hsa-miR-301a-3p",
-    "label": "hsa-miR-301a-3p"
+    "key": "hsa-miR-423-3p",
+    "label": "hsa-miR-423-3p"
   },
   {
     "key": "hsa-miR-423-5p",
     "label": "hsa-miR-423-5p"
   },
   {
-    "key": "hsa-miR-374b-5p",
-    "label": "hsa-miR-374b-5p"
-  },
-  {
-    "key": "hsa-miR-330-3p",
-    "label": "hsa-miR-330-3p"
-  },
-  {
-    "key": "hsa-miR-98-5p",
-    "label": "hsa-miR-98-5p"
-  },
-  {
-    "key": "hsa-miR-181b-5p",
-    "label": "hsa-miR-181b-5p"
-  },
-  {
-    "key": "hsa-miR-22-3p",
-    "label": "hsa-miR-22-3p"
-  },
-  {
-    "key": "hsa-miR-335-5p",
-    "label": "hsa-miR-335-5p"
-  },
-  {
-    "key": "hsa-miR-99a-5p",
-    "label": "hsa-miR-99a-5p"
-  },
-  {
-    "key": "hsa-miR-138-5p",
-    "label": "hsa-miR-138-5p"
-  },
-  {
-    "key": "hsa-miR-151a-5p",
-    "label": "hsa-miR-151a-5p"
-  },
-  {
-    "key": "hsa-miR-222-3p",
-    "label": "hsa-miR-222-3p"
-  },
-  {
-    "key": "hsa-miR-19a-3p",
-    "label": "hsa-miR-19a-3p"
-  },
-  {
-    "key": "hsa-miR-331-3p",
-    "label": "hsa-miR-331-3p"
-  },
-  {
-    "key": "hsa-miR-574-3p",
-    "label": "hsa-miR-574-3p"
-  },
-  {
-    "key": "hsa-miR-99b-5p",
-    "label": "hsa-miR-99b-5p"
-  },
-  {
     "key": "hsa-miR-424-5p",
     "label": "hsa-miR-424-5p"
   },
   {
-    "key": "hsa-miR-221-3p",
-    "label": "hsa-miR-221-3p"
+    "key": "hsa-miR-425-3p",
+    "label": "hsa-miR-425-3p"
   },
   {
-    "key": "hsa-miR-137-3p",
-    "label": "hsa-miR-137-3p"
+    "key": "hsa-miR-425-5p",
+    "label": "hsa-miR-425-5p"
   },
   {
-    "key": "hsa-let-7i-5p",
-    "label": "hsa-let-7i-5p"
+    "key": "hsa-miR-4284",
+    "label": "hsa-miR-4284"
   },
   {
-    "key": "hsa-miR-34a-5p",
-    "label": "hsa-miR-34a-5p"
+    "key": "hsa-miR-4286",
+    "label": "hsa-miR-4286"
   },
   {
-    "key": "hsa-miR-142-5p",
-    "label": "hsa-miR-142-5p"
+    "key": "hsa-miR-432-5p",
+    "label": "hsa-miR-432-5p"
   },
   {
-    "key": "hsa-miR-9-3p",
-    "label": "hsa-miR-9-3p"
-  },
-  {
-    "key": "hsa-miR-103a-3p",
-    "label": "hsa-miR-103a-3p"
-  },
-  {
-    "key": "hsa-miR-342-3p",
-    "label": "hsa-miR-342-3p"
-  },
-  {
-    "key": "hsa-miR-23b-3p",
-    "label": "hsa-miR-23b-3p"
-  },
-  {
-    "key": "hsa-miR-16-5p",
-    "label": "hsa-miR-16-5p"
-  },
-  {
-    "key": "hsa-let-7d-5p",
-    "label": "hsa-let-7d-5p"
-  },
-  {
-    "key": "hsa-miR-23a-3p",
-    "label": "hsa-miR-23a-3p"
-  },
-  {
-    "key": "hsa-miR-101-3p",
-    "label": "hsa-miR-101-3p"
-  },
-  {
-    "key": "hsa-let-7e-5p",
-    "label": "hsa-let-7e-5p"
-  },
-  {
-    "key": "hsa-miR-7-5p",
-    "label": "hsa-miR-7-5p"
-  },
-  {
-    "key": "hsa-miR-24-3p",
-    "label": "hsa-miR-24-3p"
-  },
-  {
-    "key": "hsa-miR-338-3p",
-    "label": "hsa-miR-338-3p"
-  },
-  {
-    "key": "hsa-miR-19b-3p",
-    "label": "hsa-miR-19b-3p"
-  },
-  {
-    "key": "hsa-miR-181a-5p",
-    "label": "hsa-miR-181a-5p"
-  },
-  {
-    "key": "hsa-miR-9-5p",
-    "label": "hsa-miR-9-5p"
-  },
-  {
-    "key": "hsa-miR-125a-5p",
-    "label": "hsa-miR-125a-5p"
-  },
-  {
-    "key": "hsa-miR-142-3p",
-    "label": "hsa-miR-142-3p"
-  },
-  {
-    "key": "hsa-miR-128-3p",
-    "label": "hsa-miR-128-3p"
-  },
-  {
-    "key": "hsa-miR-29c-3p",
-    "label": "hsa-miR-29c-3p"
-  },
-  {
-    "key": "hsa-miR-191-5p",
-    "label": "hsa-miR-191-5p"
-  },
-  {
-    "key": "hsa-miR-29a-3p",
-    "label": "hsa-miR-29a-3p"
-  },
-  {
-    "key": "hsa-miR-223-3p",
-    "label": "hsa-miR-223-3p"
+    "key": "hsa-miR-4449",
+    "label": "hsa-miR-4449"
   },
   {
     "key": "hsa-miR-4454",
     "label": "hsa-miR-4454"
   },
   {
-    "key": "hsa-miR-8485",
-    "label": "hsa-miR-8485"
+    "key": "hsa-miR-4484",
+    "label": "hsa-miR-4484"
   },
   {
-    "key": "hsa-let-7g-5p",
-    "label": "hsa-let-7g-5p"
+    "key": "hsa-miR-4485-3p",
+    "label": "hsa-miR-4485-3p"
   },
   {
-    "key": "hsa-let-7c-5p",
-    "label": "hsa-let-7c-5p"
+    "key": "hsa-miR-4485-5p",
+    "label": "hsa-miR-4485-5p"
   },
   {
-    "key": "hsa-let-7f-5p",
-    "label": "hsa-let-7f-5p"
+    "key": "hsa-miR-451a",
+    "label": "hsa-miR-451a"
   },
   {
-    "key": "hsa-let-7b-5p",
-    "label": "hsa-let-7b-5p"
+    "key": "hsa-miR-454-3p",
+    "label": "hsa-miR-454-3p"
   },
   {
-    "key": "hsa-miR-21-5p",
-    "label": "hsa-miR-21-5p"
+    "key": "hsa-miR-455-3p",
+    "label": "hsa-miR-455-3p"
+  },
+  {
+    "key": "hsa-miR-4800-5p",
+    "label": "hsa-miR-4800-5p"
+  },
+  {
+    "key": "hsa-miR-484",
+    "label": "hsa-miR-484"
+  },
+  {
+    "key": "hsa-miR-485-3p",
+    "label": "hsa-miR-485-3p"
+  },
+  {
+    "key": "hsa-miR-485-5p",
+    "label": "hsa-miR-485-5p"
+  },
+  {
+    "key": "hsa-miR-487b-3p",
+    "label": "hsa-miR-487b-3p"
+  },
+  {
+    "key": "hsa-miR-488-3p",
+    "label": "hsa-miR-488-3p"
+  },
+  {
+    "key": "hsa-miR-491-5p",
+    "label": "hsa-miR-491-5p"
+  },
+  {
+    "key": "hsa-miR-494-3p",
+    "label": "hsa-miR-494-3p"
+  },
+  {
+    "key": "hsa-miR-495-3p",
+    "label": "hsa-miR-495-3p"
+  },
+  {
+    "key": "hsa-miR-497-5p",
+    "label": "hsa-miR-497-5p"
+  },
+  {
+    "key": "hsa-miR-504-5p",
+    "label": "hsa-miR-504-5p"
+  },
+  {
+    "key": "hsa-miR-505-3p",
+    "label": "hsa-miR-505-3p"
+  },
+  {
+    "key": "hsa-miR-505-5p",
+    "label": "hsa-miR-505-5p"
+  },
+  {
+    "key": "hsa-miR-5100",
+    "label": "hsa-miR-5100"
+  },
+  {
+    "key": "hsa-miR-532-3p",
+    "label": "hsa-miR-532-3p"
+  },
+  {
+    "key": "hsa-miR-532-5p",
+    "label": "hsa-miR-532-5p"
+  },
+  {
+    "key": "hsa-miR-539-3p",
+    "label": "hsa-miR-539-3p"
+  },
+  {
+    "key": "hsa-miR-543",
+    "label": "hsa-miR-543"
+  },
+  {
+    "key": "hsa-miR-548aa",
+    "label": "hsa-miR-548aa"
+  },
+  {
+    "key": "hsa-miR-548aj-5p",
+    "label": "hsa-miR-548aj-5p"
+  },
+  {
+    "key": "hsa-miR-548c-5p",
+    "label": "hsa-miR-548c-5p"
+  },
+  {
+    "key": "hsa-miR-548h-3p",
+    "label": "hsa-miR-548h-3p"
+  },
+  {
+    "key": "hsa-miR-548o-5p",
+    "label": "hsa-miR-548o-5p"
+  },
+  {
+    "key": "hsa-miR-548t-3p",
+    "label": "hsa-miR-548t-3p"
+  },
+  {
+    "key": "hsa-miR-548z",
+    "label": "hsa-miR-548z"
+  },
+  {
+    "key": "hsa-miR-5585-3p",
+    "label": "hsa-miR-5585-3p"
+  },
+  {
+    "key": "hsa-miR-5684",
+    "label": "hsa-miR-5684"
+  },
+  {
+    "key": "hsa-miR-5701",
+    "label": "hsa-miR-5701"
+  },
+  {
+    "key": "hsa-miR-574-3p",
+    "label": "hsa-miR-574-3p"
+  },
+  {
+    "key": "hsa-miR-574-5p",
+    "label": "hsa-miR-574-5p"
+  },
+  {
+    "key": "hsa-miR-577",
+    "label": "hsa-miR-577"
+  },
+  {
+    "key": "hsa-miR-590-3p",
+    "label": "hsa-miR-590-3p"
+  },
+  {
+    "key": "hsa-miR-590-5p",
+    "label": "hsa-miR-590-5p"
+  },
+  {
+    "key": "hsa-miR-598-3p",
+    "label": "hsa-miR-598-3p"
   },
   {
     "key": "hsa-miR-619-5p",
     "label": "hsa-miR-619-5p"
   },
   {
-    "key": "hsa-miR-29b-3p",
-    "label": "hsa-miR-29b-3p"
+    "key": "hsa-miR-625-3p",
+    "label": "hsa-miR-625-3p"
   },
   {
-    "key": "hsa-miR-125b-5p",
-    "label": "hsa-miR-125b-5p"
+    "key": "hsa-miR-625-5p",
+    "label": "hsa-miR-625-5p"
   },
   {
-    "key": "hsa-miR-219a-5p",
-    "label": "hsa-miR-219a-5p"
+    "key": "hsa-miR-628-5p",
+    "label": "hsa-miR-628-5p"
   },
   {
-    "key": "hsa-let-7a-5p",
-    "label": "hsa-let-7a-5p"
+    "key": "hsa-miR-6516-3p",
+    "label": "hsa-miR-6516-3p"
   },
   {
-    "key": "hsa-miR-124-3p",
-    "label": "hsa-miR-124-3p"
+    "key": "hsa-miR-655-3p",
+    "label": "hsa-miR-655-3p"
+  },
+  {
+    "key": "hsa-miR-656-3p",
+    "label": "hsa-miR-656-3p"
+  },
+  {
+    "key": "hsa-miR-660-5p",
+    "label": "hsa-miR-660-5p"
+  },
+  {
+    "key": "hsa-miR-663a",
+    "label": "hsa-miR-663a"
+  },
+  {
+    "key": "hsa-miR-663b",
+    "label": "hsa-miR-663b"
+  },
+  {
+    "key": "hsa-miR-664a-3p",
+    "label": "hsa-miR-664a-3p"
+  },
+  {
+    "key": "hsa-miR-664b-3p",
+    "label": "hsa-miR-664b-3p"
+  },
+  {
+    "key": "hsa-miR-6724-5p",
+    "label": "hsa-miR-6724-5p"
+  },
+  {
+    "key": "hsa-miR-6803-5p",
+    "label": "hsa-miR-6803-5p"
+  },
+  {
+    "key": "hsa-miR-7-1-3p",
+    "label": "hsa-miR-7-1-3p"
+  },
+  {
+    "key": "hsa-miR-7-5p",
+    "label": "hsa-miR-7-5p"
+  },
+  {
+    "key": "hsa-miR-708-5p",
+    "label": "hsa-miR-708-5p"
+  },
+  {
+    "key": "hsa-miR-744-5p",
+    "label": "hsa-miR-744-5p"
+  },
+  {
+    "key": "hsa-miR-769-3p",
+    "label": "hsa-miR-769-3p"
+  },
+  {
+    "key": "hsa-miR-769-5p",
+    "label": "hsa-miR-769-5p"
+  },
+  {
+    "key": "hsa-miR-7704",
+    "label": "hsa-miR-7704"
+  },
+  {
+    "key": "hsa-miR-7851-3p",
+    "label": "hsa-miR-7851-3p"
+  },
+  {
+    "key": "hsa-miR-8485",
+    "label": "hsa-miR-8485"
+  },
+  {
+    "key": "hsa-miR-874-3p",
+    "label": "hsa-miR-874-3p"
+  },
+  {
+    "key": "hsa-miR-876-5p",
+    "label": "hsa-miR-876-5p"
+  },
+  {
+    "key": "hsa-miR-877-5p",
+    "label": "hsa-miR-877-5p"
+  },
+  {
+    "key": "hsa-miR-885-5p",
+    "label": "hsa-miR-885-5p"
+  },
+  {
+    "key": "hsa-miR-887-3p",
+    "label": "hsa-miR-887-3p"
+  },
+  {
+    "key": "hsa-miR-9-3p",
+    "label": "hsa-miR-9-3p"
+  },
+  {
+    "key": "hsa-miR-9-5p",
+    "label": "hsa-miR-9-5p"
+  },
+  {
+    "key": "hsa-miR-92a-3p",
+    "label": "hsa-miR-92a-3p"
+  },
+  {
+    "key": "hsa-miR-92b-3p",
+    "label": "hsa-miR-92b-3p"
+  },
+  {
+    "key": "hsa-miR-93-5p",
+    "label": "hsa-miR-93-5p"
+  },
+  {
+    "key": "hsa-miR-935",
+    "label": "hsa-miR-935"
+  },
+  {
+    "key": "hsa-miR-95-3p",
+    "label": "hsa-miR-95-3p"
+  },
+  {
+    "key": "hsa-miR-98-5p",
+    "label": "hsa-miR-98-5p"
+  },
+  {
+    "key": "hsa-miR-99a-3p",
+    "label": "hsa-miR-99a-3p"
+  },
+  {
+    "key": "hsa-miR-99a-5p",
+    "label": "hsa-miR-99a-5p"
+  },
+  {
+    "key": "hsa-miR-99b-5p",
+    "label": "hsa-miR-99b-5p"
   }
 ]
