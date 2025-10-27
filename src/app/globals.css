@@ -140,3 +140,18 @@ button:active { transform: scale(0.96); }
   font-size: initial !important;
   line-height: initial !important;
 }
+/* ---- App-wide zoom (like browser zoom) ---- */
+.zoom-70 {
+  transform: scale(0.70);
+  transform-origin: top center;
+  /* פיצוי על הסקייל כדי שהרוחב הוויזואלי יישאר מלא */
+  width: calc(100% / 0.70);
+}
+
+/* במסכים קטנים – אל תפעיל זום כדי לא למעוך תוכן נייד */
+@media (max-width: 1024px) {
+  .zoom-70 {
+    transform: none;
+    width: auto;
+  }
+}

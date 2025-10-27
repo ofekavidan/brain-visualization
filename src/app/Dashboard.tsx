@@ -121,7 +121,7 @@ export default function Dashboard() {
 
   /* --- Render --- */
   return (
-    <div className="app-text mx-auto max-w-[1400px] px-6 py-8">
+    <div className="zoom-70 mx-auto max-w-[1400px] px-6 py-8">
       {/* Top header text only */}
       <header className="flex justify-center mb-4">
         <h1 className="text-2xl font-bold">Main Page (1)</h1>
