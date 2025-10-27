@@ -52,11 +52,12 @@
   --ring: oklch(0.705 0.015 286.067);
 }
 
-/* ==== Global responsive “90% zoom” via root font-size ==== */
-/* כל הטקסט שמוגדר ב-rem יקטן/יגדל אוטומטית, הגרפים יוחרגו בהמשך */
-html { font-size: 100%; }                    /* base: 16px */
-@media (min-width: 1280px) { html { font-size: 93%; } }  /* xl */
-@media (min-width: 1536px) { html { font-size: 90%; } }  /* 2xl ≈ 90% */
+/* ==== Global responsive zoom via root font-size ==== */
+/* מובייל רגיל 100%, דסקטופ ומעלה ~80% */
+html { font-size: 100%; }                 /* base 16px */
+@media (min-width: 1024px) {              /* ≥ LG */
+  html { font-size: 80%; }                /* ~12.8px rem-base */
+}
 
 .dark {
   --background: oklch(0.141 0.005 285.823);
@@ -84,8 +85,7 @@ html { font-size: 100%; }                    /* base: 16px */
     @apply border-border outline-ring/50;
   }
 
-  html,
-  body {
+  html, body {
     @apply bg-background text-foreground;
     overflow-x: hidden;
     overflow-y: auto;
@@ -94,7 +94,7 @@ html { font-size: 100%; }                    /* base: 16px */
   }
 }
 
-/* החרגת Plotly מה”זום” (שומר על גודל כיתוב בגרפים) */
+/* החרגת Plotly מהשפעת שינוי ה-rem (שומר על גודל טקסט בגרפים) */
 .js-plotly-plot,
 .plotly,
 .js-plotly-plot *,
@@ -102,7 +102,9 @@ html { font-size: 100%; }                    /* base: 16px */
   font-size: initial !important;
 }
 
-body:has([data-slot="listbox"]) { overflow: hidden !important; }
+body:has([data-slot="listbox"]) {
+  overflow: hidden !important;
+}
 
 [data-slot="listbox"] {
   max-height: 300px !important;
@@ -111,32 +113,28 @@ body:has([data-slot="listbox"]) { overflow: hidden !important; }
   scrollbar-width: thin;
 }
 [data-slot="listbox"]::-webkit-scrollbar { width: 8px; }
-[data-slot="listbox"]::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 4px; }
-[data-slot="listbox"]::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.3); }
+[data-slot="listbox"]::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
+[data-slot="listbox"]::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
 
 [data-slot="popover"],
 .nextui-popover-content,
 .nextui-select-popover,
-[data-slot="base"] { overflow: visible !important; }
+[data-slot="base"] {
+  overflow: visible !important;
+}
 
-button { transition: transform .15s ease-in-out; }
+button { transition: transform 0.15s ease-in-out; }
 button:hover { transform: scale(1.015); }
 button:active { transform: scale(0.96); }
 
 #__next-route-announcer { display: none !important; }
-/* ==== FORCE BIGGER TYPOGRAPHY (exclude Plotly) ==== */
+
+/* (אופציונלי) הגדלת טיפוגרפיה לכל התוכן שאינו גרפים – עטוף את ה-root של העמוד ב-`app-text` אם תרצה להפעיל: */
 .app-text,
 .app-text * {
-  font-size: 22px !important;   /* תרגיש חופשי לשנות ל-24/26 כדי לבדוק */
+  font-size: 22px !important;
   line-height: 1.6 !important;
 }
-
-/* כותרות יישארו פרופורציונליות מעל הבסיס */
-.app-text h1 { font-size: 1.6em !important; font-weight: 700; }
-.app-text h2 { font-size: 1.4em !important; font-weight: 600; }
-.app-text h3 { font-size: 1.2em !important; font-weight: 600; }
-
-/* אל תשפיע על הגרפים של Plotly */
 .app-text .js-plotly-plot,
 .app-text .js-plotly-plot * {
   font-size: initial !important;

@@ -92,7 +92,7 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     xaxis: {
       automargin: true,
       tickangle: -25,
-      tickpadding: 8,
+      ticklabelposition: "outside",
     },
     yaxis: {
       title: { text: "Log(CPM)" },
