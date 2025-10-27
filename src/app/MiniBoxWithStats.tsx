@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { Layout } from "plotly.js";
+
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
 type Stat = {
@@ -14,7 +16,7 @@ type Stat = {
 
 type Props = {
   mir: string;
-  // שורת הספירות עבור ה-miR מהקובץ mirs_oligos_counts.csv
+  // counts row for the miR from mirs_oligos_counts.csv
   countsRow?: Record<string, number | string>;
   stat?: Stat;
 };
@@ -41,7 +43,6 @@ const abToFull: Record<string, keyof typeof palette> = {
 };
 
 export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
-  // אם עוד לא נטען הקובץ – הצג placeholder קל
   if (!countsRow) {
     return (
       <div className="rounded border bg-white/50 p-8 text-gray-500">
@@ -50,12 +51,12 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     );
   }
 
-  // זיהוי שם שדה ה-miR (בד״כ העמודה הראשונה)
+  // detect miR key (usually first col)
   const nameKey =
     Object.keys(countsRow).find((k) => k.toLowerCase().includes("mir")) ??
     Object.keys(countsRow)[0];
 
-  // חלוקה לקבוצות לפי סיומת הסמפלים
+  // group by sample suffix
   const groupVals: Record<string, number[]> = {};
   order.forEach((k) => (groupVals[k] = []));
 
@@ -63,14 +64,13 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     if (sample === nameKey) continue;
     if (typeof val !== "number") continue;
 
-    // דוגמאות לשמות: X123_NEUN, ABC_GFAP, ...
     const parts = sample.split("_");
     const abbr = parts[1]?.toUpperCase();
     const full = abToFull[abbr || ""] ?? undefined;
     if (full) groupVals[full].push(val);
   }
 
-  // בניית טרייסים – קופסה שקופה + נקודות (כמו seaborn: fill=False + stripplot)
+  // box + all points (transparent fill)
   const traces = order.map((ct) => ({
     type: "box" as const,
     name: ct,
@@ -85,10 +85,15 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     showlegend: false,
   }));
 
-  const layout: Partial<Plotly.Layout> = {
+  const layout: Partial<Layout> = {
     title: { text: mir },
-    margin: { l: 60, r: 10, t: 40, b: 80 },
-    xaxis: { tickangle: 30 },
+    // extra bottom room for long label "Oligodendrocytes"
+    margin: { l: 60, r: 10, t: 40, b: 190 },
+    xaxis: {
+      automargin: true,
+      tickangle: -25,
+      tickpadding: 8,
+    },
     yaxis: {
       title: { text: "Log(CPM)" },
       zeroline: false,
@@ -96,19 +101,18 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
       ticks: "outside",
       ticklen: 5,
     },
-    // פרופורציות (ריבוע יותר) + גובה נוח
     autosize: true,
     height: 520,
   };
 
   return (
     <div className="grid grid-cols-12 gap-4 items-start">
-      {/* גרף – מעט יותר "ריבועי" */}
+      {/* Plot */}
       <div className="col-span-12 lg:col-span-8 rounded border bg-white">
         <Plot data={traces as any} layout={layout} style={{ width: "100%" }} />
       </div>
 
-      {/* תיבת סטטיסטיקות מימין – גדולה יותר */}
+      {/* Stats box */}
       <div className="col-span-12 lg:col-span-4 rounded border bg-white p-4">
         <h4 className="font-semibold mb-2">Statistics</h4>
         {stat ? (

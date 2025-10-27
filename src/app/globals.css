@@ -52,6 +52,12 @@
   --ring: oklch(0.705 0.015 286.067);
 }
 
+/* ==== Global responsive “90% zoom” via root font-size ==== */
+/* כל הטקסט שמוגדר ב-rem יקטן/יגדל אוטומטית, הגרפים יוחרגו בהמשך */
+html { font-size: 100%; }                    /* base: 16px */
+@media (min-width: 1280px) { html { font-size: 93%; } }  /* xl */
+@media (min-width: 1536px) { html { font-size: 90%; } }  /* 2xl ≈ 90% */
+
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
@@ -88,9 +94,15 @@
   }
 }
 
-body:has([data-slot="listbox"]) {
-  overflow: hidden !important;
+/* החרגת Plotly מה”זום” (שומר על גודל כיתוב בגרפים) */
+.js-plotly-plot,
+.plotly,
+.js-plotly-plot *,
+.plotly * {
+  font-size: initial !important;
 }
+
+body:has([data-slot="listbox"]) { overflow: hidden !important; }
 
 [data-slot="listbox"] {
   max-height: 300px !important;
@@ -98,38 +110,35 @@ body:has([data-slot="listbox"]) {
   overflow-x: hidden !important;
   scrollbar-width: thin;
 }
-
-[data-slot="listbox"]::-webkit-scrollbar {
-  width: 8px;
-}
-
-[data-slot="listbox"]::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-
-[data-slot="listbox"]::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
-}
+[data-slot="listbox"]::-webkit-scrollbar { width: 8px; }
+[data-slot="listbox"]::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 4px; }
+[data-slot="listbox"]::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.3); }
 
 [data-slot="popover"],
 .nextui-popover-content,
 .nextui-select-popover,
-[data-slot="base"] {
-  overflow: visible !important;
+[data-slot="base"] { overflow: visible !important; }
+
+button { transition: transform .15s ease-in-out; }
+button:hover { transform: scale(1.015); }
+button:active { transform: scale(0.96); }
+
+#__next-route-announcer { display: none !important; }
+/* ==== FORCE BIGGER TYPOGRAPHY (exclude Plotly) ==== */
+.app-text,
+.app-text * {
+  font-size: 22px !important;   /* תרגיש חופשי לשנות ל-24/26 כדי לבדוק */
+  line-height: 1.6 !important;
 }
 
-button {
-  transition: transform 0.15s ease-in-out;
-}
+/* כותרות יישארו פרופורציונליות מעל הבסיס */
+.app-text h1 { font-size: 1.6em !important; font-weight: 700; }
+.app-text h2 { font-size: 1.4em !important; font-weight: 600; }
+.app-text h3 { font-size: 1.2em !important; font-weight: 600; }
 
-button:hover {
-  transform: scale(1.015);
-}
-
-button:active {
-  transform: scale(0.96);
-}
-#__next-route-announcer {
-  display: none !important;
+/* אל תשפיע על הגרפים של Plotly */
+.app-text .js-plotly-plot,
+.app-text .js-plotly-plot * {
+  font-size: initial !important;
+  line-height: initial !important;
 }

@@ -71,9 +71,8 @@ export default function Dashboard() {
 
   const [pcaRows, setPcaRows] = useState<PcaRow[]>([]);
   const [deRows, setDeRows] = useState<DeRow[]>([]);
-  const [oligoRows, setOligoRows] = useState<any[]>([]); // row per miR from the oligodendrocyte counts file
+  const [oligoRows, setOligoRows] = useState<any[]>([]);
 
-  // Render-after-mount flag to avoid hydration mismatches from extensions (e.g., fdprocessedid)
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -81,7 +80,6 @@ export default function Dashboard() {
   useEffect(() => {
     loadCsv<PcaRow>(PCA_CSV).then(setPcaRows).catch(console.error);
 
-    // Normalize first column name to miR if missing
     loadCsv<DeRow>(DE_FILE)
       .then((rows) => {
         const fixed = rows.map((r: any) => {
@@ -97,7 +95,6 @@ export default function Dashboard() {
       })
       .catch(console.error);
 
-    // Oligodendrocyte counts table (columns = sample names)
     loadCsv<any>(OLIGO_COUNTS).then(setOligoRows).catch(console.error);
   }, []);
 
@@ -116,7 +113,6 @@ export default function Dashboard() {
 
   const oligoRow = useMemo(() => {
     if (!oligoRows.length) return undefined;
-    // Detect miR name key (header might differ)
     const nameKey =
       Object.keys(oligoRows[0]).find((k) => k.toLowerCase().includes("mir")) ??
       Object.keys(oligoRows[0])[0];
@@ -125,10 +121,10 @@ export default function Dashboard() {
 
   /* --- Render --- */
   return (
-    <div className="mx-auto max-w-[1400px] px-6 py-8">
+    <div className="app-text mx-auto max-w-[1400px] px-6 py-8">
       {/* Top header text only */}
       <header className="flex justify-center mb-4">
-        <h1 className="text-xl font-bold">Main Page (1)</h1>
+        <h1 className="text-2xl font-bold">Main Page (1)</h1>
       </header>
 
       {/* Search + combo */}
@@ -186,11 +182,11 @@ export default function Dashboard() {
 
       {/* First table + heading text */}
       <div className="mt-8">
-        <p className="mb-3 text-sm text-gray-700">
+        <p className="mb-3 text-base md:text-lg text-gray-700">
           {`The table below summarizes the statistical comparison of cell type–specific profiles of ${selectedMir} across all pairwise combinations.`}
         </p>
         <div className="overflow-x-auto rounded border">
-          <table className="min-w-full text-sm">
+          <table className="min-w-full text-base md:text-lg">
             <thead className="bg-gray-50">
               <tr className="text-left">
                 <th className="px-3 py-2">miR</th>
@@ -226,13 +222,13 @@ export default function Dashboard() {
 
       {/* Boxplot + stats section */}
       <div className="mt-10">
-        <p className="mb-3 text-sm text-gray-700">
+        <p className="mb-3 text-base md:text-lg text-gray-700">
           {`The table below summarizes the statistical comparison of the oligodendrocyte profile of ${selectedMir} against all other cell types.`}
         </p>
         <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deRow} />
       </div>
 
-      {/* Bottom "Main Page (1)" button – render client-only to avoid hydration mismatch */}
+      {/* Bottom "Main Page (1)" button */}
       {mounted && (
         <div className="flex justify-center mt-8 mb-2">
           <button
