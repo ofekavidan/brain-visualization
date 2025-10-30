@@ -105,7 +105,39 @@ export default function Dashboard() {
     return mirs.filter((m) => m.toLowerCase().includes(q));
   }, [mirs, query]);
 
-  
+  /* --- Step 1: keep selected in-sync with filtered options --- */
+  useEffect(() => {
+    if (!filteredOptions.length) return;
+    // If current selection isn't in filtered list → pick first
+    if (!filteredOptions.includes(selectedMir)) {
+      setSelectedMir(filteredOptions[0]);
+      // If only one option remains and it's different → force it
+    } else if (
+      filteredOptions.length === 1 &&
+      selectedMir !== filteredOptions[0]
+    ) {
+      setSelectedMir(filteredOptions[0]);
+    }
+  }, [filteredOptions, selectedMir]);
+
+  /* --- Threshold check for TOP (3-cell) dataset: CPM>1 in ≥50% --- */
+  const cpmOkTop = useMemo(() => {
+    if (!pcaRows.length) return false;
+
+    // בעמודת ה-PCA לכל דגימה יש עמודת CPM בשם ה-miR; אם אין – לא עומד בסף
+    const hasCol =
+      pcaRows.length > 0 &&
+      Object.prototype.hasOwnProperty.call(pcaRows[0], selectedMir);
+    if (!hasCol) return false;
+
+    const n = pcaRows.length;
+    let cnt = 0;
+    for (const r of pcaRows) {
+      const v = Number((r as any)[selectedMir]);
+      if (!Number.isNaN(v) && v > 1) cnt++;
+    }
+    return cnt / n >= 0.5;
+  }, [pcaRows, selectedMir]);
 
   /* --- Stats + oligodendrocyte row for selected miR --- */
   const deRow = useMemo(
@@ -141,7 +173,11 @@ export default function Dashboard() {
         <select
           className="border rounded px-3 py-2 w-[420px]"
           value={selectedMir}
-          onChange={(e) => setSelectedMir(e.target.value)}
+          onChange={(e) => {
+            // Step 2: choosing from dropdown always sets selection and clears search
+            setSelectedMir(e.target.value);
+            setQuery("");
+          }}
           suppressHydrationWarning
         >
           {filteredOptions.map((m) => (
@@ -152,35 +188,41 @@ export default function Dashboard() {
         </select>
       </div>
 
-      {/* Top 3 charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="border rounded-lg p-3">
-          <PcaPlot data={pcaRows} pc1Var={56.2} pc2Var={34.2} />
-        </div>
+      {/* Top 3 charts (only if selected miR passes CPM threshold in 3-cell dataset) */}
+      {cpmOkTop ? (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="border rounded-lg p-3">
+            <PcaPlot data={pcaRows} pc1Var={56.2} pc2Var={34.2} />
+          </div>
 
-        <div className="border rounded-lg p-3">
-          <UmapPlot
-            title={selectedMir}
-            data={pcaRows}
-            mir={selectedMir}
-            pc1Var={56.2}
-            pc2Var={34.2}
-          />
-        </div>
+          <div className="border rounded-lg p-3">
+            <UmapPlot
+              title={selectedMir}
+              data={pcaRows}
+              mir={selectedMir}
+              pc1Var={56.2}
+              pc2Var={34.2}
+            />
+          </div>
 
-        <div className="border rounded-lg p-3">
-          <BoxPlot
-            title={selectedMir}
-            data={pcaRows}
-            mir={selectedMir}
-            colors={{
-              neurons: "#E64B35",
-              astro: "#4DBBD5",
-              micro: "#00A087",
-            }}
-          />
+          <div className="border rounded-lg p-3">
+            <BoxPlot
+              title={selectedMir}
+              data={pcaRows}
+              mir={selectedMir}
+              colors={{
+                neurons: "#E64B35",
+                astro: "#4DBBD5",
+                micro: "#00A087",
+              }}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="mt-4 rounded border bg-amber-50 text-amber-900 px-4 py-3">
+          {`${selectedMir} did not meet the expression threshold required for this statistical comparison (CPM > 1 in ≥ 50% of samples).`}
+        </div>
+      )}
 
       {/* First table + heading text */}
       <div className="mt-8">
@@ -210,10 +252,10 @@ export default function Dashboard() {
                   <td className="px-3 py-2">{deRow["adj.P.Val"]}</td>
                 </tr>
               ) : (
+                /* Informative message when miR didn't pass expression threshold for this comparison */
                 <tr className="border-t">
-                  <td className="px-3 py-3 text-gray-500" colSpan={6}>
-                    No row for <b>{selectedMir}</b> in{" "}
-                    <code>{DE_FILE.split("/").pop()}</code>
+                  <td className="px-3 py-3 bg-amber-50 text-amber-900" colSpan={6}>
+                    {`${selectedMir} did not meet the expression threshold required for this statistical comparison (CPM > 1 in ≥ 50% of samples).`}
                   </td>
                 </tr>
               )}
@@ -227,7 +269,19 @@ export default function Dashboard() {
         <p className="mb-3 text-gray-700">
           {`The table below summarizes the statistical comparison of the oligodendrocyte profile of ${selectedMir} against all other cell types.`}
         </p>
-        <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deRow} />
+
+        {oligoRows.length === 0 ? (
+          <div className="rounded border p-4 text-gray-500">
+            Loading oligodendrocyte counts…
+          </div>
+        ) : !oligoRow ? (
+          /* Informative message when miR didn't pass expression threshold for this comparison */
+          <div className="rounded border p-4 bg-amber-50 text-amber-900">
+            {`${selectedMir} did not meet the expression threshold required for this statistical comparison (CPM > 1 in ≥ 50% of samples).`}
+          </div>
+        ) : (
+          <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deRow} />
+        )}
       </div>
 
       {/* Bottom "Main Page (1)" button */}
