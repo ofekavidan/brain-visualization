@@ -105,6 +105,8 @@ export default function Dashboard() {
     return mirs.filter((m) => m.toLowerCase().includes(q));
   }, [mirs, query]);
 
+  
+
   /* --- Stats + oligodendrocyte row for selected miR --- */
   const deRow = useMemo(
     () => deRows.find((r) => r.miR === selectedMir),
@@ -121,10 +123,10 @@ export default function Dashboard() {
 
   /* --- Render --- */
   return (
-    <div className="zoom-70 mx-auto max-w-[1400px] px-6 py-8">
+    <div className="app-text zoom-80 mx-auto max-w-[1400px] px-6 py-8">
       {/* Top header text only */}
       <header className="flex justify-center mb-4">
-        <h1 className="text-2xl font-bold">Main Page (1)</h1>
+        <h1 className="font-bold">Main Page (1)</h1>
       </header>
 
       {/* Search + combo */}
@@ -182,11 +184,11 @@ export default function Dashboard() {
 
       {/* First table + heading text */}
       <div className="mt-8">
-        <p className="mb-3 text-base md:text-lg text-gray-700">
+        <p className="mb-3 text-gray-700">
           {`The table below summarizes the statistical comparison of cell type–specific profiles of ${selectedMir} across all pairwise combinations.`}
         </p>
         <div className="overflow-x-auto rounded border">
-          <table className="min-w-full text-base md:text-lg">
+          <table className="min-w-full">
             <thead className="bg-gray-50">
               <tr className="text-left">
                 <th className="px-3 py-2">miR</th>
@@ -222,7 +224,7 @@ export default function Dashboard() {
 
       {/* Boxplot + stats section */}
       <div className="mt-10">
-        <p className="mb-3 text-base md:text-lg text-gray-700">
+        <p className="mb-3 text-gray-700">
           {`The table below summarizes the statistical comparison of the oligodendrocyte profile of ${selectedMir} against all other cell types.`}
         </p>
         <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deRow} />

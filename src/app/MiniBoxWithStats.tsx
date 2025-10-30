@@ -116,7 +116,7 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
       <div className="col-span-12 lg:col-span-4 rounded border bg-white p-4">
         <h4 className="font-semibold mb-2">Statistics</h4>
         {stat ? (
-          <div className="space-y-1 text-[15px]">
+          <div className="space-y-1">
             <div>
               <span className="font-semibold">logFC:</span>{" "}
               {Number(stat.logFC).toFixed(2)}

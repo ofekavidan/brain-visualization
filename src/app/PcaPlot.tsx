@@ -42,7 +42,7 @@ export default function PcaPlot({ data, pc1Var, pc2Var, height = 420 }: Props) {
     plot_bgcolor: "white",
 
     // מרווח ימין מוגדל כדי שה-legend לא ייחתך
-    margin: { l: 70, r: 140, t: 40, b: 80 },
+    margin: { l: 70, r: 10, t: 40, b: 80 },
 
     // צירים זהים לאמצעי + ריבוע פרופורציונלי
     xaxis: {
