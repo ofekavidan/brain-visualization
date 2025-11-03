@@ -1,3 +1,4 @@
+// src/app/page.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -12,7 +13,16 @@ import mirListRaw from "../data/mir_list.json";
 
 /* ---------- Public data files (public/data) ---------- */
 const PCA_CSV = "/data/mirs_pca_counts_df.csv";
-const DE_FILE = "/data/DE_dream_miRs_O_vs_all.csv";
+
+/* DE for the 3 pairwise comparisons (table #1) */
+const DE_N_A = "/data/DE_dream_miRs_N_A.csv"; // Neurons vs Astrocytes
+const DE_N_M = "/data/DE_dream_miRs_N_M.csv"; // Neurons vs Microglia
+const DE_M_A = "/data/DE_dream_miRs_M_A.csv"; // Microglia vs Astrocytes
+
+/* DE for Oligodendrocyte vs All (box+stats section #2) */
+const DE_OLIGO_VS_ALL = "/data/DE_dream_miRs_O_vs_all.csv";
+
+/* Counts per sample for the mini-boxplot */
 const OLIGO_COUNTS = "/data/mirs_oligos_counts.csv";
 
 /* ---------- Types ---------- */
@@ -34,6 +44,15 @@ export type DeRow = {
 };
 
 /* ---------- Helpers ---------- */
+const nf3 = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 3,
+  maximumFractionDigits: 3,
+});
+const fmt3 = (v: number | string) => {
+  const n = typeof v === "number" ? v : Number(v);
+  return Number.isFinite(n) ? nf3.format(n) : String(v ?? "");
+};
+
 function normalizeMirList(raw: any): string[] {
   if (Array.isArray(raw)) {
     if (raw.length > 0 && typeof raw[0] === "object") {
@@ -62,6 +81,14 @@ function loadCsv<T = any>(path: string): Promise<T[]> {
   });
 }
 
+function normalizeDeRows(rows: any[]): DeRow[] {
+  return rows.map((r: any) => {
+    if (r.miR) return r as DeRow;
+    const k = Object.keys(r).find((x) => x.toLowerCase().includes("mir")) ?? Object.keys(r)[0];
+    return { ...r, miR: String(r[k]) } as DeRow;
+  });
+}
+
 /* ========================================================= */
 
 export default function Dashboard() {
@@ -70,7 +97,10 @@ export default function Dashboard() {
   const [selectedMir, setSelectedMir] = useState<string>(mirs[0] ?? "");
 
   const [pcaRows, setPcaRows] = useState<PcaRow[]>([]);
-  const [deRows, setDeRows] = useState<DeRow[]>([]);
+  const [deNA, setDeNA] = useState<DeRow[]>([]);
+  const [deNM, setDeNM] = useState<DeRow[]>([]);
+  const [deMA, setDeMA] = useState<DeRow[]>([]);
+  const [deOligoAll, setDeOligoAll] = useState<DeRow[]>([]);
   const [oligoRows, setOligoRows] = useState<any[]>([]);
 
   const [mounted, setMounted] = useState(false);
@@ -80,18 +110,17 @@ export default function Dashboard() {
   useEffect(() => {
     loadCsv<PcaRow>(PCA_CSV).then(setPcaRows).catch(console.error);
 
-    loadCsv<DeRow>(DE_FILE)
-      .then((rows) => {
-        const fixed = rows.map((r: any) => {
-          if (!r.miR) {
-            const k =
-              Object.keys(r).find((x) => x.toLowerCase().includes("mir")) ??
-              Object.keys(r)[0];
-            return { ...r, miR: String(r[k]) };
-          }
-          return r;
-        }) as DeRow[];
-        setDeRows(fixed);
+    Promise.all([
+      loadCsv<DeRow>(DE_N_A),
+      loadCsv<DeRow>(DE_N_M),
+      loadCsv<DeRow>(DE_M_A),
+      loadCsv<DeRow>(DE_OLIGO_VS_ALL),
+    ])
+      .then(([na, nm, ma, oo]) => {
+        setDeNA(normalizeDeRows(na));
+        setDeNM(normalizeDeRows(nm));
+        setDeMA(normalizeDeRows(ma));
+        setDeOligoAll(normalizeDeRows(oo));
       })
       .catch(console.error);
 
@@ -108,28 +137,19 @@ export default function Dashboard() {
   /* --- Step 1: keep selected in-sync with filtered options --- */
   useEffect(() => {
     if (!filteredOptions.length) return;
-    // If current selection isn't in filtered list → pick first
     if (!filteredOptions.includes(selectedMir)) {
       setSelectedMir(filteredOptions[0]);
-      // If only one option remains and it's different → force it
-    } else if (
-      filteredOptions.length === 1 &&
-      selectedMir !== filteredOptions[0]
-    ) {
+    } else if (filteredOptions.length === 1 && selectedMir !== filteredOptions[0]) {
       setSelectedMir(filteredOptions[0]);
     }
   }, [filteredOptions, selectedMir]);
 
   /* --- Threshold check for TOP (3-cell) dataset: CPM>1 in ≥50% --- */
   const cpmOkTop = useMemo(() => {
-    if (!pcaRows.length) return false;
-
-    // בעמודת ה-PCA לכל דגימה יש עמודת CPM בשם ה-miR; אם אין – לא עומד בסף
+    if (!pcaRows.length || !selectedMir) return false;
     const hasCol =
-      pcaRows.length > 0 &&
-      Object.prototype.hasOwnProperty.call(pcaRows[0], selectedMir);
+      pcaRows.length > 0 && Object.prototype.hasOwnProperty.call(pcaRows[0], selectedMir);
     if (!hasCol) return false;
-
     const n = pcaRows.length;
     let cnt = 0;
     for (const r of pcaRows) {
@@ -139,10 +159,20 @@ export default function Dashboard() {
     return cnt / n >= 0.5;
   }, [pcaRows, selectedMir]);
 
-  /* --- Stats + oligodendrocyte row for selected miR --- */
-  const deRow = useMemo(
-    () => deRows.find((r) => r.miR === selectedMir),
-    [deRows, selectedMir]
+  /* --- Table #1 rows: three pairwise comparisons --- */
+  const pairRows = useMemo(() => {
+    const find = (rows: DeRow[], mir: string) => rows.find((r) => r.miR === mir);
+    return [
+      { cmp: "Neurons vs Astrocytes", row: find(deNA, selectedMir) },
+      { cmp: "Neurons vs Microglia", row: find(deNM, selectedMir) },
+      { cmp: "Astrocytes vs Microglia", row: find(deMA, selectedMir) },
+    ] as Array<{ cmp: string; row?: DeRow }>;
+  }, [deNA, deNM, deMA, selectedMir]);
+
+  /* --- Box+stats section: Oligodendrocyte vs All --- */
+  const deOligoRow = useMemo(
+    () => deOligoAll.find((r) => r.miR === selectedMir),
+    [deOligoAll, selectedMir]
   );
 
   const oligoRow = useMemo(() => {
@@ -174,7 +204,6 @@ export default function Dashboard() {
           className="border rounded px-3 py-2 w-[420px]"
           value={selectedMir}
           onChange={(e) => {
-            // Step 2: choosing from dropdown always sets selection and clears search
             setSelectedMir(e.target.value);
             setQuery("");
           }}
@@ -188,7 +217,7 @@ export default function Dashboard() {
         </select>
       </div>
 
-      {/* Top 3 charts (only if selected miR passes CPM threshold in 3-cell dataset) */}
+      {/* Top 3 charts */}
       {cpmOkTop ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="border rounded-lg p-3">
@@ -224,16 +253,16 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* First table + heading text */}
+      {/* ===== Table #1: THREE pairwise comparisons (N↔A, N↔M, A↔M) ===== */}
       <div className="mt-8">
         <p className="mb-3 text-gray-700">
-          {`The table below summarizes the statistical comparison of cell type–specific profiles of ${selectedMir} across all pairwise combinations.`}
+          {`The table below summarizes the statistical comparison of cell type–specific profiles of ${selectedMir} across the three pairwise combinations.`}
         </p>
         <div className="overflow-x-auto rounded border">
           <table className="min-w-full">
             <thead className="bg-gray-50">
               <tr className="text-left">
-                <th className="px-3 py-2">miR</th>
+                <th className="px-3 py-2">Comparison</th>
                 <th className="px-3 py-2">logFC</th>
                 <th className="px-3 py-2">AveExpr</th>
                 <th className="px-3 py-2">t</th>
@@ -242,45 +271,43 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {deRow ? (
-                <tr className="border-t">
-                  <td className="px-3 py-2">{deRow.miR}</td>
-                  <td className="px-3 py-2">{deRow.logFC}</td>
-                  <td className="px-3 py-2">{deRow.AveExpr}</td>
-                  <td className="px-3 py-2">{deRow.t}</td>
-                  <td className="px-3 py-2">{deRow["P.Value"]}</td>
-                  <td className="px-3 py-2">{deRow["adj.P.Val"]}</td>
-                </tr>
-              ) : (
-                /* Informative message when miR didn't pass expression threshold for this comparison */
-                <tr className="border-t">
-                  <td className="px-3 py-3 bg-amber-50 text-amber-900" colSpan={6}>
-                    {`${selectedMir} did not meet the expression threshold required for this statistical comparison (CPM > 1 in ≥ 50% of samples).`}
-                  </td>
-                </tr>
+              {pairRows.map(({ cmp, row }) =>
+                row ? (
+                  <tr key={cmp} className="border-t">
+                    <td className="px-3 py-2">{cmp}</td>
+                    <td className="px-3 py-2">{fmt3(row.logFC)}</td>
+                    <td className="px-3 py-2">{fmt3(row.AveExpr)}</td>
+                    <td className="px-3 py-2">{fmt3(row.t)}</td>
+                    <td className="px-3 py-2">{fmt3(row["P.Value"])}</td>
+                    <td className="px-3 py-2">{fmt3(row["adj.P.Val"])}</td>
+                  </tr>
+                ) : (
+                  <tr key={cmp} className="border-t">
+                    <td className="px-3 py-3 bg-amber-50 text-amber-900" colSpan={6}>
+                      {`${cmp}: ${selectedMir} did not meet the expression threshold required for this comparison (CPM > 1 in ≥ 50% of samples).`}
+                    </td>
+                  </tr>
+                )
               )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Boxplot + stats section */}
+      {/* ===== Boxplot + stats: Oligodendrocyte vs All ===== */}
       <div className="mt-10">
         <p className="mb-3 text-gray-700">
           {`The table below summarizes the statistical comparison of the oligodendrocyte profile of ${selectedMir} against all other cell types.`}
         </p>
 
         {oligoRows.length === 0 ? (
-          <div className="rounded border p-4 text-gray-500">
-            Loading oligodendrocyte counts…
-          </div>
+          <div className="rounded border p-4 text-gray-500">Loading oligodendrocyte counts…</div>
         ) : !oligoRow ? (
-          /* Informative message when miR didn't pass expression threshold for this comparison */
           <div className="rounded border p-4 bg-amber-50 text-amber-900">
             {`${selectedMir} did not meet the expression threshold required for this statistical comparison (CPM > 1 in ≥ 50% of samples).`}
           </div>
         ) : (
-          <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deRow} />
+          <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deOligoRow} />
         )}
       </div>
 

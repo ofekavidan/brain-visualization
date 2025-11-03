@@ -3,7 +3,13 @@
 
 import dynamic from "next/dynamic";
 import type { Layout, Data } from "plotly.js";
-import type { PcaRow } from "./types";
+
+type PcaRow = {
+  [key: string]: string | number;
+  "PC 1": number;
+  "PC 2": number;
+  "Cell type": "Neurons" | "Astrocytes" | "Microglia" | string;
+};
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -36,15 +42,28 @@ export default function PcaPlot({ data, pc1Var, pc2Var, height = 420 }: Props) {
     };
   });
 
+  // טווחים ריבועיים (כמו באמצעי)
+  const xs = data.map((r) => Number(r["PC 1"]));
+  const ys = data.map((r) => Number(r["PC 2"]));
+  const minX = Math.min(...xs), maxX = Math.max(...xs);
+  const minY = Math.min(...ys), maxY = Math.max(...ys);
+  const cx = (minX + maxX) / 2;
+  const cy = (minY + maxY) / 2;
+  const span = Math.max(maxX - minX, maxY - minY);
+  const pad = span * 0.08;
+  const half = span / 2 + pad;
+
+  // מרווח ייעודי למקרא בצד ימין, שלא יכסה נקודות
+  const LEGEND_GUTTER = 0.22; // רוחב “העמודה” למקרא בתוך ה-paper
+
   const layout: Partial<Layout> = {
-    // מסגרת ותצוגה זהה לגרף האמצעי
     paper_bgcolor: "white",
     plot_bgcolor: "white",
 
-    // מרווח ימין מוגדל כדי שה-legend לא ייחתך
-    margin: { l: 70, r: 10, t: 40, b: 80 },
+    // לא צריך שול ימין גדול – השאירו את השוליים קטנים, כי שמרנו domain לציר X
+    margin: { l: 80, r: 12, t: 50, b: 78 },
 
-    // צירים זהים לאמצעי + ריבוע פרופורציונלי
+    // אזור הציור משמאל, והגוטר למקרא מימין
     xaxis: {
       title: { text: `PC 1 (${pc1Var}%)` },
       zeroline: false,
@@ -53,6 +72,9 @@ export default function PcaPlot({ data, pc1Var, pc2Var, height = 420 }: Props) {
       ticks: "outside",
       ticklen: 5,
       automargin: true,
+      range: [cx - half, cx + half],
+      constrain: "range",
+      domain: [0, 1 - LEGEND_GUTTER], // ← שומר “מלבן עומד” למקרא
     },
     yaxis: {
       title: { text: `PC 2 (${pc2Var}%)` },
@@ -62,19 +84,23 @@ export default function PcaPlot({ data, pc1Var, pc2Var, height = 420 }: Props) {
       ticks: "outside",
       ticklen: 5,
       automargin: true,
+      range: [cy - half, cy + half],
       scaleanchor: "x",
       scaleratio: 1,
+      constrain: "range",
     },
 
-    // legend מחוץ לפלוט, מיושר לימין – לא נחתך
+    // מקרא בעמודה הימנית (בתוך ה-paper, לא ייחתך ולא יסתיר)
     legend: {
-      x: 1.02,
-      y: 1,
-      xanchor: "left",
-      bgcolor: "rgba(255,255,255,0.7)",
-      bordercolor: "rgba(0,0,0,0)",
-      font: { size: 14 },
       orientation: "v",
+      // מניחים את המקרא באמצע הגוטר
+      x: 1 - LEGEND_GUTTER / 2 + 0.05,
+      xanchor: "center",
+      y: 1,
+      yanchor: "top",
+      bgcolor: "rgba(255,255,255,0.9)",
+      bordercolor: "rgba(0,0,0,0)",
+      font: { size: 15 },
     },
 
     autosize: true,
@@ -82,11 +108,14 @@ export default function PcaPlot({ data, pc1Var, pc2Var, height = 420 }: Props) {
   };
 
   return (
-    <Plot
-      data={traces as any}
-      layout={layout}
-      style={{ width: "100%" }}
-      config={{ displayModeBar: false }}
-    />
+    <div style={{ width: "100%", overflow: "visible" }}>
+      <Plot
+        data={traces as any}
+        layout={layout}
+        style={{ width: "100%", overflow: "visible" }}
+        config={{ displayModeBar: false, responsive: true }}
+        useResizeHandler
+      />
+    </div>
   );
 }
