@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// src/app/Dashboard.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -84,7 +84,9 @@ function loadCsv<T = any>(path: string): Promise<T[]> {
 function normalizeDeRows(rows: any[]): DeRow[] {
   return rows.map((r: any) => {
     if (r.miR) return r as DeRow;
-    const k = Object.keys(r).find((x) => x.toLowerCase().includes("mir")) ?? Object.keys(r)[0];
+    const k =
+      Object.keys(r).find((x) => x.toLowerCase().includes("mir")) ??
+      Object.keys(r)[0];
     return { ...r, miR: String(r[k]) } as DeRow;
   });
 }
@@ -148,7 +150,8 @@ export default function Dashboard() {
   const cpmOkTop = useMemo(() => {
     if (!pcaRows.length || !selectedMir) return false;
     const hasCol =
-      pcaRows.length > 0 && Object.prototype.hasOwnProperty.call(pcaRows[0], selectedMir);
+      pcaRows.length > 0 &&
+      Object.prototype.hasOwnProperty.call(pcaRows[0], selectedMir);
     if (!hasCol) return false;
     const n = pcaRows.length;
     let cnt = 0;
@@ -188,7 +191,7 @@ export default function Dashboard() {
     <div className="app-text zoom-80 mx-auto max-w-[1400px] px-6 py-8">
       {/* Top header text only */}
       <header className="flex justify-center mb-4">
-        <h1 className="font-bold">Main Page (1)</h1>
+        <h1 className="font-bold"> The Live Human Brain MicroRNA&nbsp;Atlas </h1>
       </header>
 
       {/* Search + combo */}
@@ -301,7 +304,9 @@ export default function Dashboard() {
         </p>
 
         {oligoRows.length === 0 ? (
-          <div className="rounded border p-4 text-gray-500">Loading oligodendrocyte counts…</div>
+          <div className="rounded border p-4 text-gray-500">
+            Loading oligodendrocyte counts…
+          </div>
         ) : !oligoRow ? (
           <div className="rounded border p-4 bg-amber-50 text-amber-900">
             {`${selectedMir} did not meet the expression threshold required for this statistical comparison (CPM > 1 in ≥ 50% of samples).`}
@@ -313,18 +318,19 @@ export default function Dashboard() {
 
       {/* Bottom "Main Page (1)" button */}
       {mounted && (
-        <div className="flex justify-center mt-8 mb-2">
-          <button
-            type="button"
-            className="px-4 py-1 rounded-full border shadow-sm bg-white"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            aria-label="Go to Main Page"
-            suppressHydrationWarning
-          >
-            Main Page (1)
-          </button>
-        </div>
-      )}
+  <div className="flex justify-center mt-8 mb-2">
+    <button
+      type="button"
+      className="px-4 py-1 rounded-full border shadow-sm bg-white"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Go to top"
+      suppressHydrationWarning
+    >
+      Main Page (1)
+    </button>
+  </div>
+)}
+
     </div>
   );
 }

@@ -1,5 +1,10 @@
-// src/app/page.tsx  (Server Component)
-import ClientPage from "./ClientPage";
+// src/app/page.tsx
+import Dashboard from "./Dashboard";
+
+export const metadata = {
+  title: "The Live Human Brain MicroRNA Atlas",
+};
+
 export default function Page() {
-  return <ClientPage />;
+  return <Dashboard />;
 }
