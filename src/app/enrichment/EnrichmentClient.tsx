@@ -91,8 +91,14 @@ function safeLog10(x: number) {
 /* ---------------- desired order ---------------- */
 const DEFAULT_ORDER = ["Neurons", "Astrocytes", "Microglia", "Oligodendrocytes"];
 
-// unified text style requested (same as main paragraph)
-const BASE_TEXT = "text-gray-700 leading-6";
+/** ✅ One unified text style for the whole page (excluding title + plot) */
+const TEXT_STYLE: React.CSSProperties = {
+  fontSize: "16px",
+  lineHeight: "1.5",
+  fontWeight: 400,
+};
+
+const TEXT_CLASS = "text-gray-700";
 
 export default function EnrichmentClient() {
   const [ctMarkers, setCtMarkers] = useState<CTMarkers | null>(null);
@@ -202,7 +208,6 @@ export default function EnrichmentClient() {
     const col = y.map((ct) => cMap.get(ct) ?? 0);
     const padj = y.map((ct) => pAdjMap.get(ct) ?? 1);
 
-    // ✅ start x-axis slightly below 0 so markers at 0 are fully visible
     const maxX = Math.max(1, ...x.filter((v) => Number.isFinite(v)));
     const xMax = Math.max(1, maxX * 1.05);
     const xMin = -0.1;
@@ -254,7 +259,7 @@ export default function EnrichmentClient() {
         title: { text: "Odd ratio" },
         zeroline: false,
         showline: true,
-        mirror: true, // ✅ top line
+        mirror: true,
         linecolor: "black",
         linewidth: 1,
         ticks: "outside",
@@ -266,11 +271,9 @@ export default function EnrichmentClient() {
         automargin: true,
         categoryorder: "array",
         categoryarray: y,
-
-        // ✅ add LEFT + RIGHT frame lines (to match top/bottom)
         zeroline: false,
         showline: true,
-        mirror: true, // ✅ right line
+        mirror: true,
         linecolor: "black",
         linewidth: 1,
         ticks: "outside",
@@ -294,16 +297,16 @@ export default function EnrichmentClient() {
   }, [rows]);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
-      {/* Title */}
+    <div className="mx-auto max-w-7xl px-6 py-8">
+      {/* Title (unchanged) */}
       <div className="flex justify-center mb-4">
         <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-6">
           Cell type enrichment in a list of miRs of interest
         </h1>
       </div>
 
-      {/* Description */}
-      <p className={BASE_TEXT}>
+      {/* Description (the “golden” style) */}
+      <p className={TEXT_CLASS} style={TEXT_STYLE}>
         This tool infers the cell type enrichment of a microRNA (miR) list using a
         reference-based deconvolution approach. It compares the user-provided miRs to a
         curated atlas of cell-type-specific miR markers and computes the fraction of
@@ -313,9 +316,9 @@ export default function EnrichmentClient() {
         types whose marker miRs are significantly enriched in the input list.
       </p>
 
-      {/* Preprint line (same font/size, left-aligned) */}
+      {/* Preprint line */}
       <div className="mt-2 flex justify-start">
-        <p className={`${BASE_TEXT} text-left`}>
+        <p className={`${TEXT_CLASS} text-left`} style={TEXT_STYLE}>
           For more information, please refer to our preprint – Dubnov et al.,{" "}
           <a
             className="underline"
@@ -332,19 +335,27 @@ export default function EnrichmentClient() {
       {/* Controls */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mt-6">
         <div className="md:col-span-2">
-          <label className={`block ${BASE_TEXT} mb-2`}>Insert your list</label>
+          <label className={`block ${TEXT_CLASS} mb-2`} style={TEXT_STYLE}>
+            Insert your list
+          </label>
+
           <textarea
             className="w-full h-36 border rounded-lg p-3"
             placeholder="Paste miR IDs separated by commas, spaces, or new lines"
             value={textarea}
             onChange={(e) => setTextarea(e.target.value)}
+            style={TEXT_STYLE}
           />
 
           {!!notInAtlas.length && (
-            <div className="mt-2 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded p-3">
-              <div className="font-medium mb-1">Not expressed in the atlas:</div>
-              <div className="break-words">{notInAtlas.join(", ")}</div>
-              <div className="mt-2 text-gray-700">
+            <div className="mt-2 text-amber-800 bg-amber-50 border border-amber-200 rounded p-3">
+              <div className="font-medium mb-1" style={TEXT_STYLE}>
+                Not expressed in the atlas:
+              </div>
+              <div className="break-words" style={TEXT_STYLE}>
+                {notInAtlas.join(", ")}
+              </div>
+              <div className="mt-2 text-gray-700" style={TEXT_STYLE}>
                 The analysis is performed on the subset of expressed miRs.
               </div>
             </div>
@@ -352,16 +363,20 @@ export default function EnrichmentClient() {
         </div>
 
         <div className="md:col-span-1">
-          <label className={`block ${BASE_TEXT} mb-2`}>Example</label>
+          <label className={`block ${TEXT_CLASS} mb-2`} style={TEXT_STYLE}>
+            Example
+          </label>
+
           <button
             type="button"
             className="w-full border rounded-lg px-4 py-2 hover:bg-gray-50"
             onClick={() => setTextarea(exampleList.join("\n"))}
+            style={TEXT_STYLE}
           >
             Load example list
           </button>
 
-          <p className={`${BASE_TEXT} mt-2`}>
+          <p className={`${TEXT_CLASS} mt-2`} style={TEXT_STYLE}>
             This example list represents miRs, differentially expressed in Alzheimer&apos;s
             Disease postmortem brain samples (data from{" "}
             <a
@@ -377,12 +392,12 @@ export default function EnrichmentClient() {
         </div>
       </div>
 
-      {/* Dotplot */}
+      {/* Dotplot (excluded from text styling) */}
       <div className="mt-8">
         {dotPlot ? (
           dotPlot
         ) : (
-          <div className="text-gray-500 p-6">
+          <div className="text-gray-500 p-6" style={TEXT_STYLE}>
             Provide a list or click “Load example list”.
           </div>
         )}
@@ -391,7 +406,7 @@ export default function EnrichmentClient() {
       {/* Table */}
       <div className="mt-8">
         <div className="overflow-x-auto rounded border bg-white">
-          <table className="min-w-full">
+          <table className="min-w-full" style={TEXT_STYLE}>
             <thead className="bg-gray-50">
               <tr className="text-left">
                 <th className="px-3 py-2">Cell type</th>
@@ -417,9 +432,10 @@ export default function EnrichmentClient() {
                   <td className="px-3 py-2">{r.log10Padj.toFixed(3)}</td>
                 </tr>
               ))}
+
               {rows.length === 0 && (
                 <tr className="border-t">
-                  <td className="px-3 py-4 text-gray-500" colSpan={6}>
+                  <td className="px-3 py-4 text-gray-500" colSpan={6} style={TEXT_STYLE}>
                     No data yet.
                   </td>
                 </tr>
