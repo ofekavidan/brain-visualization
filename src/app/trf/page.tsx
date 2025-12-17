@@ -1,14 +1,14 @@
-// src/app/page.tsx
-import Dashboard from "./Dashboard";
+// src/app/trf/page.tsx
+import TrfClient from "./TrfClient";
 
 export const metadata = {
-  title: "The Human Brain MicroRNA Atlas",
+  title: "tRF atlas • miR Atlas",
 };
 
 export default function Page() {
   return (
     <main className="min-h-screen">
-      <Dashboard />
+      <TrfClient />
     </main>
   );
 }

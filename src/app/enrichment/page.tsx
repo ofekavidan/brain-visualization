@@ -6,5 +6,9 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <EnrichmentClient />;
+  return (
+    <main className="min-h-screen">
+      <EnrichmentClient />
+    </main>
+  );
 }

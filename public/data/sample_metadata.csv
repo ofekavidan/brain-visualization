@@ -1,0 +1,81 @@
+,n aligned reads,unique aligned genes,mean reads per gene,Marker,Cell type,Batch,ID,Sex,Age,Pathology,Side,RIN
+HU10_IBA1,38451,271,141.8856089,IBA1,Microglia,Batch 1,HU10,F,72,Men,Left frontal,6.9
+HU11_IBA1,14436,367,39.33514986,IBA1,Microglia,Batch 1,HU11,M,73,Met,Right temporal,
+HU12_IBA1,12704,340,37.36470588,IBA1,Microglia,Batch 1,HU12,F,48,Met,Right frontal,3.5
+HU13_IBA1,17245,374,46.10962567,IBA1,Microglia,Batch 1,HU13,M,53,Met,Left temporal,5.8
+HU14_IBA1,13548,328,41.30487805,IBA1,Microglia,Batch 1,HU14,F,74,Men,Right frontal,1.2
+HU15_IBA1,28878,325,88.85538462,IBA1,Microglia,Batch 1,HU15,M,72,Men,Left frontal,2.6
+HU16_IBA1,103839,625,166.1424,IBA1,Microglia,Batch 1,HU16,M,62,Met,Right occipital,2.3
+HU17_IBA1,130783,550,237.7872727,IBA1,Microglia,Batch 1,HU17,M,42,Met,Left occipital ,2.8
+HU19_IBA1,9931,360,27.58611111,IBA1,Microglia,Batch 1,HU19,M,66,Men,Right frontal suprasylvian,2.6
+HU20_IBA1,29493,478,61.70083682,IBA1,Microglia,Batch 1,HU20,M,68,Men,Left frontal tip,3.8
+HU22_IBA1,30477,493,61.81947262,IBA1,Microglia,Batch 1,HU22,M,65,Met,Right frontal pericentral,4.3
+HU23_IBA1,6839,390,17.53589744,IBA1,Microglia,Batch 1,HU23,F,74,Men,Left frontal,4.5
+HU25_IBA1,23167,451,51.36807095,IBA1,Microglia,Batch 1,HU25,F,47,Men,Right frontal,6.1
+HU26_IBA1,75347,544,138.5055147,IBA1,Microglia,Batch 1,HU26,F,47,Met,Right temporo-parietal,4.3
+HU27_IBA1,76278,403,189.2754342,IBA1,Microglia,Batch 1,HU27,M,67,Men,Right superior temporal ,7.2
+HU8_IBA1,9638,337,28.59940653,IBA1,Microglia,Batch 1,HU8,M,75,Men,Left parietal,2.9
+HU10_NEUN,78415,541,144.9445471,NEUN,Neurons,Batch 1,HU10,F,72,Men,Left frontal,2.2
+HU11_NEUN,32181,329,97.81458967,NEUN,Neurons,Batch 1,HU11,M,73,Met,Right temporal,3.2
+HU12_NEUN,28610,347,82.44956772,NEUN,Neurons,Batch 1,HU12,F,48,Met,Right frontal,3.6
+HU13_NEUN,38591,444,86.91666667,NEUN,Neurons,Batch 1,HU13,M,53,Met,Left temporal,3.0
+HU14_NEUN,25537,438,58.30365297,NEUN,Neurons,Batch 1,HU14,F,74,Men,Right frontal,2.3
+HU15_NEUN,9831,390,25.20769231,NEUN,Neurons,Batch 1,HU15,M,72,Men,Left frontal,2.4
+HU16_NEUN,71981,481,149.6486486,NEUN,Neurons,Batch 1,HU16,M,62,Met,Right occipital,2.6
+HU17_NEUN,625204,669,934.5351271,NEUN,Neurons,Batch 1,HU17,M,42,Met,Left occipital ,2.6
+HU19_NEUN,26275,381,68.96325459,NEUN,Neurons,Batch 1,HU19,M,66,Men,Right frontal suprasylvian,2.0
+HU20_NEUN,163636,581,281.6454389,NEUN,Neurons,Batch 1,HU20,M,68,Men,Left frontal tip,2.5
+HU22_NEUN,20569,339,60.67551622,NEUN,Neurons,Batch 1,HU22,M,65,Met,Right frontal pericentral,3.7
+HU23_NEUN,36425,382,95.35340314,NEUN,Neurons,Batch 1,HU23,F,74,Men,Left frontal,3.0
+HU25_NEUN,15295,427,35.81967213,NEUN,Neurons,Batch 1,HU25,F,47,Men,Right frontal,5.6
+HU26_NEUN,146888,384,382.5208333,NEUN,Neurons,Batch 1,HU26,F,47,Met,Right temporo-parietal,4.6
+HU27_NEUN,9007,212,42.48584906,NEUN,Neurons,Batch 1,HU27,M,67,Men,Right superior temporal ,4.5
+HU8_NEUN,7899,373,21.1769437,NEUN,Neurons,Batch 1,HU8,M,75,Men,Left parietal,2.8
+HU29_IBA1,3551,227,15.64317181,IBA1,Microglia,Batch 2,HU29,F,45,Men,Left frontal,2.7
+HU31_IBA1,8475,353,24.00849858,IBA1,Microglia,Batch 2,HU31,M,50,Met,Left frontal,2.8
+HU34_GFAP,6657,375,17.752,GFAP,Astrocytes,Batch 2,HU34,M,65,Men,Left parietal,5.3
+HU39_IBA1,23416,424,55.22641509,IBA1,Microglia,Batch 2,HU39,M,69,Men,Left frontal,3.8
+HU39_NEUN,169703,566,299.8286219,NEUN,Neurons,Batch 2,HU39,M,69,Men,Left frontal,7.4
+HU43_GFAP,10657,403,26.44416873,GFAP,Astrocytes,Batch 2,HU43,F,51,Men,Right parietal,2.1
+HU44_GFAP,5422,326,16.63190184,GFAP,Astrocytes,Batch 2,HU44,F,47,Met,Right frontal,2.3
+HU44_IBA1,6784,260,26.09230769,IBA1,Microglia,Batch 2,HU44,F,47,Met,Right frontal,2.7
+HU46_IBA1,4155,362,11.47790055,IBA1,Microglia,Batch 2,HU46,F,70,Men,Left frontal,2.5
+HU47_GFAP,6411,361,17.75900277,GFAP,Astrocytes,Batch 2,HU47,M,70,Men,Left frontal,2.2
+HU47_NEUN,8041,282,28.5141844,NEUN,Neurons,Batch 2,HU47,M,70,Men,Left frontal,4.9
+HU50_GFAP,13715,394,34.80964467,GFAP,Astrocytes,Batch 2,HU50,M,58,Men,Left frontal,3.1
+HU51_GFAP,6959,329,21.15197568,GFAP,Astrocytes,Batch 2,HU51,M,76,Men,Left frontal,3.0
+HU52_GFAP,45355,465,97.53763441,GFAP,Astrocytes,Batch 2,HU52,F,78,Men,Left parietal,5.1
+HU54_GFAP,22597,325,69.52923077,GFAP,Astrocytes,Batch 2,HU54,F,41,Met,Right parietal,2.1
+HU54_IBA1,23932,497,48.15291751,IBA1,Microglia,Batch 2,HU54,F,41,Met,Right parietal,4.6
+HU54_NEUN,163459,596,274.2600671,NEUN,Neurons,Batch 2,HU54,F,41,Met,Right parietal,
+HU56_GFAP,28275,446,63.39686099,GFAP,Astrocytes,Batch 2,HU56,F,64,Men,Right occipital,3.1
+HU57_OLIG2,16344,484,33.76859504,OLIG2,Oligodendrocytes,Batch 2,HU57,F,41,Pilocytic Astro,Left temporal,2.4
+HU58_GFAP,5024,321,15.65109034,GFAP,Astrocytes,Batch 2,HU58,M,85,Men,Right frontal,2.5
+HU60_GFAP,13320,418,31.86602871,GFAP,Astrocytes,Batch 2,HU60,F,37,Men,Right frontal,2.9
+HU61_OLIG2,8414,313,26.88178914,OLIG2,Oligodendrocytes,Batch 2,HU61,F,74,Men,Bilateral frontal,2.2
+HU62_GFAP,3286,215,15.28372093,GFAP,Astrocytes,Batch 2,HU62,F,74,Men,Bilateral frontal,2.8
+HU64_GFAP,5141,302,17.02317881,GFAP,Astrocytes,Batch 2,HU64,F,37,Men,Biilateral parietal,3.1
+HU64_NEUN,24469,452,54.13495575,NEUN,Neurons,Batch 2,HU64,F,37,Men,Biilateral parietal,2.9
+HU64_OLIG2,31788,456,69.71052632,OLIG2,Oligodendrocytes,Batch 2,HU64,F,37,Men,Biilateral parietal,2.6
+HU66_OLIG2,39320,452,86.99115044,OLIG2,Oligodendrocytes,Batch 2,HU66,F,52,Met,Left frontal,2.3
+HU67_GFAP,9847,403,24.43424318,GFAP,Astrocytes,Batch 2,HU67,M,67,Men,Right frontal,3.4
+HU67_NEUN,7598,278,27.33093525,NEUN,Neurons,Batch 2,HU67,M,67,Men,Right frontal,4.1
+HU67_OLIG2,64115,514,124.7373541,OLIG2,Oligodendrocytes,Batch 2,HU67,M,67,Men,Right frontal,2.7
+HU68_OLIG2,51109,515,99.2407767,OLIG2,Oligodendrocytes,Batch 2,HU68,M,55,Met,Right frontal,2.3
+HU69_GFAP,17464,399,43.76942356,GFAP,Astrocytes,Batch 2,HU69,M,66,Met,Right temporal,4.6
+HU70_GFAP,15988,370,43.21081081,GFAP,Astrocytes,Batch 2,HU70,F,61,Men,Left temporal,2.2
+HU71_GFAP,8649,365,23.69589041,GFAP,Astrocytes,Batch 2,HU71,M,58,Met,Right occipital,3.2
+HU71_IBA1,18905,365,51.79452055,IBA1,Microglia,Batch 2,HU71,M,58,Met,Right occipital,2.4
+HU71_NEUN,10043,391,25.68542199,NEUN,Neurons,Batch 2,HU71,M,58,Met,Right occipital,3.4
+HU71_OLIG2,2243,177,12.67231638,OLIG2,Oligodendrocytes,Batch 2,HU71,M,58,Met,Right occipital,2.3
+HU73_NEUN,41078,505,81.34257426,NEUN,Neurons,Batch 2,HU73,M,69,Men,Left frontal,2.2
+HU73_OLIG2,18465,454,40.67180617,OLIG2,Oligodendrocytes,Batch 2,HU73,M,69,Men,Left frontal,2.4
+HU74_OLIG2,4178,256,16.3203125,OLIG2,Oligodendrocytes,Batch 2,HU74,M,72,Other,Left frontal,1.6
+HU75_GFAP,10570,414,25.53140097,GFAP,Astrocytes,Batch 2,HU75,M,65,Met,Left parietal,4.5
+HU75_IBA1,6776,355,19.08732394,IBA1,Microglia,Batch 2,HU75,M,65,Met,Left parietal,5.2
+HU75_NEUN,13072,404,32.35643564,NEUN,Neurons,Batch 2,HU75,M,65,Met,Left parietal,3.9
+HU75_OLIG2,46089,483,95.42236025,OLIG2,Oligodendrocytes,Batch 2,HU75,M,65,Met,Left parietal,2.4
+HU76_OLIG2,33054,436,75.81192661,OLIG2,Oligodendrocytes,Batch 2,HU76,M,67,Men,Left frontal,2.3
+HU77_OLIG2,36407,417,87.30695444,OLIG2,Oligodendrocytes,Batch 2,HU77,M,47,Cav,Right temporal,2.3
+HU78_OLIG2,62882,475,132.3831579,OLIG2,Oligodendrocytes,Batch 2,HU78,F,49,Cav,Right parietal,2.2
+HU79_OLIG2,13101,415,31.5686747,OLIG2,Oligodendrocytes,Batch 2,HU79,M,85,Met,Left temporal,2.3

@@ -1,7 +1,8 @@
+// src/app/MiniBoxWithStats.tsx
 "use client";
 
 import dynamic from "next/dynamic";
-import type { Layout } from "plotly.js";
+import type { Layout, Data } from "plotly.js";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -16,7 +17,6 @@ type Stat = {
 
 type Props = {
   mir: string;
-  // counts row for the miR from mirs_oligos_counts.csv
   countsRow?: Record<string, number | string>;
   stat?: Stat;
 };
@@ -29,9 +29,9 @@ const palette = {
 } as const;
 
 const order: Array<keyof typeof palette> = [
-  "Microglia",
   "Neurons",
   "Astrocytes",
+  "Microglia",
   "Oligodendrocytes",
 ];
 
@@ -42,6 +42,12 @@ const abToFull: Record<string, keyof typeof palette> = {
   OLIG2: "Oligodendrocytes",
 };
 
+function fmtNum(v: unknown, digits = 2) {
+  const n = typeof v === "number" ? v : Number(v);
+  if (!Number.isFinite(n)) return String(v ?? "");
+  return n.toFixed(digits);
+}
+
 export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
   if (!countsRow) {
     return (
@@ -51,55 +57,104 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     );
   }
 
-  // detect miR key (usually first col)
   const nameKey =
     Object.keys(countsRow).find((k) => k.toLowerCase().includes("mir")) ??
     Object.keys(countsRow)[0];
 
-  // group by sample suffix
-  const groupVals: Record<string, number[]> = {};
-  order.forEach((k) => (groupVals[k] = []));
+  const groupVals: Record<keyof typeof palette, number[]> = {
+    Neurons: [],
+    Astrocytes: [],
+    Microglia: [],
+    Oligodendrocytes: [],
+  };
 
   for (const [sample, val] of Object.entries(countsRow)) {
     if (sample === nameKey) continue;
-    if (typeof val !== "number") continue;
+
+    const num = typeof val === "number" ? val : Number(val);
+    if (!Number.isFinite(num)) continue;
 
     const parts = sample.split("_");
     const abbr = parts[1]?.toUpperCase();
-    const full = abToFull[abbr || ""] ?? undefined;
-    if (full) groupVals[full].push(val);
+    const full = abToFull[abbr || ""];
+    if (full) groupVals[full].push(num);
   }
 
-  // box + all points (transparent fill)
-  const traces = order.map((ct) => ({
-    type: "box" as const,
+  const allVals = order.flatMap((ct) => groupVals[ct]);
+
+  const maxY = allVals.length ? Math.max(...allVals) : 0;
+  const minY = allVals.length ? Math.min(...allVals) : 0;
+
+  // Top padding (nice spacing above)
+  const yTop = maxY > 0 ? maxY * 1.05 : 1;
+
+  // ✅ Bottom padding (THIS is the "distance from minimum" you can play with)
+  const PAD = Math.max(5, Math.min(500, maxY * 0.00001));
+  const yPadPoint = minY - PAD; // we'll force autorange to include this
+
+  const boxTraces: Partial<Data>[] = order.map((ct) => ({
+    type: "box",
     name: ct,
     y: groupVals[ct],
-    marker: { color: (palette as any)[ct], size: 6 },
-    line: { color: (palette as any)[ct], width: 3 },
-    fillcolor: "rgba(0,0,0,0)",
-    boxpoints: "all" as const,
-    jitter: 0.2,
+    boxpoints: "all",
+    jitter: 0.25,
     pointpos: 0,
-    hoverinfo: "y+name",
+    fillcolor: "rgba(0,0,0,0)",
+    marker: { color: palette[ct], size: 6, opacity: 0.9 },
+    line: { color: palette[ct], width: 3 },
     showlegend: false,
+    hovertemplate: "CPM: %{y:.0f}<extra></extra>",
   }));
+
+  // ✅ Invisible points to control autorange (bottom + top)
+  const padBottomTrace: Partial<Data> = {
+    type: "scatter",
+    mode: "markers",
+    x: [order[0]], // any category is fine
+    y: [yPadPoint],
+    marker: { opacity: 0, size: 0 },
+    hoverinfo: "skip",
+    showlegend: false,
+  };
+
+  const padTopTrace: Partial<Data> = {
+    type: "scatter",
+    mode: "markers",
+    x: [order[0]],
+    y: [yTop],
+    marker: { opacity: 0, size: 0 },
+    hoverinfo: "skip",
+    showlegend: false,
+  };
+
+  const traces: Partial<Data>[] = [
+    ...boxTraces,
+    padBottomTrace,
+    padTopTrace,
+  ];
 
   const layout: Partial<Layout> = {
     title: { text: mir },
-    // extra bottom room for long label "Oligodendrocytes"
-    margin: { l: 60, r: 10, t: 40, b: 190 },
+    paper_bgcolor: "white",
+    plot_bgcolor: "white",
+    margin: { l: 100, r: 20, t: 60, b: 150 },
     xaxis: {
       automargin: true,
       tickangle: -25,
       ticklabelposition: "outside",
+      ticks: "outside",
     },
     yaxis: {
-      title: { text: "Log(CPM)" },
+      title: { text: "CPM", standoff: 20 },
       zeroline: false,
+      showline: true,
       mirror: true,
       ticks: "outside",
       ticklen: 5,
+
+      // ✅ Let plotly autorange, and our invisible points will extend it
+      autorange: true,
+      rangemode: "normal",
     },
     autosize: true,
     height: 520,
@@ -107,27 +162,29 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
 
   return (
     <div className="grid grid-cols-12 gap-4 items-start">
-      {/* Plot */}
-      <div className="col-span-12 lg:col-span-8 rounded border bg-white">
-        <Plot data={traces as any} layout={layout} style={{ width: "100%" }} />
+      <div className="col-span-12 lg:col-span-8 rounded border bg-white p-3">
+        <Plot
+          data={traces as any}
+          layout={layout as any}
+          config={{ displayModeBar: false, responsive: true }}
+          style={{ width: "100%" }}
+          useResizeHandler
+        />
       </div>
 
-      {/* Stats box */}
       <div className="col-span-12 lg:col-span-4 rounded border bg-white p-4">
         <h4 className="font-semibold mb-2">Statistics</h4>
+
         {stat ? (
           <div className="space-y-1">
             <div>
-              <span className="font-semibold">logFC:</span>{" "}
-              {Number(stat.logFC).toFixed(2)}
+              <span className="font-semibold">logFC:</span> {fmtNum(stat.logFC, 2)}
             </div>
             <div>
-              <span className="font-semibold">P-val:</span>{" "}
-              {Number(stat["P.Value"]).toFixed(2)}
+              <span className="font-semibold">P-val:</span> {fmtNum(stat["P.Value"], 2)}
             </div>
             <div>
-              <span className="font-semibold">Adj.P-val:</span>{" "}
-              {Number(stat["adj.P.Val"]).toFixed(2)}
+              <span className="font-semibold">Adj.P-val:</span> {fmtNum(stat["adj.P.Val"], 2)}
             </div>
           </div>
         ) : (

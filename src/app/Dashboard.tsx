@@ -12,18 +12,14 @@ import MiniBoxWithStats from "./MiniBoxWithStats";
 import mirListRaw from "../data/mir_list.json";
 
 /* ---------- Public data files (public/data) ---------- */
-const PCA_CSV = "/data/mirs_pca_counts_df.csv";
+const PCA_CSV = "/data/mirs_pca_CPM_counts_df.csv";
 
-/* DE for the 3 pairwise comparisons (table #1) */
-const DE_N_A = "/data/DE_dream_miRs_N_A.csv"; // Neurons vs Astrocytes
-const DE_N_M = "/data/DE_dream_miRs_N_M.csv"; // Neurons vs Microglia
-const DE_M_A = "/data/DE_dream_miRs_M_A.csv"; // Microglia vs Astrocytes
+const DE_N_A = "/data/DE_dream_miRs_N_A.csv";
+const DE_N_M = "/data/DE_dream_miRs_N_M.csv";
+const DE_M_A = "/data/DE_dream_miRs_M_A.csv";
 
-/* DE for Oligodendrocyte vs All (box+stats section #2) */
 const DE_OLIGO_VS_ALL = "/data/DE_dream_miRs_O_vs_all.csv";
-
-/* Counts per sample for the mini-boxplot */
-const OLIGO_COUNTS = "/data/mirs_oligos_counts.csv";
+const OLIGO_COUNTS = "/data/mirs_oligos_CPM.csv";
 
 /* ---------- Types ---------- */
 export type PcaRow = {
@@ -95,8 +91,16 @@ function normalizeDeRows(rows: any[]): DeRow[] {
 
 export default function Dashboard() {
   const mirs = useMemo(() => normalizeMirList(mirListRaw), []);
+
+  // ✅ default miR on load: hsa-miR-7-5p
+  const DEFAULT_MIR = "hsa-miR-7-5p";
+
   const [query, setQuery] = useState("");
-  const [selectedMir, setSelectedMir] = useState<string>(mirs[0] ?? "");
+  const [selectedMir, setSelectedMir] = useState<string>(() => {
+    const list = normalizeMirList(mirListRaw);
+    if (list.includes(DEFAULT_MIR)) return DEFAULT_MIR;
+    return list[0] ?? "";
+  });
 
   const [pcaRows, setPcaRows] = useState<PcaRow[]>([]);
   const [deNA, setDeNA] = useState<DeRow[]>([]);
@@ -104,9 +108,6 @@ export default function Dashboard() {
   const [deMA, setDeMA] = useState<DeRow[]>([]);
   const [deOligoAll, setDeOligoAll] = useState<DeRow[]>([]);
   const [oligoRows, setOligoRows] = useState<any[]>([]);
-
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
   /* --- Load CSVs --- */
   useEffect(() => {
@@ -136,7 +137,7 @@ export default function Dashboard() {
     return mirs.filter((m) => m.toLowerCase().includes(q));
   }, [mirs, query]);
 
-  /* --- Step 1: keep selected in-sync with filtered options --- */
+  /* --- Keep selected in-sync with filtered options --- */
   useEffect(() => {
     if (!filteredOptions.length) return;
     if (!filteredOptions.includes(selectedMir)) {
@@ -153,6 +154,7 @@ export default function Dashboard() {
       pcaRows.length > 0 &&
       Object.prototype.hasOwnProperty.call(pcaRows[0], selectedMir);
     if (!hasCol) return false;
+
     const n = pcaRows.length;
     let cnt = 0;
     for (const r of pcaRows) {
@@ -189,12 +191,13 @@ export default function Dashboard() {
   /* --- Render --- */
   return (
     <div className="app-text zoom-80 mx-auto max-w-[1400px] px-6 py-8">
-      {/* Top header text only */}
-      <header className="flex justify-center mb-4">
-        <h1 className="font-bold"> The Live Human Brain MicroRNA&nbsp;Atlas </h1>
-      </header>
+      <header className="mb-6">
+  <h1 className="!text-4xl sm:!text-5xl !font-semibold text-center">
+    The Human Brain MicroRNA&nbsp;Atlas
+  </h1>
+</header>
 
-      {/* Search + combo */}
+
       <div className="flex gap-4 items-center mb-6">
         <input
           className="border rounded px-3 py-2 w-[420px]"
@@ -220,7 +223,6 @@ export default function Dashboard() {
         </select>
       </div>
 
-      {/* Top 3 charts */}
       {cpmOkTop ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="border rounded-lg p-3">
@@ -256,7 +258,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* ===== Table #1: THREE pairwise comparisons (N↔A, N↔M, A↔M) ===== */}
       <div className="mt-8">
         <p className="mb-3 text-gray-700">
           {`The table below summarizes the statistical comparison of cell type–specific profiles of ${selectedMir} across the three pairwise combinations.`}
@@ -297,7 +298,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ===== Boxplot + stats: Oligodendrocyte vs All ===== */}
       <div className="mt-10">
         <p className="mb-3 text-gray-700">
           {`The table below summarizes the statistical comparison of the oligodendrocyte profile of ${selectedMir} against all other cell types.`}
@@ -315,22 +315,6 @@ export default function Dashboard() {
           <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deOligoRow} />
         )}
       </div>
-
-      {/* Bottom "Main Page (1)" button */}
-      {mounted && (
-  <div className="flex justify-center mt-8 mb-2">
-    <button
-      type="button"
-      className="px-4 py-1 rounded-full border shadow-sm bg-white"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Go to top"
-      suppressHydrationWarning
-    >
-      Main Page (1)
-    </button>
-  </div>
-)}
-
     </div>
   );
 }
