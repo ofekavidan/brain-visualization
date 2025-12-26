@@ -68,6 +68,14 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     Oligodendrocytes: [],
   };
 
+  // ✅ added: parallel sample-id arrays per group (for hover text)
+  const groupTexts: Record<keyof typeof palette, string[]> = {
+    Neurons: [],
+    Astrocytes: [],
+    Microglia: [],
+    Oligodendrocytes: [],
+  };
+
   for (const [sample, val] of Object.entries(countsRow)) {
     if (sample === nameKey) continue;
 
@@ -77,7 +85,13 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     const parts = sample.split("_");
     const abbr = parts[1]?.toUpperCase();
     const full = abToFull[abbr || ""];
-    if (full) groupVals[full].push(num);
+    if (full) {
+      groupVals[full].push(num);
+
+      // ✅ added: HU17 from "HU17_GFAP" etc.
+      const sampleId = (parts[0] ?? "").trim();
+      groupTexts[full].push(sampleId);
+    }
   }
 
   const allVals = order.flatMap((ct) => groupVals[ct]);
@@ -96,6 +110,10 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     type: "box",
     name: ct,
     y: groupVals[ct],
+
+    // ✅ added: per-point sample id for hover
+    text: groupTexts[ct],
+
     boxpoints: "all",
     jitter: 0.25,
     pointpos: 0,
@@ -103,7 +121,10 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     marker: { color: palette[ct], size: 6, opacity: 0.9 },
     line: { color: palette[ct], width: 3 },
     showlegend: false,
-    hovertemplate: "CPM: %{y:.0f}<extra></extra>",
+
+    // ✅ updated only: hover now includes sample id
+    hovertemplate:
+      "Sample: %{text}<br>CPM: %{y:.0f}<extra></extra>",
   }));
 
   // ✅ Invisible points to control autorange (bottom + top)
@@ -127,11 +148,7 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
     showlegend: false,
   };
 
-  const traces: Partial<Data>[] = [
-    ...boxTraces,
-    padBottomTrace,
-    padTopTrace,
-  ];
+  const traces: Partial<Data>[] = [...boxTraces, padBottomTrace, padTopTrace];
 
   const layout: Partial<Layout> = {
     title: { text: mir },
@@ -178,13 +195,16 @@ export default function MiniBoxWithStats({ mir, countsRow, stat }: Props) {
         {stat ? (
           <div className="space-y-1">
             <div>
-              <span className="font-semibold">logFC:</span> {fmtNum(stat.logFC, 2)}
+              <span className="font-semibold">logFC:</span>{" "}
+              {fmtNum(stat.logFC, 2)}
             </div>
             <div>
-              <span className="font-semibold">P-val:</span> {fmtNum(stat["P.Value"], 2)}
+              <span className="font-semibold">P-val:</span>{" "}
+              {fmtNum(stat["P.Value"], 2)}
             </div>
             <div>
-              <span className="font-semibold">Adj.P-val:</span> {fmtNum(stat["adj.P.Val"], 2)}
+              <span className="font-semibold">Adj.P-val:</span>{" "}
+              {fmtNum(stat["adj.P.Val"], 2)}
             </div>
           </div>
         ) : (

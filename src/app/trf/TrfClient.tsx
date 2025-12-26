@@ -118,10 +118,44 @@ function normalizeKey(k: string) {
 
 function findKey(keys: string[], candidates: string[]) {
   const normCands = candidates.map(normalizeKey);
-  return (
-    keys.find((k) => normCands.includes(normalizeKey(k))) ??
-    null
-  );
+  return keys.find((k) => normCands.includes(normalizeKey(k))) ?? null;
+}
+
+/** ✅ added: sample-id helpers (only for hover) */
+function pickSampleKey(row: Record<string, unknown>): string | null {
+  const keys = Object.keys(row);
+  const candidates = [
+    "Unnamed: 0",
+    "Unnamed:0",
+    "Sample",
+    "sample",
+    "Sample ID",
+    "sample_id",
+    "id",
+    "ID",
+    "Index",
+    "index",
+  ];
+
+  for (const c of candidates) {
+    const exact = keys.find((k) => k === c);
+    if (exact) return exact;
+  }
+
+  const unnamed = keys.find((k) => k.toLowerCase().startsWith("unnamed"));
+  if (unnamed) return unnamed;
+
+  return null;
+}
+
+function sampleLabelFromRow(row: Record<string, unknown>): string {
+  const k = pickSampleKey(row);
+  const raw = k ? String((row as any)[k] ?? "") : "";
+  if (!raw) return "";
+
+  // Example: "HU44_GFAP" -> "HU44"
+  const short = raw.split("_")[0]?.trim() ?? raw.trim();
+  return short || raw.trim();
 }
 
 export default function TrfClient() {
@@ -131,8 +165,10 @@ export default function TrfClient() {
 
   // defaults
   const [origin, setOrigin] = useState<(typeof ORIGINS)[number]>("Nuc");
-  const [aminoAcid, setAminoAcid] = useState<(typeof AMINO_ACIDS)[number]>("Lys");
-  const [cleavageType, setCleavageType] = useState<(typeof CLEAVAGE_TYPES)[number]>("5'-half");
+  const [aminoAcid, setAminoAcid] =
+    useState<(typeof AMINO_ACIDS)[number]>("Lys");
+  const [cleavageType, setCleavageType] =
+    useState<(typeof CLEAVAGE_TYPES)[number]>("5'-half");
 
   useEffect(() => {
     setError(null);
@@ -226,8 +262,15 @@ export default function TrfClient() {
         name: ct,
         x: subset.map((r) => Number(r["PC 1"])),
         y: subset.map((r) => Number(r["PC 2"])),
+
+        // ✅ added: sample id for hover
+        text: subset.map((r) => sampleLabelFromRow(r as any)),
+
         marker: { size: 10, color: COLORS[ct], opacity: 0.9 },
-        hovertemplate: "PC1: %{x:.2f}<br>PC2: %{y:.2f}<extra></extra>",
+
+        // ✅ updated only: hover now includes sample id
+        hovertemplate:
+          "Sample: %{text}<br>PC1: %{x:.2f}<br>PC2: %{y:.2f}<extra></extra>",
       };
     });
 
@@ -281,11 +324,18 @@ export default function TrfClient() {
     const y = trfData.map((r) => Number(r["PC 2"]));
     const z = trfData.map((r) => Number((r as any)[trfOfInterest] ?? 0));
 
+    // ✅ added: sample id for hover
+    const text = trfData.map((r) => sampleLabelFromRow(r as any));
+
     const trace: Partial<Data> = {
       type: "scattergl",
       mode: "markers",
       x,
       y,
+
+      // ✅ added
+      text,
+
       marker: {
         size: 10,
         opacity: 0.85,
@@ -299,8 +349,10 @@ export default function TrfClient() {
           outlinewidth: 0,
         },
       },
+
+      // ✅ updated only: hover now includes sample id
       hovertemplate:
-        "PC1: %{x:.2f}<br>PC2: %{y:.2f}<br>log: %{marker.color:.2f}<extra></extra>",
+        "Sample: %{text}<br>PC1: %{x:.2f}<br>PC2: %{y:.2f}<br>log: %{marker.color:.2f}<extra></extra>",
     };
 
     const layout: Partial<Layout> = {
@@ -345,17 +397,34 @@ export default function TrfClient() {
       Microglia: [],
     };
 
+    // ✅ added: parallel texts per group (sample id for hover)
+    const groupTexts: Record<string, string[]> = {
+      Neurons: [],
+      Astrocytes: [],
+      Microglia: [],
+    };
+
     for (const r of trfData) {
       const ct = String(r["Cell Type"] ?? r["Cell type"]);
       const v = finiteNumber((r as any)[trfOfInterest]);
       if (v === null) continue;
-      if (ct in groupVals) groupVals[ct].push(v);
+
+      if (ct in groupVals) {
+        groupVals[ct].push(v);
+
+        // ✅ added
+        groupTexts[ct].push(sampleLabelFromRow(r as any));
+      }
     }
 
     const traces: Partial<Data>[] = CELL_TYPES.map((ct) => ({
       type: "box",
       name: ct,
       y: groupVals[ct],
+
+      // ✅ added
+      text: groupTexts[ct],
+
       marker: { color: COLORS[ct], size: 6 },
       line: { color: COLORS[ct], width: 3 },
       fillcolor: "rgba(0,0,0,0)",
@@ -363,7 +432,10 @@ export default function TrfClient() {
       jitter: 0.25,
       pointpos: 0,
       showlegend: false,
-      hovertemplate: "log(CPM): %{y:.2f}<extra></extra>",
+
+      // ✅ updated only: hover now includes sample id
+      hovertemplate:
+        "Sample: %{text}<br>log(CPM): %{y:.2f}<extra></extra>",
     }));
 
     const layout: Partial<Layout> = {
@@ -416,43 +488,45 @@ export default function TrfClient() {
     return filtered;
   }, [statTable, trfOfInterest]);
 
-// ✅ columns: order + aliasing exactly as requested
-const statsColumns = useMemo(() => {
-  const first = statsForFamily[0];
-  const keys = first ? Object.keys(first).filter((k) => !looksLikeBadHeader(k)) : [];
+  // ✅ columns: order + aliasing exactly as requested
+  const statsColumns = useMemo(() => {
+    const first = statsForFamily[0];
+    const keys = first
+      ? Object.keys(first).filter((k) => !looksLikeBadHeader(k))
+      : [];
 
-  const comparisonKey =
-    keys.find((k) => normalizeKey(k) === "comparison") ?? "Comparison";
+    const comparisonKey =
+      keys.find((k) => normalizeKey(k) === "comparison") ?? "Comparison";
 
-  const statKey =
-    keys.find((k) => normalizeKey(k) === "stat") ??
-    keys.find((k) => normalizeKey(k) === "t") ??
-    "Stat";
+    const statKey =
+      keys.find((k) => normalizeKey(k) === "stat") ??
+      keys.find((k) => normalizeKey(k) === "t") ??
+      "Stat";
 
-  const logfcKey =
-    keys.find((k) => normalizeKey(k) === "logfc") ??
-    keys.find((k) => normalizeKey(k) === "log2foldchange") ?? // <- your CSV
-    "log2FoldChange";
+    const logfcKey =
+      keys.find((k) => normalizeKey(k) === "logfc") ??
+      keys.find((k) => normalizeKey(k) === "log2foldchange") ?? // <- your CSV
+      "log2FoldChange";
 
-  const pvalueKey =
-    keys.find((k) => normalizeKey(k) === "pvalue") ?? // <- your CSV
-    keys.find((k) => normalizeKey(k) === "pvalue") ??
-    "Pvalue";
+    const pvalueKey =
+      keys.find((k) => normalizeKey(k) === "pvalue") ?? // <- your CSV
+      keys.find((k) => normalizeKey(k) === "pvalue") ??
+      "Pvalue";
 
-  const padjKey =
-    keys.find((k) => normalizeKey(k) === "adjpval") ??
-    keys.find((k) => normalizeKey(k) === "padj") ?? // <- your CSV
-    "Padj";
+    const padjKey =
+      keys.find((k) => normalizeKey(k) === "adjpval") ??
+      keys.find((k) => normalizeKey(k) === "padj") ?? // <- your CSV
+      "Padj";
 
-  // display labels are EXACTLY what you asked for
-  return [
-    { label: "Comparison", key: comparisonKey },
-    { label: "Stat", key: statKey },
-    { label: "logFC", key: logfcKey },
-    { label: "P.Value", key: pvalueKey },
-    { label: "adj.P.Val", key: padjKey },
-  ] as const;
-}, [statsForFamily]);
+    // display labels are EXACTLY what you asked for
+    return [
+      { label: "Comparison", key: comparisonKey },
+      { label: "Stat", key: statKey },
+      { label: "logFC", key: logfcKey },
+      { label: "P.Value", key: pvalueKey },
+      { label: "adj.P.Val", key: padjKey },
+    ] as const;
+  }, [statsForFamily]);
 
   if (error) {
     return (
@@ -508,7 +582,9 @@ const statsColumns = useMemo(() => {
         {/* 3 selection boxes */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 max-w-[1100px] mx-auto">
           <div className="w-full">
-            <label className="block text-sm text-gray-600 mb-2">Select the origin</label>
+            <label className="block text-sm text-gray-600 mb-2">
+              Select the origin
+            </label>
             <select
               className="border rounded px-3 py-2 w-full"
               value={origin}
@@ -523,7 +599,9 @@ const statsColumns = useMemo(() => {
           </div>
 
           <div className="w-full">
-            <label className="block text-sm text-gray-600 mb-2">Select the amino acid</label>
+            <label className="block text-sm text-gray-600 mb-2">
+              Select the amino acid
+            </label>
             <select
               className="border rounded px-3 py-2 w-full"
               value={aminoAcid}
@@ -538,7 +616,9 @@ const statsColumns = useMemo(() => {
           </div>
 
           <div className="w-full">
-            <label className="block text-sm text-gray-600 mb-2">Select the cleavage type</label>
+            <label className="block text-sm text-gray-600 mb-2">
+              Select the cleavage type
+            </label>
             <select
               className="border rounded px-3 py-2 w-full"
               value={cleavageType}
@@ -611,39 +691,41 @@ const statsColumns = useMemo(() => {
 
         {/* Stats table */}
         <div className="mt-6 overflow-x-auto rounded border">
-  <table className="min-w-full">
-    <thead className="bg-gray-50">
-      <tr className="text-left">
-        {statsColumns.map((c) => (
-          <th key={c.label} className="px-3 py-2">
-            {c.label}
-          </th>
-        ))}
-      </tr>
-    </thead>
+          <table className="min-w-full">
+            <thead className="bg-gray-50">
+              <tr className="text-left">
+                {statsColumns.map((c) => (
+                  <th key={c.label} className="px-3 py-2">
+                    {c.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
 
-    <tbody>
-      {statsForFamily.map((r, idx) => (
-        <tr key={idx} className="border-t">
-          {statsColumns.map((c) => (
-            <td key={c.label} className="px-3 py-2 whitespace-nowrap">
-              {fmtCell((r as any)[c.key], c.label)}
-            </td>
-          ))}
-        </tr>
-      ))}
+            <tbody>
+              {statsForFamily.map((r, idx) => (
+                <tr key={idx} className="border-t">
+                  {statsColumns.map((c) => (
+                    <td key={c.label} className="px-3 py-2 whitespace-nowrap">
+                      {fmtCell((r as any)[c.key], c.label)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
 
-      {statsForFamily.length === 0 && (
-        <tr className="border-t">
-          <td className="px-3 py-4 text-gray-500" colSpan={statsColumns.length}>
-            No data yet.
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-</div>
-
+              {statsForFamily.length === 0 && (
+                <tr className="border-t">
+                  <td
+                    className="px-3 py-4 text-gray-500"
+                    colSpan={statsColumns.length}
+                  >
+                    No data yet.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         <div className="h-6" />
       </div>

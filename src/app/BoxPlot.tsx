@@ -24,6 +24,82 @@ function chooseDtick(maxY: number) {
   return 100;
 }
 
+// build at most `maxTicks` y-ticks (starting at 0) so labels don't overlap
+function buildTickVals(maxY: number, maxTicks = 6): number[] {
+  if (!Number.isFinite(maxY) || maxY <= 0) return [0];
+
+  let dt = chooseDtick(maxY);
+
+  // if too many ticks, enlarge step by an integer factor
+  const baseCount = Math.floor(maxY / dt) + 1; // includes 0
+  if (baseCount > maxTicks) {
+    const factor = Math.ceil((baseCount - 1) / (maxTicks - 1));
+    dt *= factor;
+  }
+
+  // generate ticks 0..maxY by dt
+  const ticks: number[] = [];
+  for (let v = 0; v <= maxY + 1e-9; v += dt) ticks.push(v);
+
+  // ensure we include maxY as last tick (helps when maxY is not aligned to dt)
+  if (ticks[ticks.length - 1] < maxY) ticks.push(maxY);
+
+  // if still too many, subsample evenly down to maxTicks
+  if (ticks.length > maxTicks) {
+    const out: number[] = [];
+    const last = ticks.length - 1;
+    for (let i = 0; i < maxTicks; i++) {
+      const idx = Math.round((i * last) / (maxTicks - 1));
+      out.push(ticks[idx]);
+    }
+    // de-dup (rounding can collide)
+    return Array.from(new Set(out)).sort((a, b) => a - b);
+  }
+
+  return ticks;
+}
+
+function pickSampleKey(row: Record<string, unknown>): string | null {
+  const keys = Object.keys(row);
+
+  // common candidates (your PCA CSV uses "Unnamed: 0" as the sample name column)
+  const candidates = [
+    "Sample",
+    "sample",
+    "Sample ID",
+    "sample_id",
+    "id",
+    "ID",
+    "Index",
+    "index",
+    "Unnamed: 0",
+    "unnamed: 0",
+    "unnamed:0",
+    "Unnamed:0",
+  ];
+
+  for (const c of candidates) {
+    const exact = keys.find((k) => k === c);
+    if (exact) return exact;
+  }
+
+  // fallback: any "unnamed" column
+  const unnamed = keys.find((k) => k.toLowerCase().startsWith("unnamed"));
+  if (unnamed) return unnamed;
+
+  return null;
+}
+
+function sampleLabelFromRow(row: Record<string, unknown>): string {
+  const k = pickSampleKey(row);
+  const raw = k ? String((row as any)[k] ?? "") : "";
+  if (!raw) return "";
+
+  // Example: "HU44_GFAP" -> want "HU44" (what you asked: Hu17 / hu29)
+  const short = raw.split("_")[0]?.trim() ?? raw.trim();
+  return short || raw.trim();
+}
+
 export default function BoxPlot({
   title,
   data,
@@ -31,43 +107,58 @@ export default function BoxPlot({
   colors = { neurons: "#E64B35", astro: "#4DBBD5", micro: "#00A087" },
   height = 520,
 }: Props) {
-  const getY = (cell: string) =>
+  type Point = { y: number; text: string };
+
+  const getPoints = (cell: string): Point[] =>
     data
       .filter((r) => String(r["Cell type"]).toLowerCase().includes(cell))
-      .map((r) => Number((r as any)[mir]))
-      .filter((v) => Number.isFinite(v));
+      .map((r) => {
+        const y = Number((r as any)[mir]);
+        const text = sampleLabelFromRow(r as any);
+        return { y, text };
+      })
+      .filter((p) => Number.isFinite(p.y));
 
-  const neurons = getY("neuron");
-  const astro = getY("astro");
-  const micro = getY("micro");
+  const neuronsPts = getPoints("neuron");
+  const astroPts = getPoints("astro");
+  const microPts = getPoints("micro");
+
+  const neurons = neuronsPts.map((p) => p.y);
+  const astro = astroPts.map((p) => p.y);
+  const micro = microPts.map((p) => p.y);
 
   const allVals = [...neurons, ...astro, ...micro];
   const minY = allVals.length ? Math.min(...allVals) : 0;
   const maxY = allVals.length ? Math.max(...allVals) : 0;
 
-  // ✅ padding that is actually visible on large CPM scales:
-  //    at least 10, but also ~5% of max (capped a bit so it doesn't get crazy)
+  // padding that is actually visible on large CPM scales
   const PAD = Math.max(5, Math.min(500, maxY * 0.00001));
-  const yPadPoint = minY - PAD; // we'll force autorange to include this
+  const yPadPoint = minY - PAD;
 
-  const trace = (name: string, y: number[], color: string): Partial<Data> => ({
+  const trace = (
+    name: string,
+    pts: Point[],
+    color: string
+  ): Partial<Data> => ({
     type: "box",
     name,
-    y,
+    y: pts.map((p) => p.y),
+    text: pts.map((p) => p.text), // <-- per-point sample id
     boxpoints: "all",
     jitter: 0.35,
     pointpos: 0,
     marker: { color, opacity: 0.85, size: 7 },
     line: { color, width: 3 },
     fillcolor: "rgba(0,0,0,0)",
-    hovertemplate: "CPM: %{y:.0f}<extra></extra>",
+    hovertemplate:
+      "Sample: %{text}<br>CPM: %{y:.0f}<extra></extra>",
   });
 
-  // ✅ invisible trace that only exists to expand y-range below the min
+  // invisible trace that only exists to expand y-range below the min
   const padTrace: Partial<Data> = {
     type: "scatter",
     mode: "markers",
-    x: ["Neurons"], // any x-category that exists
+    x: ["Neurons"],
     y: [yPadPoint],
     marker: { opacity: 0, size: 1 },
     hoverinfo: "skip",
@@ -75,13 +166,13 @@ export default function BoxPlot({
   };
 
   const dataTraces: Partial<Data>[] = [
-    trace("Neurons", neurons, colors.neurons),
-    trace("Astrocytes", astro, colors.astro),
-    trace("Microglia", micro, colors.micro),
+    trace("Neurons", neuronsPts, colors.neurons),
+    trace("Astrocytes", astroPts, colors.astro),
+    trace("Microglia", microPts, colors.micro),
     padTrace,
   ];
 
-  const dtick = chooseDtick(maxY);
+  const tickvals = buildTickVals(maxY, 6);
 
   const layout: Partial<Layout> = {
     title: { text: title },
@@ -99,14 +190,9 @@ export default function BoxPlot({
       ticks: "outside",
       ticklen: 5,
       automargin: true,
-
-      // ✅ crucial: do NOT force "tozero"
       rangemode: "normal",
-
-      // ✅ keep ticks starting at 0 (so you don't see negative labels),
-      // but still have blank space below 0 thanks to padTrace.
-      tick0: 0,
-      dtick,
+      tickmode: "array",
+      tickvals,
       tickformat: "~s",
     },
     showlegend: false,
@@ -117,7 +203,7 @@ export default function BoxPlot({
 
   return (
     <Plot
-      key={`${mir}-${title}`} // remount when mir changes
+      key={`${mir}-${title}`}
       data={dataTraces as any}
       layout={layout as any}
       config={{ displayModeBar: false, responsive: true }}

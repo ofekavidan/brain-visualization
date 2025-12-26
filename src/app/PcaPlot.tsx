@@ -26,6 +26,44 @@ const COLORS = {
   Microglia: "#00A087",
 } as const;
 
+// ✅ added: sample id helpers (no other behavior changes)
+function pickSampleKey(row: Record<string, unknown>): string | null {
+  const keys = Object.keys(row);
+
+  const candidates = [
+    "Unnamed: 0",
+    "Unnamed:0",
+    "Sample",
+    "sample",
+    "Sample ID",
+    "sample_id",
+    "id",
+    "ID",
+    "Index",
+    "index",
+  ];
+
+  for (const c of candidates) {
+    const exact = keys.find((k) => k === c);
+    if (exact) return exact;
+  }
+
+  const unnamed = keys.find((k) => k.toLowerCase().startsWith("unnamed"));
+  if (unnamed) return unnamed;
+
+  return null;
+}
+
+function sampleLabelFromRow(row: Record<string, unknown>): string {
+  const k = pickSampleKey(row);
+  const raw = k ? String((row as any)[k] ?? "") : "";
+  if (!raw) return "";
+
+  // Example: "HU44_GFAP" -> "HU44"
+  const short = raw.split("_")[0]?.trim() ?? raw.trim();
+  return short || raw.trim();
+}
+
 export default function PcaPlot({ data, pc1Var, pc2Var, height = 420 }: Props) {
   const types = ["Neurons", "Astrocytes", "Microglia"] as const;
 
@@ -37,16 +75,25 @@ export default function PcaPlot({ data, pc1Var, pc2Var, height = 420 }: Props) {
       name: ct,
       x: subset.map((r) => Number(r["PC 1"])),
       y: subset.map((r) => Number(r["PC 2"])),
+
+      // ✅ added: per-point sample id for hover
+      text: subset.map((r) => sampleLabelFromRow(r as any)),
+
       marker: { size: 8, color: COLORS[ct], opacity: 0.9 },
-      hovertemplate: "PC1: %{x:.2f}<br>PC2: %{y:.2f}<extra></extra>",
+
+      // ✅ updated only: hover now includes sample id
+      hovertemplate:
+        "Sample: %{text}<br>PC1: %{x:.2f}<br>PC2: %{y:.2f}<extra></extra>",
     };
   });
 
   // טווחים ריבועיים (כמו באמצעי)
   const xs = data.map((r) => Number(r["PC 1"]));
   const ys = data.map((r) => Number(r["PC 2"]));
-  const minX = Math.min(...xs), maxX = Math.max(...xs);
-  const minY = Math.min(...ys), maxY = Math.max(...ys);
+  const minX = Math.min(...xs),
+    maxX = Math.max(...xs);
+  const minY = Math.min(...ys),
+    maxY = Math.max(...ys);
   const cx = (minX + maxX) / 2;
   const cy = (minY + maxY) / 2;
   const span = Math.max(maxX - minX, maxY - minY);
