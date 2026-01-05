@@ -7,6 +7,8 @@ import Papa from "papaparse";
 import type { Data, Layout } from "plotly.js";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+const PREPRINT_URL =
+  "https://www.biorxiv.org/content/10.64898/2026.01.04.697535v1";
 
 type TrfRow = Record<string, string | number>;
 type StatRow = Record<string, string | number>;
@@ -568,10 +570,24 @@ export default function TrfClient() {
           </div>
 
           <div className="lg:col-span-6">
-            <p className="text-base sm:text-lg text-gray-700 leading-7">
-              {readmeTop}
-            </p>
-          </div>
+  <p className="text-base sm:text-lg text-gray-700 leading-7">
+    {readmeTop}
+  </p>
+
+  <p className="text-base sm:text-lg text-gray-700 leading-7 mt-2">
+    For additional details and citation, please refer to our preprint:{" "}
+    <a
+      className="underline"
+      href={PREPRINT_URL}
+      target="_blank"
+      rel="noreferrer"
+    >
+      Dubnov et al., 2026
+    </a>
+    .
+  </p>
+</div>
+
         </div>
 
         {/* Selector README */}
@@ -690,8 +706,8 @@ export default function TrfClient() {
         </p>
 
         {/* Stats table */}
-        <div className="mt-6 overflow-x-auto rounded border">
-          <table className="min-w-full">
+<div className="mt-6 overflow-x-auto rounded border">
+  <table className="min-w-full !text-xl">
             <thead className="bg-gray-50">
               <tr className="text-left">
                 {statsColumns.map((c) => (

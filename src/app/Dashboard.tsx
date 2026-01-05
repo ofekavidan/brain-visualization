@@ -315,6 +315,21 @@ export default function Dashboard() {
           <MiniBoxWithStats mir={selectedMir} countsRow={oligoRow} stat={deOligoRow} />
         )}
       </div>
+{/* ✅ Preprint footer (added at the very bottom of the main page) */}
+      <div className="mt-16 pt-6 border-t border-gray-200">
+        <p className="text-sm text-gray-600">
+          For additional details and citation, please refer to our preprint:{" "}
+          <a
+            className="underline"
+            href="https://www.biorxiv.org/content/10.64898/2026.01.04.697535v1"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Dubnov et al., 2026
+          </a>
+          .
+        </p>
+      </div>
     </div>
   );
 }

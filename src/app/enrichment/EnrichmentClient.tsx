@@ -297,41 +297,41 @@ export default function EnrichmentClient() {
   }, [rows]);
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
-      {/* Title (unchanged) */}
-      <div className="flex justify-center mb-4">
-        <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-6">
-          Cell type enrichment in a list of miRs of interest
-        </h1>
-      </div>
+  <div className="mx-auto max-w-7xl px-6 py-8">
+    {/* Title (unchanged) */}
+    <div className="flex justify-center mb-4">
+      <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-6">
+        Cell type enrichment in a list of miRs of interest
+      </h1>
+    </div>
 
-      {/* Description (the “golden” style) */}
-      <p className={TEXT_CLASS} style={TEXT_STYLE}>
-        This tool infers the cell type enrichment of a microRNA (miR) list using a
-        reference-based deconvolution approach. It compares the user-provided miRs to a
-        curated atlas of cell-type-specific miR markers and computes the fraction of
-        markers detected for each cell type. To determine whether the observed overlap is
-        greater than expected by chance, the tool applies a one-sided Fisher’s exact test
-        for each cell type, followed by FDR correction. The output highlights the cell
-        types whose marker miRs are significantly enriched in the input list.
+    {/* Description (updated text) */}
+    <p className={TEXT_CLASS} style={TEXT_STYLE}>
+      This tool infers the cell type enrichment of a microRNA (miR) list using a
+      reference-based deconvolution approach. It compares the user-provided miRs to a
+      curated atlas of cell-type-specific miR markers and computes the fraction of
+      markers detected for each cell type. To determine whether the observed overlap is
+      greater than expected by chance, the tool applies a one-sided Fisher’s exact test
+      for each cell type, followed by FDR correction. The output highlights the cell
+      types whose marker miRs are significantly enriched in the input list.
+    </p>
+
+    {/* Preprint line (updated) */}
+    <div className="mt-2 flex justify-start">
+      <p className={`${TEXT_CLASS} text-left`} style={TEXT_STYLE}>
+        For additional details and citation, please refer to our preprint:{" "}
+        <a
+          className="underline"
+          href="https://www.biorxiv.org/content/10.64898/2026.01.04.697535v1"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Dubnov et al., 2026
+        </a>
+        .
       </p>
-
-      {/* Preprint line */}
-      <div className="mt-2 flex justify-start">
-        <p className={`${TEXT_CLASS} text-left`} style={TEXT_STYLE}>
-          For more information, please refer to our preprint – Dubnov et al.,{" "}
-          <a
-            className="underline"
-            href="https://www.biorxiv.org"
-            target="_blank"
-            rel="noreferrer"
-          >
-            bioRxiv
-          </a>
-          , 2026.
-        </p>
-      </div>
-
+    </div>
+    
       {/* Controls */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mt-6">
         <div className="md:col-span-2">
