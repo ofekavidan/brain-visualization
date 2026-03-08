@@ -170,7 +170,7 @@ export default function Dashboard() {
     return [
       { cmp: "Neurons vs Astrocytes", row: find(deNA, selectedMir) },
       { cmp: "Neurons vs Microglia", row: find(deNM, selectedMir) },
-      { cmp: "Astrocytes vs Microglia", row: find(deMA, selectedMir) },
+      { cmp: "Microglia vs Astrocytes", row: find(deMA, selectedMir) },
     ] as Array<{ cmp: string; row?: DeRow }>;
   }, [deNA, deNM, deMA, selectedMir]);
 
