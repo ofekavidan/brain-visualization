@@ -12,12 +12,6 @@ const FILES = [
     description: "Raw aligned read counts for microRNAs (miRs).",
   },
   {
-    title: "raw_counts_tRF_families.csv",
-    filename: "raw_counts_tRF_families.csv",
-    href: `${DATA_BASE}/raw_counts_tRF_families.csv`,
-    description: "Raw aligned read counts for tRF families.",
-  },
-  {
     title: "Sample_metadata.csv",
     filename: "Sample_metadata.csv",
     href: `${DATA_BASE}/Sample_metadata.csv`,
@@ -64,7 +58,7 @@ export default function DownloadsClient() {
         </h1>
 
         <p className="text-base sm:text-lg text-gray-700 leading-7 max-w-[1100px] mx-auto mt-3 text-center">
-          Here we provide the raw aligned reads for microRNAs and for tRF families,
+          Here we provide the raw aligned reads for microRNAs,
           along with the sample metadata table.
         </p>
 

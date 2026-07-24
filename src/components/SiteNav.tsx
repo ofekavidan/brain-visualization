@@ -8,7 +8,6 @@ type NavItem = { href: string; label: string };
 const NAV: NavItem[] = [
   { href: "/", label: "miR Atlas" },
   { href: "/enrichment", label: "Enrichment" },
-  { href: "/trf", label: "tRF Atlas" },
   { href: "/downloads", label: "Downloads" },
 ];
 
