@@ -193,7 +193,7 @@ export default function Dashboard() {
     <div className="app-text zoom-80 mx-auto max-w-[1400px] px-6 py-8">
       <header className="mb-6">
   <h1 className="!text-4xl sm:!text-5xl !font-semibold text-center">
-    The Human Brain MicroRNA&nbsp;Atlas
+    BACTMan - Brain Annotation of Cell-Type-enriched MicroRNAs
   </h1>
 </header>
 
@@ -226,7 +226,7 @@ export default function Dashboard() {
       {cpmOkTop ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="border rounded-lg p-3">
-            <PcaPlot data={pcaRows} pc1Var={56.2} pc2Var={34.2} />
+            <PcaPlot data={pcaRows} pc1Var={21.0} pc2Var={11.4} />
           </div>
 
           <div className="border rounded-lg p-3">
@@ -234,8 +234,8 @@ export default function Dashboard() {
               title={selectedMir}
               data={pcaRows}
               mir={selectedMir}
-              pc1Var={56.2}
-              pc2Var={34.2}
+              pc1Var={21.0}
+              pc2Var={11.4}
             />
           </div>
 

@@ -1,324 +1,66 @@
-// src/app/enrichment/EnrichmentClient.tsx
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import dynamic from "next/dynamic";
-import type { Data, Layout, Shape } from "plotly.js";
+import { useMemo, useState } from "react";
+import referenceJson from "@/data/bactman_reference.json";
+import {
+  runEnrichment,
+  type BactmanReference,
+  type Level,
+} from "@/lib/bactmanEnrichment";
+import { EnrichmentDotPlot, MarkerStarPlot } from "./EnrichmentPlots";
 
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+const reference = referenceJson as BactmanReference;
+const EXAMPLE = Object.entries(reference.example_lists);
 
-type CTMarkers = Record<string, string[]>;
-
-type Row = {
-  cellType: string;
-  pctOverlap: number; // % overlap out of reference marker list
-  oddsRatio: number;
-  pValue: number;
-  pAdj: number;
-  log10Padj: number; // -log10(pAdj)
-};
-
-const DATA_BASE = "/data";
-
-async function loadJSON<T>(path: string): Promise<T> {
-  const r = await fetch(path, { cache: "force-cache" });
-  if (!r.ok) throw new Error(`Failed to fetch ${path}`);
-  return r.json();
-}
-
-/* ---------------- Fisher exact (one-sided “greater”) + BH ---------------- */
-
-function logFactorial(n: number) {
-  if (n < 2) return 0;
-  let s = 0;
-  for (let k = 2; k <= n; k++) s += Math.log(k);
-  return s;
-}
-function logChoose(n: number, k: number) {
-  if (k < 0 || k > n) return -Infinity;
-  return logFactorial(n) - logFactorial(k) - logFactorial(n - k);
-}
-function hypergeomPMF(x: number, K: number, N: number, n: number) {
-  if (x < 0 || x > K || x > n || n > N) return 0;
-  const logp = logChoose(K, x) + logChoose(N - K, n - x) - logChoose(N, n);
-  return Math.exp(logp);
-}
-function fisherExactGreater(a: number, b: number, c: number, d: number) {
-  const n = a + b + c + d;
-  const row1 = a + b;
-  const col1 = a + c;
-  let p = 0;
-
-  const xMax = Math.min(row1, col1);
-  for (let x = a; x <= xMax; x++) p += hypergeomPMF(x, col1, n, row1);
-
-  return Math.min(1, Math.max(0, p));
-}
-function benjaminiHochberg(pvals: number[]) {
-  const m = pvals.length;
-  const idx = pvals.map((p, i) => [p, i] as const).sort((a, b) => a[0] - b[0]);
-  const adj = new Array(m).fill(0);
-  let prev = Infinity;
-
-  for (let i = m - 1; i >= 0; i--) {
-    const [p, orig] = idx[i];
-    const val = Math.min(prev, (p * m) / (i + 1));
-    adj[orig] = val;
-    prev = val;
-  }
-
-  return adj.map((x) => Math.min(1, Math.max(0, x)));
-}
-
-/* ---------------- utils ---------------- */
-
-function parseMirList(text: string) {
-  return Array.from(
-    new Set(
-      text
-        .split(/[\s,;]+/g)
-        .map((s) => s.trim())
-        .filter(Boolean)
-    )
-  );
-}
-
-function safeLog10(x: number) {
-  if (!Number.isFinite(x) || x <= 0) return 0;
-  return Math.log(x) / Math.log(10);
-}
-
-/* ---------------- desired order ---------------- */
-const DEFAULT_ORDER = ["Neurons", "Astrocytes", "Microglia", "Oligodendrocytes"];
-
-/** ✅ One unified text style for the whole page (excluding title + plot) */
 const TEXT_STYLE: React.CSSProperties = {
   fontSize: "16px",
   lineHeight: "1.5",
   fontWeight: 400,
 };
 
-const TEXT_CLASS = "text-gray-700";
+function exampleLists() {
+  return [0, 1].map((i) => ({
+    label: EXAMPLE[i]?.[0] ?? `List ${i + 1}`,
+    text: EXAMPLE[i]?.[1] ?? "",
+  }));
+}
+
+function fmtP(p: number) {
+  if (!Number.isFinite(p)) return "—";
+  return p < 0.001 ? p.toExponential(2) : p.toFixed(4);
+}
 
 export default function EnrichmentClient() {
-  const [ctMarkers, setCtMarkers] = useState<CTMarkers | null>(null);
-  const [allExpressed, setAllExpressed] = useState<string[]>([]);
-  const [exampleList, setExampleList] = useState<string[]>([]);
-  const [textarea, setTextarea] = useState<string>("");
+  const [lists, setLists] = useState(exampleLists);
+  const [level, setLevel] = useState<Level>("mature");
 
-  const mirList = useMemo(() => parseMirList(textarea), [textarea]);
-
-  useEffect(() => {
-    (async () => {
-      const [ctm, allM, ex] = await Promise.all([
-        loadJSON<CTMarkers>(`${DATA_BASE}/cell_type_markers.json`),
-        loadJSON<string[]>(`${DATA_BASE}/all_expressed_mirs.json`),
-        loadJSON<string[]>(`${DATA_BASE}/AD_example_list.json`),
-      ]);
-      setCtMarkers(ctm);
-      setAllExpressed(allM);
-      setExampleList(ex);
-    })().catch(console.error);
-  }, []);
-
-  const cellTypes = useMemo(() => {
-    if (!ctMarkers) return [];
-    const keys = Object.keys(ctMarkers);
-
-    const ordered = DEFAULT_ORDER.filter((ct) => keys.includes(ct));
-    const rest = keys.filter((k) => !ordered.includes(k));
-    return [...ordered, ...rest];
-  }, [ctMarkers]);
-
-  const notInAtlas = useMemo(
-    () => mirList.filter((m) => !allExpressed.some((x) => x.includes(m))),
-    [mirList, allExpressed]
+  const result = useMemo(
+    () => runEnrichment(reference, lists, level),
+    [lists, level]
   );
 
-  const inAtlas = useMemo(
-    () => mirList.filter((m) => allExpressed.some((x) => x.includes(m))),
-    [mirList, allExpressed]
-  );
-
-  const rows: Row[] = useMemo(() => {
-    if (!ctMarkers || cellTypes.length === 0) return [];
-
-    const nunexAD = new Set(
-      allExpressed.filter((m) => inAtlas.some((q) => m.includes(q)))
-    );
-    const nunexNotAD = new Set(allExpressed.filter((m) => !nunexAD.has(m)));
-
-    const out: Omit<Row, "pAdj" | "log10Padj">[] = [];
-    const pvals: number[] = [];
-
-    for (const ct of cellTypes) {
-      const markersArr = ctMarkers[ct] || [];
-      const markers = new Set(markersArr);
-
-      const overlapCt = new Set(
-        [...markers].filter((m) => inAtlas.some((q) => m.includes(q)))
-      );
-
-      const ad_not_ct = new Set([...nunexAD].filter((m) => !overlapCt.has(m)));
-      const not_ad_not_ct = new Set(
-        [...nunexNotAD].filter((m) => !overlapCt.has(m))
-      );
-      const ct_not_ad = new Set([...markers].filter((m) => !nunexAD.has(m)));
-
-      const a = overlapCt.size;
-      const b = ad_not_ct.size;
-      const c = ct_not_ad.size;
-      const d = not_ad_not_ct.size;
-
-      const p = fisherExactGreater(a, b, c, d);
-      pvals.push(p);
-
-      const pct = (a * 100) / Math.max(1, markers.size);
-      const or = (a * d) / Math.max(1e-12, b * c);
-
-      out.push({
-        cellType: ct,
-        pctOverlap: pct,
-        oddsRatio: or,
-        pValue: p,
-      });
-    }
-
-    const padj = benjaminiHochberg(pvals);
-
-    return out.map((r, i) => {
-      const q = padj[i];
-      const log10Padj = q > 0 ? -safeLog10(q) : 0;
-      return { ...r, pAdj: q, log10Padj };
-    });
-  }, [ctMarkers, cellTypes, allExpressed, inAtlas]);
-
-  /* ---------------- Dotplot (like python) ---------------- */
-  const dotPlot = useMemo(() => {
-    if (!rows.length) return null;
-
-    const yCats = [...rows.map((r) => r.cellType)].reverse();
-
-    const xMap = new Map(rows.map((r) => [r.cellType, r.oddsRatio]));
-    const cMap = new Map(rows.map((r) => [r.cellType, r.log10Padj]));
-    const pAdjMap = new Map(rows.map((r) => [r.cellType, r.pAdj]));
-
-    const y = yCats;
-    const x = y.map((ct) => xMap.get(ct) ?? 0);
-    const col = y.map((ct) => cMap.get(ct) ?? 0);
-    const padj = y.map((ct) => pAdjMap.get(ct) ?? 1);
-
-    const maxX = Math.max(1, ...x.filter((v) => Number.isFinite(v)));
-    const xMax = Math.max(1, maxX * 1.05);
-    const xMin = -0.1;
-
-    const shapes: Partial<Shape>[] = y.map((ct, i) => ({
-      type: "line",
-      x0: 0,
-      x1: x[i] ?? 0,
-      y0: ct,
-      y1: ct,
-      xref: "x",
-      yref: "y",
-      line: { color: "lightgrey", width: 1 },
-      opacity: 1,
-      layer: "below",
-    }));
-
-    const trace: Partial<Data> = {
-      type: "scatter",
-      mode: "markers",
-      x,
-      y,
-      marker: {
-        size: 26,
-        opacity: 0.85,
-        color: col,
-        colorscale: "Viridis",
-        showscale: true,
-        line: { color: "black", width: 0.5 },
-        colorbar: {
-          title: { text: "-log10(Padj)" },
-          thickness: 18,
-          outlinewidth: 0,
-        },
-      },
-      customdata: padj,
-      hovertemplate:
-        "Cell type: %{y}<br>Odd ratio: %{x:.3g}<br>Padj: %{customdata:.3g}<br>-log10(Padj): %{marker.color:.2f}<extra></extra>",
-      showlegend: false,
-    };
-
-    const height = Math.max(420, 120 + y.length * 55);
-
-    const layout: Partial<Layout> = {
-      paper_bgcolor: "white",
-      plot_bgcolor: "white",
-      margin: { l: 180, r: 60, t: 10, b: 60 },
-      xaxis: {
-        title: { text: "Odd ratio" },
-        zeroline: false,
-        showline: true,
-        mirror: true,
-        linecolor: "black",
-        linewidth: 1,
-        ticks: "outside",
-        ticklen: 5,
-        range: [xMin, xMax],
-      },
-      yaxis: {
-        title: { text: "" },
-        automargin: true,
-        categoryorder: "array",
-        categoryarray: y,
-        zeroline: false,
-        showline: true,
-        mirror: true,
-        linecolor: "black",
-        linewidth: 1,
-        ticks: "outside",
-        ticklen: 5,
-      },
-      shapes: shapes as any,
-      height,
-    };
-
-    return (
-      <div className="rounded border bg-white p-3">
-        <Plot
-          data={[trace as any]}
-          layout={layout as any}
-          config={{ displayModeBar: false, responsive: true }}
-          style={{ width: "100%" }}
-          useResizeHandler
-        />
-      </div>
-    );
-  }, [rows]);
+  const hasStars = result.lists.some((label) => (result.enriched[label] ?? []).length > 0);
 
   return (
-  <div className="mx-auto max-w-7xl px-6 py-8">
-    {/* Title (unchanged) */}
-    <div className="flex justify-center mb-4">
-      <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-6">
-        Cell type enrichment in a list of miRs of interest
-      </h1>
-    </div>
+    <div className="mx-auto max-w-7xl px-6 py-8">
+      <div className="flex justify-center mb-4">
+        <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-6">
+          Cell type enrichment in lists of miRs of interest
+        </h1>
+      </div>
 
-    {/* Description (updated text) */}
-    <p className={TEXT_CLASS} style={TEXT_STYLE}>
-      This tool infers the cell type enrichment of a microRNA (miR) list using a
-      reference-based deconvolution approach. It compares the user-provided miRs to a
-      curated atlas of cell-type-specific miR markers and computes the fraction of
-      markers detected for each cell type. To determine whether the observed overlap is
-      greater than expected by chance, the tool applies a one-sided Fisher’s exact test
-      for each cell type, followed by FDR correction. The output highlights the cell
-      types whose marker miRs are significantly enriched in the input list.
-    </p>
+      <p className="text-gray-700" style={TEXT_STYLE}>
+        Each list is tested separately against the BACTMan cell-type markers
+        (neurons, astrocytes, microglia, and oligodendrocytes). A one-sided
+        Fisher’s exact test asks whether the list contains more markers of a
+        cell type than expected from the BACTMan background, and P values are
+        adjusted across the four cell types. A cell type is enriched when the
+        adjusted P value is below 0.05. The dot plot shows the Haldane–Anscombe
+        odds ratio. The star plot shows the miRNAs from each list that are
+        markers of a cell type enriched in that list.
+      </p>
 
-    {/* Preprint line (updated) */}
-    <div className="mt-2 flex justify-start">
-      <p className={`${TEXT_CLASS} text-left`} style={TEXT_STYLE}>
+      <p className="text-gray-700 mt-2" style={TEXT_STYLE}>
         For additional details and citation, please refer to our preprint:{" "}
         <a
           className="underline"
@@ -330,119 +72,144 @@ export default function EnrichmentClient() {
         </a>
         .
       </p>
-    </div>
-    
-      {/* Controls */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start mt-6">
-        <div className="md:col-span-2">
-          <label className={`block ${TEXT_CLASS} mb-2`} style={TEXT_STYLE}>
-            Insert your list
-          </label>
 
-          <textarea
-            className="w-full h-36 border rounded-lg p-3"
-            placeholder="Paste miR IDs separated by commas, spaces, or new lines"
-            value={textarea}
-            onChange={(e) => setTextarea(e.target.value)}
-            style={TEXT_STYLE}
-          />
-
-          {!!notInAtlas.length && (
-            <div className="mt-2 text-amber-800 bg-amber-50 border border-amber-200 rounded p-3">
-              <div className="font-medium mb-1" style={TEXT_STYLE}>
-                Not expressed in the atlas:
-              </div>
-              <div className="break-words" style={TEXT_STYLE}>
-                {notInAtlas.join(", ")}
-              </div>
-              <div className="mt-2 text-gray-700" style={TEXT_STYLE}>
-                The analysis is performed on the subset of expressed miRs.
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="md:col-span-1">
-          <label className={`block ${TEXT_CLASS} mb-2`} style={TEXT_STYLE}>
-            Example
-          </label>
-
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <span className="text-gray-700" style={TEXT_STYLE}>
+          Level
+        </span>
+        {(["mature", "precursor"] as const).map((option) => (
           <button
+            key={option}
             type="button"
-            className="w-full border rounded-lg px-4 py-2 hover:bg-gray-50"
-            onClick={() => setTextarea(exampleList.join("\n"))}
+            onClick={() => setLevel(option)}
+            className={[
+              "rounded-full px-4 py-1.5 border",
+              level === option ? "bg-gray-900 text-white border-gray-900" : "bg-white text-gray-800",
+            ].join(" ")}
             style={TEXT_STYLE}
           >
-            Load example list
+            {option === "mature" ? "Mature miRNA" : "Precursor"}
           </button>
+        ))}
+        <button
+          type="button"
+          className="rounded-lg border px-4 py-1.5 hover:bg-gray-50"
+          style={TEXT_STYLE}
+          onClick={() => {
+            setLists(exampleLists());
+            setLevel("mature");
+          }}
+        >
+          Load example
+        </button>
+      </div>
+      <p className="text-gray-600 mt-2" style={TEXT_STYLE}>
+        The example is the miRNAs upregulated and downregulated in Alzheimer&apos;s
+        disease hippocampus (Lau et al., 2013). Names can be written with or
+        without the hsa- prefix and the arm.
+      </p>
 
-          <p className={`${TEXT_CLASS} mt-2`} style={TEXT_STYLE}>
-            This example list represents miRs, differentially expressed in Alzheimer&apos;s
-            Disease postmortem brain samples (data from{" "}
-            <a
-              href="https://doi.org/10.1016/j.neurobiolaging.2025.03.014"
-              target="_blank"
-              rel="noreferrer"
-              className="underline"
-            >
-              Liu et al., 2025
-            </a>
-            ).
-          </p>
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        {lists.map((list, index) => {
+          const unmatched = result.matching.filter((m) => m.list === list.label && !m.matched);
+          return (
+            <div key={index}>
+              <label className="block text-gray-700 mb-2" style={TEXT_STYLE}>
+                Label
+              </label>
+              <input
+                className="w-full border rounded-lg px-3 py-2 mb-3"
+                value={list.label}
+                onChange={(e) =>
+                  setLists((prev) =>
+                    prev.map((item, i) => (i === index ? { ...item, label: e.target.value } : item))
+                  )
+                }
+                style={TEXT_STYLE}
+              />
+              <label className="block text-gray-700 mb-2" style={TEXT_STYLE}>
+                miRNA list
+              </label>
+              <textarea
+                className="w-full h-40 border rounded-lg p-3"
+                placeholder="One miRNA per line, or separated by commas"
+                value={list.text}
+                onChange={(e) =>
+                  setLists((prev) =>
+                    prev.map((item, i) => (i === index ? { ...item, text: e.target.value } : item))
+                  )
+                }
+                style={TEXT_STYLE}
+              />
+              {!!unmatched.length && (
+                <div className="mt-2 text-amber-800 bg-amber-50 border border-amber-200 rounded p-3">
+                  <div className="font-medium mb-1" style={TEXT_STYLE}>
+                    Not in BACTMan ({unmatched.length})
+                  </div>
+                  <div className="break-words" style={TEXT_STYLE}>
+                    {unmatched.map((m) => m.reported).join(", ")}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Dotplot (excluded from text styling) */}
-      <div className="mt-8">
-        {dotPlot ? (
-          dotPlot
+      <div className="mt-8 rounded border bg-white p-3">
+        {result.lists.length ? (
+          <EnrichmentDotPlot result={result} />
         ) : (
           <div className="text-gray-500 p-6" style={TEXT_STYLE}>
-            Provide a list or click “Load example list”.
+            Add a miRNA list to see the enrichment plot.
           </div>
         )}
       </div>
 
-      {/* Table */}
-      <div className="mt-8">
-        <div className="overflow-x-auto rounded border bg-white">
+      {!!result.lists.length && (
+        <div className="mt-8 overflow-x-auto rounded border bg-white">
           <table className="min-w-full" style={TEXT_STYLE}>
             <thead className="bg-gray-50">
               <tr className="text-left">
+                <th className="px-3 py-2">List</th>
                 <th className="px-3 py-2">Cell type</th>
+                <th className="px-3 py-2">Overlap</th>
                 <th className="px-3 py-2">% overlap</th>
-                <th className="px-3 py-2">Odd ratio</th>
-                <th className="px-3 py-2">Pvalue</th>
+                <th className="px-3 py-2">Odds ratio</th>
+                <th className="px-3 py-2">P value</th>
                 <th className="px-3 py-2">Padj</th>
-                <th className="px-3 py-2">-log10(Padj)</th>
               </tr>
             </thead>
             <tbody>
-              {rows.map((r) => (
-                <tr key={r.cellType} className="border-t">
-                  <td className="px-3 py-2">{r.cellType}</td>
-                  <td className="px-3 py-2">{r.pctOverlap.toFixed(2)}</td>
+              {result.table.map((row) => (
+                <tr key={`${row.list}-${row.cellType}`} className="border-t">
+                  <td className="px-3 py-2">{row.list}</td>
+                  <td className="px-3 py-2">{row.cellType}</td>
                   <td className="px-3 py-2">
-                    {Number.isFinite(r.oddsRatio) ? r.oddsRatio.toFixed(4) : "—"}
+                    {row.markersInList}/{row.markersK}
                   </td>
-                  <td className="px-3 py-2">{r.pValue.toExponential(3)}</td>
+                  <td className="px-3 py-2">{row.pctOverlap.toFixed(1)}</td>
+                  <td className="px-3 py-2">{row.haldane.toFixed(2)}</td>
+                  <td className="px-3 py-2">{fmtP(row.pValue)}</td>
                   <td className="px-3 py-2">
-                    {r.pAdj < 0.001 ? r.pAdj.toExponential(3) : r.pAdj.toFixed(4)}
+                    {fmtP(row.pAdj)}
+                    {row.enriched ? " *" : ""}
                   </td>
-                  <td className="px-3 py-2">{r.log10Padj.toFixed(3)}</td>
                 </tr>
               ))}
-
-              {rows.length === 0 && (
-                <tr className="border-t">
-                  <td className="px-3 py-4 text-gray-500" colSpan={6} style={TEXT_STYLE}>
-                    No data yet.
-                  </td>
-                </tr>
-              )}
             </tbody>
           </table>
         </div>
+      )}
+
+      <div className="mt-8 rounded border bg-white p-3">
+        {hasStars ? (
+          <MarkerStarPlot reference={reference} result={result} />
+        ) : (
+          <div className="text-gray-500 p-6" style={TEXT_STYLE}>
+            No cell type is enriched in the current lists, so there is no marker plot.
+          </div>
+        )}
       </div>
     </div>
   );

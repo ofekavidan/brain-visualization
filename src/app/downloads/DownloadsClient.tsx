@@ -7,14 +7,14 @@ const DATA_BASE = "/data";
 const FILES = [
   {
     title: "Raw_mir_counts.csv",
-    filename: "Raw_mir_counts.csv",
-    href: `${DATA_BASE}/Raw_mir_counts.csv`,
+    filename: "raw_mir_counts.csv",
+    href: `${DATA_BASE}/raw_mir_counts.csv`,
     description: "Raw aligned read counts for microRNAs (miRs).",
   },
   {
     title: "Sample_metadata.csv",
-    filename: "Sample_metadata.csv",
-    href: `${DATA_BASE}/Sample_metadata.csv`,
+    filename: "sample_metadata.csv",
+    href: `${DATA_BASE}/sample_metadata.csv`,
     description: "Sample metadata table for the atlas datasets.",
   },
 ] as const;

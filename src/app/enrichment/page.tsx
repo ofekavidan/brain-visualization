@@ -2,7 +2,7 @@
 import EnrichmentClient from "./EnrichmentClient";
 
 export const metadata = {
-  title: "Cell type enrichment • miR Atlas",
+  title: "Cell type enrichment • BACTMan",
 };
 
 export default function Page() {

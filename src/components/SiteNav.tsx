@@ -24,7 +24,7 @@ export default function SiteNav() {
       <div className="mx-auto w-full max-w-[1400px] px-6 py-3 flex items-center justify-between">
         {/* Left: brand */}
         <Link href="/" className="font-semibold tracking-tight text-gray-900">
-          The Human Brain MicroRNA Atlas
+          BACTMan - Brain Annotation of Cell-Type-enriched MicroRNAs
         </Link>
 
         {/* Right: links */}

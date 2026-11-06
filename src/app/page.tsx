@@ -2,7 +2,7 @@
 import Dashboard from "./Dashboard";
 
 export const metadata = {
-  title: "The Human Brain MicroRNA Atlas",
+  title: "BACTMan - Brain Annotation of Cell-Type-enriched MicroRNAs",
 };
 
 export default function Page() {
