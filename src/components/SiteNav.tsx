@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 type NavItem = { href: string; label: string };
 
 const NAV: NavItem[] = [
-  { href: "/", label: "miR Reviewer" },
+  { href: "/", label: "miR Viewer" },
   { href: "/enrichment", label: "Enrichment" },
   { href: "/downloads", label: "Downloads" },
 ];
